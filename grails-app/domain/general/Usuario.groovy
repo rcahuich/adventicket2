@@ -6,10 +6,10 @@ class Usuario {
 
 	String username
 	String password
-	boolean enabled
-	boolean accountExpired
-	boolean accountLocked
-	boolean passwordExpired
+	boolean enabled = true
+	boolean accountExpired = false
+	boolean accountLocked = false
+	boolean passwordExpired = false
         String nombre
         String apellidoPaterno
         String apellidoMaterno

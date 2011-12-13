@@ -18,21 +18,23 @@
           </form>
           
           <ul class="nav secondary-nav">
+            
             <sec:ifNotLoggedIn>
-            <form action="">
-                  <input class="input-small" type="text" placeholder="usuario">
-                  <input class="input-small" type="password" placeholder="contrasena">
+            <form action="/adventicket/j_spring_security_check" method='POST' autocomplete='off'>
+                  <input class="input-small" type="text" placeholder="usuario" name='j_username' id='username' >
+                  <input class="input-small" type="password" placeholder="contrasena" name='j_password' id='password'>
                   <button class="btn" type="submit">Entrar</button>
             </form>
             </sec:ifNotLoggedIn>
+            
             <sec:ifLoggedIn>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle">Dropdown</a>
+              <a href="#" class="dropdown-toggle"><sec:username /></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Secondary link</a></li>
-                <li><a href="#">Something else here</a></li>
+                <li><a href="#">Mi Cuenta</a></li>
+                <li><a href="#">Eventos</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Another link</a></li>
+                <li><a href="${createLink(controller:'logout')}">Cerrar sesion</a></li>
               </ul>
             </li>
             </sec:ifLoggedIn>
