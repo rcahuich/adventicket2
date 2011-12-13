@@ -18,13 +18,14 @@
           </form>
           
           <ul class="nav secondary-nav">
-            
+            <sec:ifNotLoggedIn>
             <form action="">
                   <input class="input-small" type="text" placeholder="usuario">
                   <input class="input-small" type="password" placeholder="contrasena">
                   <button class="btn" type="submit">Entrar</button>
             </form>
-            
+            </sec:ifNotLoggedIn>
+            <sec:ifLoggedIn>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle">Dropdown</a>
               <ul class="dropdown-menu">
@@ -34,7 +35,7 @@
                 <li><a href="#">Another link</a></li>
               </ul>
             </li>
-            
+            </sec:ifLoggedIn>
           </ul>
           
         </div>

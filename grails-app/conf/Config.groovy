@@ -87,6 +87,16 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+    
+    //warn   'org.mortbay.log'
+
+    debug  'grails.app'//,'org.hibernate'//,'test.integration'
+
+    //trace  'org.hibernate.type'
+
+    off    'grails.app.services.org.grails.plugin.resource',
+           'grails.app.taglib.org.grails.plugin.resource',
+           'grails.app.resourceMappers.org.grails.plugin.resource'
 }
 
 // Added by the Spring Security Core plugin:
