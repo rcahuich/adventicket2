@@ -16,23 +16,31 @@
 		
                 <link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
                 <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}" type="text/css">
-
+                <r:require module="jquery-ui"/>
+                
 		<!-- Le javascript -->
 	            
 		    <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
-		    <script src="js/google-code-prettify/prettify.js"></script>
+		    <script src="/adventicket/js/google-code-prettify/prettify.js"></script>
+		    <script src="/adventicket/js/bootstrap-modal.js"></script>
+		    <script src="/adventicket/js/bootstrap-alerts.js"></script>
+		    <script src="/adventicket/js/bootstrap-twipsy.js"></script>
+		    <script src="/adventicket/js/bootstrap-popover.js"></script>
+		    <script src="/adventicket/js/bootstrap-dropdown.js"></script>
+		    <script src="/adventicket/js/bootstrap-scrollspy.js"></script>
+		    <script src="/adventicket/js/bootstrap-tabs.js"></script>
+		    <script src="/adventicket/js/bootstrap-buttons.js"></script>
 		    <script>$(function () { prettyPrint() })</script>
-		    <script src="js/bootstrap-modal.js"></script>
-		    <script src="js/bootstrap-alerts.js"></script>
-		    <script src="js/bootstrap-twipsy.js"></script>
-		    <script src="js/bootstrap-popover.js"></script>
-		    <script src="js/bootstrap-dropdown.js"></script>
-		    <script src="js/bootstrap-scrollspy.js"></script>
-		    <script src="js/bootstrap-tabs.js"></script>
-		    <script src="js/bootstrap-buttons.js"></script>
-
+                    
 		<link href="${resource(dir: 'css', file: 'docs.css')}" rel="stylesheet" type="text/css">
+                <r:layoutResources/>
 		<g:layoutHead/>
+                
+                <style type="text/css">
+                  body {
+                    padding-top: 75px;
+                  }
+                </style>
 	</head>
 	<body>
                 <g:render template="/common/header" />
@@ -45,6 +53,7 @@
                   <g:render template="/common/footer" />
                 </div>
                 
+                <r:layoutResources/>
 		<g:javascript library="application"/>
 	</body>
 </html>

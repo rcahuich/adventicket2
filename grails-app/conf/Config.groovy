@@ -103,3 +103,8 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'general.Usuario'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'general.UsuarioRol'
 grails.plugins.springsecurity.authority.className = 'general.Rol'
+grails.plugins.springsecurity.roleHierarchy = '''
+   ROLE_ADMIN > ROLE_EVENTO
+   ROLE_EVENTO > ROLE_ASISTENTE
+   ROLE_ASISTENTE > ROLE_USER
+'''

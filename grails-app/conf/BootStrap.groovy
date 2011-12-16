@@ -23,6 +23,7 @@ class BootStrap {
                 apellidoPaterno: 'Cahuich',
                 apellidoMaterno: '',
                 fechaDeNacimiento: '07/12/2011',
+                sexo: 'Masculino',
                 telefono: '1234567890',
                 correo: 'rcc@um.edu.mx'
             )

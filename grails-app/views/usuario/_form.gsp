@@ -1,110 +1,163 @@
 <%@ page import="general.Usuario" %>
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'username', 'error')} required">
-	<label for="username">
-		<g:message code="usuario.username.label" default="Username" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="username" required="" value="${usuario?.username}"/>
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'username', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.username" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="username" size="30" type="text" required="" placeholder="escribe tu usuario" value="${usuario?.username}" autoFocus/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'password', 'error')} required">
-	<label for="password">
-		<g:message code="usuario.password.label" default="Password" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:passwordField name="password" required="" value="${usuario?.password}"/>
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'password', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.password" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="password" size="30" type="password" required="" placeholder="escribe tu contrasena" value="${usuario?.password}"/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'nombre', 'error')} required">
-	<label for="nombre">
-		<g:message code="usuario.nombre.label" default="Nombre" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="nombre" maxlength="64" required="" value="${usuario?.nombre}"/>
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'nombre', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.nombre" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="nombre" size="30" type="text" required="" placeholder="nombre(s)" value="${usuario?.nombre}"/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'apellidoPaterno', 'error')} required">
-	<label for="apellido">
-		<g:message code="usuario.apellido.label" default="Apellido Paterno" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="apellido" maxlength="128" required="" value="${usuario?.apellidoPaterno}"/>
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'apellidoPaterno', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.apellidoPaterno" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="apellidoPaterno" size="30" type="text" required="" placeholder="escribe tu apellido paterno" value="${usuario?.apellidoPaterno}"/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'apellidoMaterno', 'error')} required">
-	<label for="apellido">
-		<g:message code="usuario.apellido.label" default="Apellido Materno" />
-	</label>
-	<g:textField name="apellido" maxlength="128" value="${usuario?.apellidoMaterno}"/>
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'apellidoMaterno', 'error')}">
+                  <label for="xlInput">
+                    <g:message code="usuario.apellidoMaterno" />
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="apellidoMaterno" size="30" type="text" placeholder="escribe tu apellido materno" value="${usuario?.apellidoMaterno}"/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'fechaDeNacimiento', 'error')} required">
-	<label for="fechaDeNacimiento">
-		<g:message code="usuario.fechaDeNacimiento.label" default="Fecha De Nacimiento" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fechaDeNacimiento" precision="day"  value="${usuarioInstance?.fechaDeNacimiento}"  />
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'sexo', 'errors')}">
+                  <label for="xlInput">
+                    <g:message code="usuario.sexo" />
+                  </label>
+                  <div class="input">
+                    <g:select name="sexo" from="${usuario.constraints.sexo.inList}" value="${usuario?.sexo}" valueMessagePrefix="usuario.sexo"  />
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'telefono', 'error')} required">
-	<label for="telefono">
-		<g:message code="usuario.telefono.label" default="Telefono" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="telefono" maxlength="10" required="" value="${usuario?.telefono}"/>
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'telefono', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.telefono" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" maxlength="10" name="telefono" size="30" type="text" required="" placeholder="telefono o celular" value="${usuario?.telefono}"/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'correo', 'error')} required">
-	<label for="correo">
-		<g:message code="usuario.correo.label" default="Correo" />
-		<span class="required-indicator">*</span>
-	</label>
-    <input type="email" name="correo" maxlength="128" required="" value="${usuario?.correo}" id="correo" />
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'correo', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.correo" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="correo" size="30" type="email" required="" placeholder="escribe tu correo" value="${usuario?.correo}"/>
+                  </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'accountExpired', 'error')} ">
-	<label for="accountExpired">
-		<g:message code="usuario.accountExpired.label" default="Account Expired" />
-		
-	</label>
-	<g:checkBox name="accountExpired" value="${usuario?.accountExpired}" />
-</div>
+<div class="clearfix ${hasErrors(bean: usuarioInstance, field: 'fechaDeNacimiento', 'error')} required">
+            <label for="mediumSelect">
+              <g:message code="usuario.fechaDeNacimiento" />
+              <span class="required-indicator">*</span>
+            </label>
+            <div class="input">
+              <g:datePicker class="medium" id="medium" name="fechaDeNacimiento" precision="day"  value="${usuario?.fechaDeNacimiento}"  years="${2007..1940}"/>
+            </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'accountLocked', 'error')} ">
-	<label for="accountLocked">
-		<g:message code="usuario.accountLocked.label" default="Account Locked" />
-		
-	</label>
-	<g:checkBox name="accountLocked" value="${usuario?.accountLocked}" />
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'imagenes', 'error')}">
+            <label for="fileInput">
+              <g:message code="usuario.imagen"/>
+            </label>
+            <div class="input">
+              <input class="input-file" id="fileInput" type="file" name="imagen" />
+            </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'enabled', 'error')} ">
-	<label for="enabled">
-		<g:message code="usuario.enabled.label" default="Enabled" />
-		
-	</label>
-	<g:checkBox name="enabled" value="${usuario?.enabled}" />
-</div>
+<sec:ifAllGranted roles="ROLE_ADMIN">
+<div class="clearfix ${hasErrors(bean: usuario, field: 'accountExpired', 'error')}">
+            <label for="appendedInput">
+              <g:message code="usuario.accountExpired" />
+            </label>
+            <div class="input">
+              <div class="input-append">
+                <label class="add-on"><input type="checkbox" name="accountExpired" value="${usuario?.accountExpired}" /></label>
+              </div>
+            </div>
+</div><!-- /clearfix -->
 
-<div class="fieldcontain ${hasErrors(bean: usuario, field: 'passwordExpired', 'error')} ">
-	<label for="passwordExpired">
-		<g:message code="usuario.passwordExpired.label" default="Password Expired" />
-		
-	</label>
-	<g:checkBox name="passwordExpired" value="${usuario?.passwordExpired}" />
-</div>
+<div class="clearfix ${hasErrors(bean: usuario, field: 'accountLocked', 'error')}">
+            <label for="appendedInput">
+              <g:message code="usuario.accountLocked" />
+            </label>
+            <div class="input">
+              <div class="input-append">
+                <label class="add-on"><input type="checkbox" name="accountLocked" value="${usuario?.accountLocked}" /></label>
+              </div>
+            </div>
+</div><!-- /clearfix -->
 
+<div class="clearfix ${hasErrors(bean: usuario, field: 'enabled', 'error')}">
+            <label for="appendedInput">
+              <g:message code="usuario.enabled" />
+            </label>
+            <div class="input">
+              <div class="input-append">
+                <label class="add-on"><input type="checkbox" name="enabled" value="${usuario?.enabled}" checked="checked"/></label>
+              </div>
+            </div>
+</div><!-- /clearfix -->
+
+<div class="clearfix ${hasErrors(bean: usuario, field: 'passwordExpired', 'error')}">
+            <label for="appendedInput">
+              <g:message code="usuario.passwordExpired" />
+            </label>
+            <div class="input">
+              <div class="input-append">
+                <label class="add-on">
+                  <input type="checkbox" name="passwordExpired" value="${usuario?.passwordExpired}" />
+                </label>
+              </div>
+            </div>
+</div><!-- /clearfix -->
+
+         
 <g:if test="${roles}">
-    <div class="fieldcontain ${hasErrors(bean: usuario, field: 'authorities', 'error')} ">
+    <div class="clearfix ${hasErrors(bean: usuario, field: 'authorities', 'error')} ">
         <g:set var="contador" value="${1}" />
         <g:each var="entry" in="${roles}">
             <label for="${entry.key.authority}">
                 <g:if test="${contador++ == 1}">
-                    <g:message code="usuario.authorities.label" default="Authorities" />
+                    <g:message code="usuario.authorities" />
                 </g:if>
             </label>
+          <div class="input">
             <g:checkBox name="${entry.key.authority}" value="${entry.value}"/> ${entry.key.authority}<br/>
+          </div>
         </g:each>
     </div>
 </g:if>
+</sec:ifAllGranted>

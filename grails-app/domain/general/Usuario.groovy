@@ -14,11 +14,15 @@ class Usuario {
         String apellidoPaterno
         String apellidoMaterno
         Date fechaDeNacimiento
+        String sexo
         String telefono
         String correo
         String nombreCompleto
+        //Foto
+        Set imagenes
         
         static transients = ['nombreCompleto']
+        static hasMany = [imagenes: Imagen]
 
 	static constraints = {
 		username blank: false, unique: true
@@ -26,6 +30,7 @@ class Usuario {
                 nombre   blank: false, maxSize: 64
                 apellidoPaterno blank: false, maxSize: 64
                 apellidoMaterno blank: true, maxSize: 64
+                sexo inList: ["Femenino", "Masculino"]
                 correo   blank: false, maxSize: 128, email:true
                 telefono blank: false, size:1..10
 	}
@@ -33,6 +38,7 @@ class Usuario {
 	static mapping = {
                 table 'usuarios'
 		password column: '`password`'
+                imagenes cascade:'all-delete-orphan'
 	}
 
 	Set<Rol> getAuthorities() {

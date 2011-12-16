@@ -3,43 +3,53 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'usuario.label', default: 'Usuario')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
-        <r:require module="jquery" />
+		<title><g:message code="usuario.nuevaTituloCuenta" /></title>
 	</head>
+        
 	<body>
-		<a href="#create-usuario" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-                                <li><a class="panel" href="${createLink(controller:'admin', action:'admin')}">Panel de Control</a></li>
-				<li><g:link class="list" action="lista">Lista de Usuarios</g:link></li>
-			</ul>
+          <div class="container">
+          
+            <div class="hero-unitCuenta">
+            <sec:ifAllGranted roles="ROLE_ADMIN">
+		<div class="tabs">
+                        <li><g:link class="list" action="lista">Lista de Usuarios</g:link></li>
 		</div>
-		<div id="create-usuario" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${usuario}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${usuario}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form action="crea" enctype="multipart/form-data">
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
-			</g:form>
+            </sec:ifAllGranted>
+		
+                  <div class="page-header">
+                    <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small></h1>
+                  </div>      
+
+                              <g:hasErrors bean="${usuario}">
+
+                              <div class="alert-message block-message error fade in" data-alert="alert" >
+                                <a class="close" href="#">&times;</a>
+                                <g:eachError bean="${usuario}" var="error">
+                                  <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
+                                </g:eachError>
+                                <g:if test="${flash.message}">
+                                    flash ${flash.message}
+                                </g:if>
+                                <g:if test="${error in org.springframework.validation.FieldError}">
+                                  data-field-id="${error.field}"
+                                </g:if>
+                              </div>
+
+                            </g:hasErrors>
+
+                            <g:form action="crea" enctype="multipart/form-data">
+                                    <fieldset>
+                                            
+                                            <g:render template="form"/>
+                                            
+                                            <div class="input">
+                                              <fieldset class="buttones">
+                                                <g:submitButton name="create" class="nuevo" value="${message(code: 'usuario.crearMiCuenta')}" />
+                                              </fieldset>
+                                            </div>
+                                    </fieldset>
+                            </g:form>
 		</div>
-        <r:script>
-            $(document).ready(function() {
-                $('#username').focus();
-            });
-        </r:script>
+            </div>
 	</body>
 </html>

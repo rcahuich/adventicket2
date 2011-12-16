@@ -11,15 +11,18 @@ class UsuarioController {
 
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
+    @Secured(['ROLE_ADMIN'])
     def index = {
         redirect(action: "lista", params: params)
     }
 
+    @Secured(['ROLE_ADMIN'])
     def lista = {
             params.max = Math.min(params.max ? params.int('max') : 10, 100)
             [usuarios: Usuario.list(params), totalDeUsuarios: Usuario.count()]
     }
 
+    
     def nuevo = {
         def usuario = new Usuario()
         usuario.properties = params
@@ -34,6 +37,26 @@ class UsuarioController {
             def usuario = new Usuario(params)
             
             if (usuario.save(flush: true)) {
+                
+                def archivo = request.getFile('imagen')
+                if (!archivo.empty) {
+                    byte[] f = archivo.bytes
+                    def imagen = new Imagen(
+                        nombre : archivo.originalFilename
+                        , tipoContenido : archivo.contentType
+                        , tamano : archivo.size
+                        , archivo : f
+                    )
+                    log.debug "Mostrando imagen ${imagen.nombre}"
+                    if (usuario.imagenes) {
+                        usuario.imagenes?.clear()
+                    } else {
+                        usuario.imagenes = []
+                    }
+                    usuario.imagenes << imagen
+                    usuario.save()
+                }
+                
                 def roles = asignaRoles(params)
                 for(rol in roles) {
                     UsuarioRol.create(usuario, rol, false)
@@ -46,8 +69,14 @@ class UsuarioController {
             }
         }
     }
-
+    
+    @Secured(['ROLE_USER'])
     def ver = {
+        
+        if(params.id == null){
+            params.id = springSecurityService.principal.id
+        }
+        
         def usuario = Usuario.get(params.id)
         if (!usuario) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
@@ -60,7 +89,9 @@ class UsuarioController {
         }
     }
 
+    @Secured(['ROLE_USER'])
     def edita = {
+        
         def usuario = Usuario.get(params.id)
         if (!usuario) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
@@ -73,6 +104,7 @@ class UsuarioController {
         }
     }
 
+    @Secured(['ROLE_USER'])
     def actualiza = {
         Usuario.withTransaction {
             def usuario = Usuario.get(params.id)
@@ -93,6 +125,7 @@ class UsuarioController {
                 usuario.properties = params
 
                 if (!usuario.hasErrors() && usuario.save(flush: true)) {
+                    
                     UsuarioRol.removeAll(usuario)
                     def roles = asignaRoles(params)
                     for(rol in roles) {
@@ -134,22 +167,22 @@ class UsuarioController {
     }
 
     def obtieneListaDeRoles = { usuario ->
-        log.debug "Obteniendo lista de roles"
+        //log.debug "Obteniendo lista de roles"
         def roles = Rol.list()
 
         def rolesFiltrados = [] as Set
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')) {
-            log.debug "Roles para ADMIN"
+            //log.debug "Roles para ADMIN"
             rolesFiltrados = roles
         } else if(SpringSecurityUtils.ifAnyGranted('ROLE_EVENTO')) {
-            log.debug "Roles para EVENTO"
+            //log.debug "Roles para EVENTO"
             for(rol in roles) {
                 if (!rol.authority.equals('ROLE_ADMIN') && !rol.authority.equals('ROLE_EVENTO')) {
                     rolesFiltrados << rol
                 }
             }
         } else if(SpringSecurityUtils.ifAnyGranted('ROLE_ASISTENTE')) {
-            log.debug "Roles para ASISTENTE"
+            //log.debug "Roles para ASISTENTE"
             for(rol in roles) {
                 if (rol.authority.equals('ROLE_USER')) {
                     rolesFiltrados << rol
@@ -175,13 +208,48 @@ class UsuarioController {
         def roles = [] as Set
         if (params.ROLE_ADMIN) {
             roles << Rol.findByAuthority('ROLE_ADMIN')
-        } else if (params.ROLE_ORG) {
+        } else if (params.ROLE_EVENTO) {
             roles << Rol.findByAuthority('ROLE_EVENTO')
-        } else if (params.ROLE_EMP) {
+        } else if (params.ROLE_ASISTENTE) {
             roles << Rol.findByAuthority('ROLE_ASISTENTE')
         } else {
             roles << Rol.findByAuthority('ROLE_USER')
         }
         return roles
+    }
+    
+    //Foto
+    @Secured(['ROLE_USER'])
+    def imagen = {
+        try {
+                       
+            def usuario = Usuario.get(params.id)
+            def foto
+            for(x in usuario?.imagenes) {
+                foto = x
+                break;
+            }
+            if (!foto) {
+                def directorio = servletContext.getRealPath("/images")
+                def file = new File("${directorio}/userT.png")
+                foto = new Imagen(
+                    nombre : 'userT.png'
+                    , tipoContenido : 'image/png'
+                    , tamano : file.size()
+                    , archivo : file.getBytes()
+                )
+            }
+            //log.debug "Mostrando imagen ${foto.nombre}"
+            //log.debug "TipoContenido: ${foto.tipoContenido}"
+            response.contentType = foto.tipoContenido
+            //response.setHeader("Content-disposition", "attachment; filename=${foto?.nombre}")
+            //log.debug "Tamano: ${foto.tamano}"
+            response.contentLength = foto.tamano
+            response.outputStream << foto.archivo
+            //response.outputStream.flush()
+            //return;
+        } catch(Exception e) {
+            log.error("No se pudo obtener la imagen", e)
+        }
     }
 }

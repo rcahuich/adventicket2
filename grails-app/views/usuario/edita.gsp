@@ -3,41 +3,65 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'usuario.label', default: 'Usuario')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<title><g:message code="usuario.nuevo" /></title>
 	</head>
+        
 	<body>
-		<a href="#edit-usuario" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-                                <li><a class="panel" href="${createLink(controller:'admin', action:'admin')}">Panel de Control</a></li>
-				<li><g:link class="list" action="lista">Lista de Usuarios</g:link></li>
-				<li><g:link class="create" action="nuevo">Nuevo Usuario</g:link></li>
-			</ul>
+          <div class="container">
+            
+            <sec:ifAllGranted roles="ROLE_ADMIN">
+		<div class="tabs">
+                        <li><g:link class="list" action="lista"><g:message code="usuario.lista" /></g:link></li>
 		</div>
-		<div id="edit-usuario" class="content scaffold-edit" role="main">
-			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${usuario}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${usuario}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form method="post" >
-				<g:hiddenField name="id" value="${usuario?.id}" />
-				<g:hiddenField name="version" value="${usuario?.version}" />
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-					<g:actionSubmit class="delete" action="elimina" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
+              </sec:ifAllGranted>
+            
+                <div class="span16">
+                                <ul class="breadcrumb">
+                                  <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                                  <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
+                                  <li class="active"><g:message code="usuario.modificaPerfil" /></li>
+                                </ul>
+                </div>
+            <div class="hero-unitCuenta">
+              
+              <div class="page-header">
+                    <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small></h1>
+                  </div>  
+            
+		
+
+                              <g:hasErrors bean="${usuario}">
+
+                              <div class="alert-message block-message error fade in" data-alert="alert" >
+                                <a class="close" href="#">&times;</a>
+                                <g:eachError bean="${usuario}" var="error">
+                                  <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
+                                </g:eachError>
+                                <g:if test="${flash.message}">
+                                    flash ${flash.message}
+                                </g:if>
+                                <g:if test="${error in org.springframework.validation.FieldError}">
+                                  data-field-id="${error.field}"
+                                </g:if>
+                              </div>
+
+                            </g:hasErrors>
+
+                            <g:form method="post" enctype="multipart/form-data">
+                                    <fieldset>
+                                      <g:render template="form"/>
+                                            
+                                      <div class="input">
+                                        <fieldset class="buttones">
+                                            <g:hiddenField name="id" value="${usuario?.id}" />
+                                            <g:hiddenField name="version" value="${usuario?.version}" />  
+                                            <g:actionSubmit class="actualizar" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'usuario.cancelarCuenta')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                        </fieldset>
+                                      </div>
+                                    </fieldset>
+                            </g:form>
 		</div>
-	</body>
+            </div>
+        </body>
 </html>

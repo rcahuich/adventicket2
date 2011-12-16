@@ -1,10 +1,22 @@
 <head>
 <meta name='layout' content='main' />
-<title><g:message code="springSecurity.denied.title" /></title>
+<title><g:message code="acceso.restringido" /></title>
 </head>
 
-<body>
-<div class='body'>
-	<div class='errors'><g:message code="springSecurity.denied.message" /></div>
-</div>
+<body >
+  <div class="container">
+
+        <div class="alert-message block-message error">
+          <center>
+            <br>
+            <br>
+            <br>
+          <p><strong>Acceso Restringido</strong>.</p>
+            <br>
+            <br>
+            <br>
+          </center>
+
+        </div>
+  </div>
 </body>
