@@ -31,6 +31,10 @@
                           <div class="sidebar">
                                 <div class="well">
                                          <img style="width: 180px; height: 210px;" src="${createLink(action:'imagen', id:usuario?.id)}" />
+                                <fieldset class="buttones">
+					<g:hiddenField name="id" value="${usuario?.id}" />
+					<g:link class="editar" action="edita" id="${usuario?.id}"><g:message code="usuario.modificaPerfil" /></g:link>
+				</fieldset>
                                 </div>        
                           </div>
                           
@@ -39,12 +43,13 @@
                                
                                <g:if test="${flash.message}">
                                 <div class="message" ></div>
-                                <div class="alert-message success fade in" role="status">
-                                  <p><strong>Muy bien! </strong>${flash.message}.</p>
+                                <div class="alert-message success fade in" data-alert="alert" role="status">
+                                  <a class="close" href="#">&times;</a>
+                                  <p><strong>Muy bien! </strong>${flash.message}</p>
                                 </div>
                                </g:if>
                                
-                               <form>
+                               
                                <fieldset>
                                 <g:if test="${usuario?.nombre}">
                                 <g:message code="usuario.nombreCompleto" />: <h4><g:fieldValue bean="${usuario}" field="nombreCompleto"/></h4>
@@ -98,19 +103,10 @@
                                 <br>
                                 <br>
                                 <br>
-
-                                <div class="well">
-                                <fieldset class="buttones">
-					<g:hiddenField name="id" value="${usuario?.id}" />
-					<g:link class="editar" action="edita" id="${usuario?.id}"><g:message code="usuario.modificaPerfil" /></g:link>
-					<g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'usuario.cancelarCuenta')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-                                </div>
-                                
-                                                                   
+                                <h3>Eventos</h3>                                  
 
                                </fieldset>
-                             </form>
+                             
                           </div>
                   </div>
              </div>

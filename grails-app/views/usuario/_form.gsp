@@ -104,7 +104,7 @@
             </label>
             <div class="input">
               <div class="input-append">
-                <label class="add-on"><input type="checkbox" name="accountExpired" value="${usuario?.accountExpired}" /></label>
+                <label class="add-on"><g:checkBox name="accountLocked" value="${usuario?.accountExpired}" /></label>
               </div>
             </div>
 </div><!-- /clearfix -->
@@ -115,7 +115,7 @@
             </label>
             <div class="input">
               <div class="input-append">
-                <label class="add-on"><input type="checkbox" name="accountLocked" value="${usuario?.accountLocked}" /></label>
+                <label class="add-on"><g:checkBox name="accountLocked" value="${usuario?.accountLocked}" /></label>
               </div>
             </div>
 </div><!-- /clearfix -->
@@ -126,7 +126,7 @@
             </label>
             <div class="input">
               <div class="input-append">
-                <label class="add-on"><input type="checkbox" name="enabled" value="${usuario?.enabled}" checked="checked"/></label>
+                <label class="add-on"><g:checkBox name="enabled" value="${usuario?.enabled}" /></label>
               </div>
             </div>
 </div><!-- /clearfix -->
@@ -138,7 +138,7 @@
             <div class="input">
               <div class="input-append">
                 <label class="add-on">
-                  <input type="checkbox" name="passwordExpired" value="${usuario?.passwordExpired}" />
+                  <g:checkBox name="passwordExpired" value="${usuario?.passwordExpired}" />
                 </label>
               </div>
             </div>

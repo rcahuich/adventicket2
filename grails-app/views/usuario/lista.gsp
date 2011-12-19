@@ -23,7 +23,7 @@
                         </div> 
                 <br>        
                 <g:if test="${flash.message}">
-			<div class="alert-message warning fade in" data-alert="alert" >
+			<div class="alert-message info" data-alert="alert" >
                                 <a class="close" href="#">&times;</a>
                                     ${flash.message}
                         </div>

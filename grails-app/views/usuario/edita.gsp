@@ -22,11 +22,12 @@
                                   <li class="active"><g:message code="usuario.modificaPerfil" /></li>
                                 </ul>
                 </div>
+            
             <div class="hero-unitCuenta">
               
-              <div class="page-header">
-                    <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small></h1>
-                  </div>  
+                              <div class="page-header">
+                                    <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small></h1>
+                              </div>  
             
 		
 
@@ -56,7 +57,9 @@
                                             <g:hiddenField name="id" value="${usuario?.id}" />
                                             <g:hiddenField name="version" value="${usuario?.version}" />  
                                             <g:actionSubmit class="actualizar" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <sec:ifAllGranted roles="ROLE_ADMIN">
                                             <g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'usuario.cancelarCuenta')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                            </sec:ifAllGranted>
                                         </fieldset>
                                       </div>
                                     </fieldset>

@@ -38,6 +38,10 @@ class UsuarioController {
             
             if (usuario.save(flush: true)) {
                 
+                def roles = asignaRoles(params)
+                def roles2 = [] as Set
+                
+                //Su foto
                 def archivo = request.getFile('imagen')
                 if (!archivo.empty) {
                     byte[] f = archivo.bytes
@@ -57,12 +61,24 @@ class UsuarioController {
                     usuario.save()
                 }
                 
-                def roles = asignaRoles(params)
-                for(rol in roles) {
-                    UsuarioRol.create(usuario, rol, false)
-                }
-                flash.message = message(code: 'default.created.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuario.username])
-                redirect(action: "ver", id: usuario.id)
+                //Creando al usuario
+                if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
+                        for(rol in roles) {
+                            UsuarioRol.create(usuario, rol, false)
+                        }
+                        flash.message = message(code: 'usuario.creado', args: [usuario.nombreCompleto])
+                        redirect(action: "ver", id: usuario.id)
+                    }else{
+                        roles2 << Rol.findByAuthority('ROLE_ASISTENTE')
+                        for(rol in roles2) {
+                            UsuarioRol.create(usuario, rol, false)
+                        }
+                        springSecurityService.reauthenticate(usuario.username)
+                        flash.message = message(code: 'usuario.registrado', args: [usuario.username, usuario.correo])
+                        redirect(action: "ver", id: usuario.id)
+                    }
+
+                
             } else {
                 log.error("Hubo un error al crear el usuario ${usuario.errors}")
                 render(view: "nuevo", model: [usuario: usuario])
@@ -131,8 +147,17 @@ class UsuarioController {
                     for(rol in roles) {
                         UsuarioRol.create(usuario, rol, false)
                     }
-                    flash.message = message(code: 'default.updated.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuario.username])
-                    redirect(action: "ver", id: usuario.id)
+                    
+                    if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
+                        
+                        flash.message = message(code: 'usuario.actualizado', args: [usuario.username])
+                        redirect(action: "ver", id: usuario.id)
+                    }else
+                    if(SpringSecurityUtils.ifAnyGranted('ROLE_ASISTENTE')){
+                        
+                        flash.message = message(code: 'usuario.actualizadoMiCuenta')
+                        redirect(action: "ver", id: usuario.id)
+                    }
                 }
                 else {
                     render(view: "edita", model: [usuario: usuario])
@@ -149,10 +174,10 @@ class UsuarioController {
         def usuario = Usuario.get(params.id)
         if (usuario) {
             try {
-                def nombre = usuario.username
+                def nombre = usuario.nombreCompleto
                 UsuarioRol.removeAll(usuario)
                 usuario.delete(flush: true)
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'usuario.label', default: 'Usuario'), nombre])
+                flash.message = message(code: 'usuario.eliminado', args: [nombre])
                 redirect(action: "lista")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
