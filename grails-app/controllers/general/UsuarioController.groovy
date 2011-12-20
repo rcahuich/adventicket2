@@ -134,6 +134,7 @@ class UsuarioController {
                         return
                     }
                 }
+                //Si cambio password
                 if (usuario.password != params.password) {
                     usuario.password = springSecurityService.encodePassword(params.password)
                 }
@@ -142,10 +143,12 @@ class UsuarioController {
 
                 if (!usuario.hasErrors() && usuario.save(flush: true)) {
                     
-                    UsuarioRol.removeAll(usuario)
-                    def roles = asignaRoles(params)
-                    for(rol in roles) {
-                        UsuarioRol.create(usuario, rol, false)
+                   if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
+                        UsuarioRol.removeAll(usuario)
+                        def roles = asignaRoles(params)
+                        for(rol in roles) {
+                            UsuarioRol.create(usuario, rol, false)
+                        }
                     }
                     
                     if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
