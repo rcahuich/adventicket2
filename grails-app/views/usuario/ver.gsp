@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<title><g:message code="usuario.lista" /></title>
+		<title><g:fieldValue bean="${usuario}" field="nombreCompleto"/></title>
 	</head>
         
 	<body>

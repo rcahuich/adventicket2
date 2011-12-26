@@ -99,6 +99,20 @@ log4j = {
            'grails.app.resourceMappers.org.grails.plugin.resource'
 }
 
+// Configuracion de Emails
+grails {
+    mail {
+        host = "smtp.gmail.com"
+        port = 465
+        username = "hospitalgdl@gmail.com"
+        password = "qwerty12345!"
+        props = ["mail.smtp.auth":"true",
+        "mail.smtp.socketFactory.port":"465",
+        "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+        "mail.smtp.socketFactory.fallback":"false"]
+    }
+}
+
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'general.Usuario'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'general.UsuarioRol'

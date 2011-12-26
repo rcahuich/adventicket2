@@ -28,8 +28,11 @@
                   <div class="modal-body">
                      <form action="/adventicket/j_spring_security_check" method='POST' autocomplete='off' >
                        <g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
-                       </g:if>
+                            <div class="alert-message block-message error fade in" data-alert="alert">
+                              <a class="close" href="#">&times;</a>
+                              <p>${flash.message}</p>
+                            </div>
+                          </g:if>
                         <fieldset>
                           <div class="clearfix">
                             <label for="xlInput">usuario</label>

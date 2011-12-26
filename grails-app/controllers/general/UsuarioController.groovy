@@ -34,6 +34,8 @@ class UsuarioController {
 
     def crea = {
         Usuario.withTransaction {
+            log.debug "contrasenaa $params.password"
+            def contra = params.password
             def usuario = new Usuario(params)
             
             if (usuario.save(flush: true)) {
@@ -61,20 +63,48 @@ class UsuarioController {
                     usuario.save()
                 }
                 
-                //Creando al usuario
+                
+                //Cuando el Administrador registra al Usuario
                 if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
+                    usuario.password = contra
                         for(rol in roles) {
                             UsuarioRol.create(usuario, rol, false)
                         }
+                        //Envio de e-mail
+                        try {
+                                sendMail {
+                                    to      "${usuario.correo}"
+                                    subject "Bienvenido a AdvenTicket"
+                                    html    g.render(template:'/mail/envioRegistroAdministrador', model:[usuario:usuario])
+                                }
+                                    flash.message = message(code: 'usuario.creadoMail', args: [usuario.username, usuario.correo])
+                                } catch(Exception e) {
+                                    log.error "Problema al enviar el mail = $e.message", e
+                                    flash.message = message(code: 'usuario.creadoNoMail', args: [usuario.username, usuario.correo])
+                            }
                         flash.message = message(code: 'usuario.creado', args: [usuario.nombreCompleto])
                         redirect(action: "ver", id: usuario.id)
                     }else{
+                        //Cuando un Usuario se registra
+                        usuario.password = contra
                         roles2 << Rol.findByAuthority('ROLE_ASISTENTE')
                         for(rol in roles2) {
                             UsuarioRol.create(usuario, rol, false)
                         }
+                        //Envio de e-mail
+                        try {
+                                sendMail {
+                                    to      "${usuario.correo}"
+                                    subject "Bienvenido a AdvenTicket"
+                                    html    g.render(template:'/mail/envioRegistroAsistente', model:[usuario:usuario])
+                                }
+                                flash.message = message(code: 'usuario.registradoMail', args: [usuario.username, usuario.correo])
+                                } catch(Exception e) {
+                                    log.error "Problema al enviar el mail = $e.message", e
+                                    flash.message = message(code: 'usuario.registradoNoMail', args: [usuario.username, usuario.correo])
+                            }
                         springSecurityService.reauthenticate(usuario.username)
-                        flash.message = message(code: 'usuario.registrado', args: [usuario.username, usuario.correo])
+                        //flash.message = message(code: 'usuario.registrado', args: [usuario.username])
                         redirect(action: "ver", id: usuario.id)
                     }
 

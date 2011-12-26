@@ -61,9 +61,9 @@ class Usuario {
         
         String getNombreCompleto() {
             if(apellidoMaterno == ""){
-                return "$apellidoPaterno, $nombre"
+                return "$nombre $apellidoPaterno, "
             }else{
-                return "$apellidoPaterno $apellidoMaterno, $nombre"
+                return "$nombre $apellidoPaterno $apellidoMaterno"
             }
         }
         
