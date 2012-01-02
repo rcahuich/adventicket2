@@ -11,7 +11,7 @@
             <br>
             <br>
             <br>
-          <p><strong>Acceso Restringido</strong>.</p>
+          <p><strong><g:message code="acceso.restringidoMensaje" /></strong>.</p>
             <br>
             <br>
             <br>

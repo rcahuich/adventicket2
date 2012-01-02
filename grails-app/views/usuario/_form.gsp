@@ -58,16 +58,6 @@
                   </div>
 </div><!-- /clearfix -->
 
-<div class="clearfix ${hasErrors(bean: usuario, field: 'telefono', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="usuario.telefono" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" maxlength="10" name="telefono" size="30" type="text" required="" placeholder="telefono o celular" value="${usuario?.telefono}"/>
-                  </div>
-</div><!-- /clearfix -->
-
 <div class="clearfix ${hasErrors(bean: usuario, field: 'correo', 'error')} required">
                   <label for="xlInput">
                     <g:message code="usuario.correo" />

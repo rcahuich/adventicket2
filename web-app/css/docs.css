@@ -8,8 +8,9 @@
 /* Body and structure
 -------------------------------------------------- */
 body {
-  background-color: #B6B6B6;
-  position: relative;
+    background-image: url(../images/denim.png);
+/*  background-color: #B6B6B6;*/
+/*  position: relative;*/
 }
 section {
   padding-top: 60px;

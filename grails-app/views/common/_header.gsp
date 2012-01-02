@@ -7,9 +7,9 @@
           <a href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'logo1.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/></a>
           
           <ul class="nav">
-            <li><a href="${createLink(uri: '/')}">Home</a></li>
-            <li><a href="#">Nosotros</a></li>
-            <li><a href="#">Contactanos</a></li>
+            <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a></li>
+            <li><a href="#"><g:message code="menu.nosotros" /></a></li>
+            <li><a href="#"><g:message code="menu.contactanos" /></a></li>
           </ul>
           
           <form class="pull-left" action="">
@@ -22,7 +22,7 @@
               <div id="login" class="modal hide fade">
                   <div class="modal-header">
                     <a href="#" class="close">&times;</a>
-                      <h2><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.iniciaSesion" /></small></h2>
+                      <h2><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="login.iniciaSesion" /></small></h2>
                   </div>
                 
                   <div class="modal-body">
@@ -35,13 +35,13 @@
                           </g:if>
                         <fieldset>
                           <div class="clearfix">
-                            <label for="xlInput">usuario</label>
+                            <label for="xlInput"><g:message code="login.username" /></label>
                             <div class="input">
                               <input class="input-large" type="text" placeholder="usuario" name='j_username' id='username' autofocus >
                             </div>
                           </div><!-- /clearfix -->
                           <div class="clearfix">
-                            <label for="xlInput">contrasena</label>
+                            <label for="xlInput"><g:message code="login.password" /></label>
                             <div class="input">
                               <input class="input-large" type="password" placeholder="contrasena" name='j_password' id='password'>
                             </div>
@@ -51,7 +51,7 @@
                         </fieldset>
 
                         <div class="modal-footer">
-                          <button class="btn large primary" type="submit">Entrar</button>
+                          <button class="btn large primary" type="submit"><g:message code="login.entrar" /></button>
                           
                         </div>
                      </form>
@@ -60,25 +60,25 @@
 
               </div>
               
-             <li><a href="${createLink(controller:'usuario', action:'nuevo')}">Registrate</a></li>
+             <li><a href="${createLink(controller:'usuario', action:'nuevo')}"><g:message code="menu.registrate" /></a></li>
               
              <li>
-              <a data-controls-modal="login" data-backdrop="true" data-keyboard="true" class="btn primary large"><g:message code="usuario.iniciaSesion" /></a>
+              <a data-controls-modal="login" data-backdrop="true" data-keyboard="true" class="btn primary large"><g:message code="login.iniciaSesion" /></a>
             </li>
 
             </sec:ifNotLoggedIn>
             
             <sec:ifLoggedIn>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle">Bienvenido <sec:username /></a>
+              <a href="#" class="dropdown-toggle"><g:message code="menu.bienvenido" /> <sec:username /></a>
               <ul class="dropdown-menu">
-                <li><a href="${createLink(controller:'usuario', action:'ver')}">Mi Cuenta</a></li>
-                <li><a href="#">Eventos</a></li>
+                <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="menu.miCuenta" /></a></li>
                 <sec:ifAllGranted roles="ROLE_ADMIN">
-                <li><a href="${createLink(controller:'usuario')}">Usuarios</a></li>
+                    <li><a href="${createLink(controller:'usuario')}"><g:message code="usuario.lista" /></a></li>
+                    <li><a href="${createLink(controller:'tipoEvento')}"><g:message code="tipoEvento.lista" /></a></li>
                 </sec:ifAllGranted>
                 <li class="divider"></li>
-                <li><a href="${createLink(controller:'logout')}">Cerrar sesion</a></li>
+                <li><a href="${createLink(controller:'logout')}"><g:message code="menu.cerrarSesion" /></a></li>
               </ul>
             </li>
             </sec:ifLoggedIn>

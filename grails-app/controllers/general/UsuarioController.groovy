@@ -34,7 +34,6 @@ class UsuarioController {
 
     def crea = {
         Usuario.withTransaction {
-            log.debug "contrasenaa $params.password"
             def contra = params.password
             def usuario = new Usuario(params)
             
@@ -85,6 +84,7 @@ class UsuarioController {
                         flash.message = message(code: 'usuario.creado', args: [usuario.nombreCompleto])
                         redirect(action: "ver", id: usuario.id)
                     }else{
+                        
                         //Cuando un Usuario se registra
                         usuario.password = contra
                         roles2 << Rol.findByAuthority('ROLE_ASISTENTE')
@@ -124,13 +124,13 @@ class UsuarioController {
         }
         
         def usuario = Usuario.get(params.id)
+        
         if (!usuario) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
             redirect(action: "lista")
         }
         else {
             def roles = obtieneListaDeRoles(usuario)
-
             return [usuario: usuario, roles: roles]
         }
     }
