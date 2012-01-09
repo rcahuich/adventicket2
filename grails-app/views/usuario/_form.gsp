@@ -1,5 +1,9 @@
 <%@ page import="general.Usuario" %>
 
+<div class="page-header">
+    <h2>1. <small> <g:message code="usuario.usernameTitulo" /></small></h2>
+</div>
+
 <div class="clearfix ${hasErrors(bean: usuario, field: 'username', 'error')} required">
                   <label for="xlInput">
                     <g:message code="usuario.username" />
@@ -10,15 +14,23 @@
                   </div>
 </div><!-- /clearfix -->
 
+<div class="page-header">
+    <h2>2. <small> <g:message code="usuario.passwordTitulo" /></small></h2>
+</div>
+
 <div class="clearfix ${hasErrors(bean: usuario, field: 'password', 'error')} required">
                   <label for="xlInput">
                     <g:message code="usuario.password" />
                     <span class="required-indicator">*</span>
                   </label>
                   <div class="input">
-                    <input class="xlarge" id="xlInput" name="password" size="30" type="password" required="" placeholder="escribe tu contrasena" value="${usuario?.password}"/>
+                    <input class="xlarge" id="xlInput" name="password" size="30" type="password" required="" placeholder="escribe tu contraseña" value="${usuario?.password}"/>
                   </div>
 </div><!-- /clearfix -->
+
+<div class="page-header">
+    <h2>3. <small> <g:message code="usuario.informacionPersonal" /></small></h2>
+</div>
 
 <div class="clearfix ${hasErrors(bean: usuario, field: 'nombre', 'error')} required">
                   <label for="xlInput">
@@ -58,17 +70,7 @@
                   </div>
 </div><!-- /clearfix -->
 
-<div class="clearfix ${hasErrors(bean: usuario, field: 'correo', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="usuario.correo" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="correo" size="30" type="email" required="" placeholder="escribe tu correo" value="${usuario?.correo}"/>
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="clearfix ${hasErrors(bean: usuarioInstance, field: 'fechaDeNacimiento', 'error')} required">
+<div class="clearfix ${hasErrors(bean: usuario, field: 'fechaDeNacimiento', 'error')} required">
             <label for="mediumSelect">
               <g:message code="usuario.fechaDeNacimiento" />
               <span class="required-indicator">*</span>
@@ -77,6 +79,20 @@
               <g:datePicker class="medium" id="medium" name="fechaDeNacimiento" precision="day"  value="${usuario?.fechaDeNacimiento}"  years="${2007..1940}"/>
             </div>
 </div><!-- /clearfix -->
+
+<div class="clearfix ${hasErrors(bean: usuario, field: 'correo', 'error')} required">
+                  <label for="xlInput">
+                    <g:message code="usuario.correo" />
+                    <span class="required-indicator">*</span>
+                  </label>
+                  <div class="input">
+                    <input class="xlarge" id="xlInput" name="correo" size="30" type="email" required="" placeholder="micorreo@ejemplo.com" value="${usuario?.correo}"/>
+                  </div>
+</div><!-- /clearfix -->
+
+<div class="page-header">
+    <h2>4. <small> <g:message code="usuario.imagenTitulo" /></small></h2>
+</div>
 
 <div class="clearfix ${hasErrors(bean: usuario, field: 'imagenes', 'error')}">
             <label for="fileInput">
@@ -88,6 +104,11 @@
 </div><!-- /clearfix -->
 
 <sec:ifAllGranted roles="ROLE_ADMIN">
+  
+<div class="page-header">
+    <h2>5. <small> <g:message code="usuario.informacionSeguridad" /></small></h2>
+</div>
+
 <div class="clearfix ${hasErrors(bean: usuario, field: 'accountExpired', 'error')}">
             <label for="appendedInput">
               <g:message code="usuario.accountExpired" />

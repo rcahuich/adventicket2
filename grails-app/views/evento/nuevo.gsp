@@ -1,34 +1,35 @@
-<%@ page import="general.Usuario" %>
+<%@ page import="general.Evento" %>
 <!doctype html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<title><g:message code="usuario.nuevaTituloCuenta" /></title>
+		<title><g:message code="evento.nuevo" /></title>
 	</head>
         
 	<body>
           <div class="container">
           
             <div class="hero-unitCuenta">
-            <sec:ifAllGranted roles="ROLE_ADMIN">
+              <sec:ifAllGranted roles="ROLE_ADMIN">
 		<div class="tabs">
-                        <li><g:link class="list" action="lista">Lista de Usuarios</g:link></li>
+                        <li><g:link class="list" action="lista"><g:message code="evento.lista" /></g:link></li>
 		</div>
-            </sec:ifAllGranted>
+              </sec:ifAllGranted>
+
 		
                   <div class="page-header">
-                    <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small></h1>
+                    <h1><g:message code="evento.nuevoTitulo" /><small> <g:message code="evento.nuevo" /></small></h1>
                   </div>      
 
-                              <g:hasErrors bean="${usuario}">
+                              <g:hasErrors bean="${evento}">
 
                               <div class="alert-message block-message error fade in" data-alert="alert" >
                                 <a class="close" href="#">&times;</a>
-                                <g:eachError bean="${usuario}" var="error">
+                                <g:eachError bean="${evento}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
                                 <g:if test="${flash.message}">
-                                    ${flash.message}
+                                    flash ${flash.message}
                                 </g:if>
                                 <g:if test="${error in org.springframework.validation.FieldError}">
                                   data-field-id="${error.field}"
@@ -37,14 +38,14 @@
 
                             </g:hasErrors>
 
-                            <g:form action="crea" enctype="multipart/form-data">
+                            <g:form action="crea" >
                                     <fieldset>
                                             
                                             <g:render template="form"/>
                                             
                                             <div class="input">
                                               <fieldset class="buttones">
-                                                <g:submitButton name="create" class="nuevo" value="${message(code: 'usuario.crearMiCuenta')}" />
+                                                <g:submitButton name="create" class="nuevo" value="${message(code: 'evento.nuevoCrea')}" />
                                               </fieldset>
                                             </div>
                                     </fieldset>

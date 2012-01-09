@@ -51,8 +51,14 @@
                         </fieldset>
 
                         <div class="modal-footer">
-                          <button class="btn large primary" type="submit"><g:message code="login.entrar" /></button>
+                          <div style="float: left; margin-top: 3px;">
+                            <div style="margin-bottom: 6px;">
+                            <g:message code="login.registrate" /><a href="${createLink(controller:'usuario', action:'nuevo')}">  <g:message code="menu.registrate" /></a>
+                            </div>
+                            <a href="">  <g:message code="login.recuperarPass" /></a>
+                          </div>
                           
+                          <button class="btn large primary" type="submit"><g:message code="login.entrar" /></button>
                         </div>
                      </form>
                   </div>
@@ -75,6 +81,7 @@
                 <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="menu.miCuenta" /></a></li>
                 <sec:ifAllGranted roles="ROLE_ADMIN">
                     <li><a href="${createLink(controller:'usuario')}"><g:message code="usuario.lista" /></a></li>
+                    <li><a href="${createLink(controller:'evento')}"><g:message code="evento.lista" /></a></li>
                     <li><a href="${createLink(controller:'tipoEvento')}"><g:message code="tipoEvento.lista" /></a></li>
                 </sec:ifAllGranted>
                 <li class="divider"></li>

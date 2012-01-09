@@ -38,7 +38,6 @@ class UsuarioController {
             def usuario = new Usuario(params)
             
             if (usuario.save(flush: true)) {
-                
                 def roles = asignaRoles(params)
                 def roles2 = [] as Set
                 
@@ -113,6 +112,25 @@ class UsuarioController {
                 log.error("Hubo un error al crear el usuario ${usuario.errors}")
                 render(view: "nuevo", model: [usuario: usuario])
             }
+        }
+    }
+    
+    @Secured(['ROLE_USER'])
+    def vericaRegistro = {
+        
+        if(params.id == null){
+            params.id = springSecurityService.principal.id
+        }
+        
+        def usuario = Usuario.get(params.id)
+        
+        if (!usuario) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
+            redirect(action: "lista")
+        }
+        else {
+            def roles = obtieneListaDeRoles(usuario)
+            return [usuario: usuario, roles: roles]
         }
     }
     
@@ -276,6 +294,8 @@ class UsuarioController {
         return roles
     }
     
+    
+       
     //Foto
     @Secured(['ROLE_USER'])
     def imagen = {

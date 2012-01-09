@@ -32,7 +32,7 @@
         <h1>Bienvenidos!</h1>
         <p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
 
-	<p><a class="btn primary large">Entra &raquo;</a> o <a class="btn primary large">Registrate &raquo;</a></p>
+        <p><a href="${createLink(controller:'evento', action:'nuevo')}" class="btn primary large">Crea tu Evento! &raquo;</a></p>
         </div>
       
 

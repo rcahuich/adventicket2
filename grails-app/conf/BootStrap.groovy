@@ -19,6 +19,7 @@ class BootStrap {
             admin = new Usuario(
                 username:'admin',
                 password:'admin',
+                password2:'admin00',
                 nombre: 'Ruben A.',
                 apellidoPaterno: 'Cahuich',
                 apellidoMaterno: '',

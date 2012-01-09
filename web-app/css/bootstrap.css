@@ -136,7 +136,6 @@ img {
 
 button,
 input,
-select,
 textarea {
   font-size: 100%;
   margin: 0;
@@ -407,7 +406,7 @@ p {
 }
 p small {
   font-size: 11px;
-  color: #bfbfbf;
+  color: #707070;
 }
 h1,
 h2,
@@ -416,7 +415,7 @@ h4,
 h5,
 h6 {
   font-weight: bold;
-  color: #404040;
+  color: #2B2B2B;
 }
 h1 small,
 h2 small,
@@ -424,7 +423,7 @@ h3 small,
 h4 small,
 h5 small,
 h6 small {
-  color: #bfbfbf;
+  color: #707070;
 }
 h1 {
   margin-bottom: 18px;
@@ -611,7 +610,6 @@ form .clearfix:after {
 }
 label,
 input,
-select,
 textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
@@ -635,7 +633,6 @@ input[type=checkbox], input[type=radio] {
 }
 input,
 textarea,
-select,
 .uneditable-input {
   display: inline-block;
   width: 210px;
@@ -649,9 +646,7 @@ select,
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-select {
-  padding: initial;
-}
+
 input[type=checkbox], input[type=radio] {
   width: auto;
   height: auto;
@@ -676,7 +671,7 @@ input[type=button], input[type=reset], input[type=submit] {
   width: auto;
   height: auto;
 }
-select, input[type=file] {
+input[type=file] {
   height: 27px;
   *height: auto;
   line-height: 27px;
@@ -684,10 +679,7 @@ select, input[type=file] {
   /* For IE7, add top margin to align select with labels */
 
 }
-select[multiple] {
-  height: inherit;
-  background-color: #ffffff;
-}
+
 textarea {
   height: auto;
 }
@@ -723,7 +715,7 @@ input:focus, textarea:focus {
   -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
 }
-input[type=file]:focus, input[type=checkbox]:focus, select:focus {
+input[type=file]:focus, input[type=checkbox]:focus {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -785,38 +777,32 @@ form .clearfix.success .input-prepend .add-on, form .clearfix.success .input-app
 }
 .input-mini,
 input.mini,
-textarea.mini,
-select.mini {
+textarea.mini {
   width: 40px;
 }
 .input-small,
 input.small,
-textarea.small,
-select.small {
+textarea.small{
   width: 90px;
 }
 .input-medium,
 input.medium,
-textarea.medium,
-select.medium {
+textarea.medium{
   width: 150px;
 }
 .input-large,
 input.large,
-textarea.large,
-select.large {
+textarea.large {
   width: 210px;
 }
 .input-xlarge,
 input.xlarge,
-textarea.xlarge,
-select.xlarge {
+textarea.xlarge{
   width: 270px;
 }
 .input-xxlarge,
 input.xxlarge,
-textarea.xxlarge,
-select.xxlarge {
+textarea.xxlarge{
   width: 530px;
 }
 textarea.xxlarge {
@@ -919,10 +905,8 @@ input.span16, textarea.span16 {
   margin-left: 0;
 }
 input[disabled],
-select[disabled],
 textarea[disabled],
 input[readonly],
-select[readonly],
 textarea[readonly] {
   background-color: #f5f5f5;
   border-color: #ddd;
@@ -2348,6 +2332,7 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
   float: right;
   margin-left: 5px;
 }
+
 .modal .popover, .modal .twipsy {
   z-index: 12000;
 }

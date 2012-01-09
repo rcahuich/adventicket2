@@ -38,9 +38,16 @@
                           </fieldset>
 
                         <div class="modal-footer">
+                          <div style="float: left; margin-top: 3px;">
+                            <div style="margin-bottom: 6px;">
+                            <g:message code="login.registrate" /><a href="${createLink(controller:'usuario', action:'nuevo')}">  <g:message code="menu.registrate" /></a>
+                            </div>
+                            <a href="">  <g:message code="login.recuperarPass" /></a>
+                          </div>
+                        
                           <button class="btn large primary" type="submit"><g:message code="login.entrar" /></button>
-                          
                         </div>
+                       
                      </form>
                   </div>
                 

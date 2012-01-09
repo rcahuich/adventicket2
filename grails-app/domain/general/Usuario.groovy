@@ -20,10 +20,10 @@ class Usuario {
         //Foto
         Set imagenes
         //Eventos
-        //Set evento
+        Set evento
         
         static transients = ['nombreCompleto']
-        static hasMany = [imagenes: Imagen, eventos: Evento]
+        static hasMany = [imagenes: Imagen, evento: Evento]
 
 	static constraints = {
 		username blank: false, unique: true
@@ -33,6 +33,7 @@ class Usuario {
                 apellidoMaterno blank: true, maxSize: 64
                 sexo inList: ["Femenino", "Masculino"]
                 correo   blank: false, maxSize: 128, email:true
+                
 	}
 
 	static mapping = {
