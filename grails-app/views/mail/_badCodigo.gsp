@@ -1,6 +1,6 @@
 <head>
 <meta name='layout' content='main' />
-<title><g:message code="acceso.restringido" /></title>
+<title><g:message code="usuario.badCodigo" /></title>
 </head>
 
 <body >
@@ -11,7 +11,7 @@
             <br>
             <br>
             <br>
-          <p><strong><g:message code="acceso.restringido" /></strong>.</p>
+          <p><strong><g:message code="usuario.badCodigo" /></strong>.</p>
             <br>
             <br>
             <br>

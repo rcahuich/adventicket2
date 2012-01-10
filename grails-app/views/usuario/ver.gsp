@@ -46,7 +46,7 @@
                                 <div class="message" ></div>
                                 <div class="alert-message success fade in" data-alert="alert" role="status">
                                   <a class="close" href="#">&times;</a>
-                                  <p><strong>Muy bien! </strong>${flash.message}</p>
+                                  <p><strong>Muy bien! </strong><br/>${flash.message}</p>
                                 </div>
                                </g:if>
                                

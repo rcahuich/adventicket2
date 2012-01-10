@@ -87,6 +87,9 @@
                   </label>
                   <div class="input">
                     <input class="xlarge" id="xlInput" name="correo" size="30" type="email" required="" placeholder="micorreo@ejemplo.com" value="${usuario?.correo}"/>
+                    <span class="help-block">
+                      <strong><g:message code="usuario.correoImportante" /></strong> <g:message code="usuario.correoNota" />
+                    </span>
                   </div>
 </div><!-- /clearfix -->
 

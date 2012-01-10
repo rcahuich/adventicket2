@@ -15,6 +15,14 @@ class UsuarioController {
     def index = {
         redirect(action: "lista", params: params)
     }
+    
+    def correoSend = {
+        log.debug "Mostrando vista de correo enviado"
+    }
+    
+    def badCodigo = {
+        log.debug "Mostrando vista de correo incorrecto"
+    }
 
     @Secured(['ROLE_ADMIN'])
     def lista = {
@@ -36,6 +44,8 @@ class UsuarioController {
         Usuario.withTransaction {
             def contra = params.password
             def usuario = new Usuario(params)
+            //Cuenta bloqueda hasta que verifique su Cuenta
+            usuario.accountLocked = true
             
             if (usuario.save(flush: true)) {
                 def roles = asignaRoles(params)
@@ -51,7 +61,7 @@ class UsuarioController {
                         , tamano : archivo.size
                         , archivo : f
                     )
-                    log.debug "Mostrando imagen ${imagen.nombre}"
+                    //log.debug "Mostrando imagen ${imagen.nombre}"
                     if (usuario.imagenes) {
                         usuario.imagenes?.clear()
                     } else {
@@ -61,52 +71,23 @@ class UsuarioController {
                     usuario.save()
                 }
                 
-                
-                //Cuando el Administrador registra al Usuario
-                if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
-                    usuario.password = contra
-                        for(rol in roles) {
-                            UsuarioRol.create(usuario, rol, false)
-                        }
-                        //Envio de e-mail
-                        try {
-                                sendMail {
-                                    to      "${usuario.correo}"
-                                    subject "Bienvenido a AdvenTicket"
-                                    html    g.render(template:'/mail/envioRegistroAdministrador', model:[usuario:usuario])
-                                }
-                                    flash.message = message(code: 'usuario.creadoMail', args: [usuario.username, usuario.correo])
-                                } catch(Exception e) {
-                                    log.error "Problema al enviar el mail = $e.message", e
-                                    flash.message = message(code: 'usuario.creadoNoMail', args: [usuario.username, usuario.correo])
-                            }
-                        flash.message = message(code: 'usuario.creado', args: [usuario.nombreCompleto])
-                        redirect(action: "ver", id: usuario.id)
-                    }else{
-                        
-                        //Cuando un Usuario se registra
-                        usuario.password = contra
-                        roles2 << Rol.findByAuthority('ROLE_ASISTENTE')
-                        for(rol in roles2) {
-                            UsuarioRol.create(usuario, rol, false)
-                        }
-                        //Envio de e-mail
-                        try {
-                                sendMail {
-                                    to      "${usuario.correo}"
-                                    subject "Bienvenido a AdvenTicket"
-                                    html    g.render(template:'/mail/envioRegistroAsistente', model:[usuario:usuario])
-                                }
-                                flash.message = message(code: 'usuario.registradoMail', args: [usuario.username, usuario.correo])
-                                } catch(Exception e) {
-                                    log.error "Problema al enviar el mail = $e.message", e
-                                    flash.message = message(code: 'usuario.registradoNoMail', args: [usuario.username, usuario.correo])
-                            }
-                        springSecurityService.reauthenticate(usuario.username)
-                        //flash.message = message(code: 'usuario.registrado', args: [usuario.username])
-                        redirect(action: "ver", id: usuario.id)
+             def codigoRegistracion = new CodigoRegistracion(username: usuario.username).save()
+             String url = generateLink('vericaRegistro', [t: codigoRegistracion.token])
+             
+             try{
+                sendMail {
+                           to      "${usuario.correo}"
+                           subject "Nueva Cuenta en AdvenTicket"
+                           html    g.render(template:'/mail/envioDeConfirmacionCuenta', model:[usuario:usuario, url: url])
                     }
-
+                    
+             } catch(Exception e) {
+                 log.debug "entro a la exepcion"
+                                    log.error "Problema al enviar el mail = $e.message", e
+                                    flash.error = message(code: 'usuario.creadoNoMail', args: [usuario.correo])
+                                    redirect(uri: "/usuario/nuevo")
+                            }
+               redirect(uri: "/usuario/correoSend") 
                 
             } else {
                 log.error("Hubo un error al crear el usuario ${usuario.errors}")
@@ -115,23 +96,52 @@ class UsuarioController {
         }
     }
     
-    @Secured(['ROLE_USER'])
     def vericaRegistro = {
         
-        if(params.id == null){
-            params.id = springSecurityService.principal.id
+        String token = params.t
+        def codigoRegistro = token ? CodigoRegistracion.findByToken(token) : null
+        if (!codigoRegistro) {
+			redirect uri: "/usuario/badCodigo"
+			return
+		}
+                
+        def usuario
+        CodigoRegistracion.withTransaction {
+            
+                usuario = Usuario.findByUsername(codigoRegistro.username)
+                if (!usuario) {
+                        return
+                }
+                
+                usuario.accountLocked = false
+                usuario.save()
+                def roles2 = [] as Set
+                roles2 << Rol.findByAuthority('ROLE_ASISTENTE')
+                for(rol in roles2) {
+                    UsuarioRol.create(usuario, rol, false)
+                }
+                sendMail {
+                    to      "${usuario.correo}"
+                    subject "Bienvenido a AdvenTicket"
+                    html    g.render(template:'/mail/envioRegistroAsistente', model:[usuario:usuario])
+                }
+                
+                codigoRegistro.delete()
         }
-        
-        def usuario = Usuario.get(params.id)
-        
+       
         if (!usuario) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
-            redirect(action: "lista")
-        }
-        else {
-            def roles = obtieneListaDeRoles(usuario)
-            return [usuario: usuario, roles: roles]
-        }
+			redirect uri: "/usuario/badCodigo"
+			return
+		}
+                
+        springSecurityService.reauthenticate usuario.username
+        flash.message = message(code: 'usuario.cuentaValida')
+        redirect(action: "ver", id: usuario.id)
+                    
+    }
+    
+    protected String generateLink(String action, linkParams) {
+		createLink(base: "$request.scheme://$request.serverName:$request.serverPort$request.contextPath", controller: 'usuario', action: action, params: linkParams)
     }
     
     @Secured(['ROLE_USER'])

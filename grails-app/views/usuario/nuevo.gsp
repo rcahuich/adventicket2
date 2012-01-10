@@ -27,6 +27,9 @@
                                 <g:eachError bean="${usuario}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
+                                <g:if test="${flash.error}">
+                                    ${flash.error}
+                                </g:if>
                                 <g:if test="${flash.message}">
                                     ${flash.message}
                                 </g:if>
