@@ -55,7 +55,7 @@
                             <div style="margin-bottom: 6px;">
                             <g:message code="login.registrate" /><a href="${createLink(controller:'usuario', action:'nuevo')}">  <g:message code="menu.registrate" /></a>
                             </div>
-                            <a href="">  <g:message code="login.recuperarPass" /></a>
+                            <a href="${createLink(controller:'usuario', action:'olvidePassword')}">  <g:message code="login.recuperarPass" /></a>
                           </div>
                           
                           <button class="btn large primary" type="submit"><g:message code="login.entrar" /></button>

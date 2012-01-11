@@ -26,7 +26,14 @@
 	
 
     <div class="container">
-
+          <g:if test='${flash.message}'>
+            <div class="alert-message error" data-alert="alert">
+              <a class="close" href="#">&times;</a>
+              <center>
+              <p>${flash.message}</p>
+              </center>
+            </div>
+          </g:if>
       <!-- Contenedor Principal -->
       <div class="hero-unit">
         <h1>Bienvenidos!</h1>

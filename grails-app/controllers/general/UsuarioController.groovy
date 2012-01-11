@@ -8,7 +8,7 @@ import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 class UsuarioController {
 
     def springSecurityService
-
+    static transactional = true
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
     @Secured(['ROLE_ADMIN'])
@@ -77,7 +77,7 @@ class UsuarioController {
              try{
                 sendMail {
                            to      "${usuario.correo}"
-                           subject "Nueva Cuenta en AdvenTicket"
+                           subject "Nueva Cuenta - AdvenTicket"
                            html    g.render(template:'/mail/envioDeConfirmacionCuenta', model:[usuario:usuario, url: url])
                     }
                     
@@ -96,12 +96,16 @@ class UsuarioController {
         }
     }
     
+//    Usuario userInicial(Usuario usuario ) {
+//        
+//    }
+    
     def vericaRegistro = {
         
         String token = params.t
         def codigoRegistro = token ? CodigoRegistracion.findByToken(token) : null
         if (!codigoRegistro) {
-			redirect uri: "/usuario/badCodigo"
+			redirect uri: "/mail/badCodigo"
 			return
 		}
                 
@@ -138,10 +142,6 @@ class UsuarioController {
         flash.message = message(code: 'usuario.cuentaValida')
         redirect(action: "ver", id: usuario.id)
                     
-    }
-    
-    protected String generateLink(String action, linkParams) {
-		createLink(base: "$request.scheme://$request.serverName:$request.serverPort$request.contextPath", controller: 'usuario', action: action, params: linkParams)
     }
     
     @Secured(['ROLE_USER'])
@@ -230,7 +230,80 @@ class UsuarioController {
             }
         }
     }
+    
+    def olvidePassword = {
+        log.debug "Recuperar contrasena"
+        
+        String correo = params.correo
+        if (!correo) {
+			flash.error = message(code: 'usuario.correoNo')
+			return
+		}
+                
+        def usuario = Usuario.findByCorreo(correo)
+        if (!usuario) {
+			flash.error = message(code: 'usuario.correoNoUsuario')
+			return
+		}
+                
+        def codigoRegistracion = new CodigoRegistracion(username: usuario.username).save()
+        String url = generateLink('cambioPassword', [t: codigoRegistracion.token])
+        
+        sendMail {
+                   to      "${usuario.correo}"
+                   subject "Recuperar contraseña - AdvenTicket"
+                   html    g.render(template:'/mail/recuperarContrasena', model:[usuario:usuario, url: url])
+             }
+             
+        [emailSent: true]
+        
+    }
+    
+    def cambioPassword = {
+        String token = params.t
+        return [token: token]
+    }
+    
+    def nuevoPassword = {
+       
+        String token = params.t
+        String password = params.password
+        String password2 = params.password2
+            
+        def codigoRegistro = token ? CodigoRegistracion.findByToken(token) : null
+        
+        if (!codigoRegistro) {
+            flash.message = message(code: 'usuario.badCodigo')
+            redirect uri: "/"
+            return
+        }
 
+        if (password != password2) {
+            flash.message = message(code: 'usuario.passDiferentes')
+            redirect(action: cambioPassword, params: [t: token])
+            return
+        }
+        
+        Usuario usuario
+        CodigoRegistracion.withTransaction {
+            
+            usuario = Usuario.findByUsername(codigoRegistro.username)
+            
+            if (!usuario) {
+                return
+            }
+            
+            usuario.password = springSecurityService.encodePassword(password)
+            usuario.save()
+            codigoRegistro.delete()
+                      
+            springSecurityService.reauthenticate usuario.username
+            flash.message = message(code: 'usuario.passActualizo')
+            redirect(action: "ver", id: usuario.id)
+        }
+        
+    }
+    
     def elimina = {
         def usuario = Usuario.get(params.id)
         if (usuario) {
@@ -304,8 +377,6 @@ class UsuarioController {
         return roles
     }
     
-    
-       
     //Foto
     @Secured(['ROLE_USER'])
     def imagen = {
@@ -340,4 +411,9 @@ class UsuarioController {
             log.error("No se pudo obtener la imagen", e)
         }
     }
+    
+    protected String generateLink(String action, linkParams) {
+		createLink(base: "$request.scheme://$request.serverName:$request.serverPort$request.contextPath", controller: 'usuario', action: action, params: linkParams)
+    }
+    
 }
