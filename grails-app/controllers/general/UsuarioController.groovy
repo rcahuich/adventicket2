@@ -8,7 +8,6 @@ import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 class UsuarioController {
 
     def springSecurityService
-    static transactional = true
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
     @Secured(['ROLE_ADMIN'])
@@ -20,8 +19,8 @@ class UsuarioController {
         log.debug "Mostrando vista de correo enviado"
     }
     
-    def badCodigo = {
-        log.debug "Mostrando vista de correo incorrecto"
+    def correoSendRecupera = {
+        log.debug "Mostrando vista de correo enviado de recuperacion de contrasena"
     }
 
     @Secured(['ROLE_ADMIN'])
@@ -29,7 +28,6 @@ class UsuarioController {
             params.max = Math.min(params.max ? params.int('max') : 10, 100)
             [usuarios: Usuario.list(params), totalDeUsuarios: Usuario.count()]
     }
-
     
     def nuevo = {
         def usuario = new Usuario()
@@ -41,8 +39,21 @@ class UsuarioController {
     }
 
     def crea = {
+        
+        log.debug "Params : $params"
+        
+        
         Usuario.withTransaction {
-            def contra = params.password
+            
+            String password = params.password
+            String password2 = params.passwordDos
+
+            if (password != password2) {
+                flash.message = message(code: 'usuario.passDiferentes')
+                redirect(action: nuevo)
+                return
+            }
+            
             def usuario = new Usuario(params)
             //Cuenta bloqueda hasta que verifique su Cuenta
             usuario.accountLocked = true
@@ -87,7 +98,7 @@ class UsuarioController {
                                     flash.error = message(code: 'usuario.creadoNoMail', args: [usuario.correo])
                                     redirect(uri: "/usuario/nuevo")
                             }
-               redirect(uri: "/usuario/correoSend") 
+               redirect(uri: "/usuario/correoSend")
                 
             } else {
                 log.error("Hubo un error al crear el usuario ${usuario.errors}")
@@ -96,19 +107,17 @@ class UsuarioController {
         }
     }
     
-//    Usuario userInicial(Usuario usuario ) {
-//        
-//    }
-    
+   
     def vericaRegistro = {
         
         String token = params.t
         def codigoRegistro = token ? CodigoRegistracion.findByToken(token) : null
         if (!codigoRegistro) {
-			redirect uri: "/mail/badCodigo"
-			return
-		}
-                
+            flash.message = message(code: 'usuario.badCodigo')
+            redirect uri: "/"
+            return
+        }
+        
         def usuario
         CodigoRegistracion.withTransaction {
             
@@ -198,6 +207,37 @@ class UsuarioController {
                 }
                 params.remove('password')
                 usuario.properties = params
+                
+                //Su foto
+//                def archivo = request.getFile('imagen')
+//                
+//                def foto
+//                for(x in usuario?.imagenes) {
+//                    foto = x
+//                    break;
+//                }
+//                
+//                log.debug "Imagen del usuario $foto"
+//                if(foto == null){
+//                    if (!archivo.empty) {
+//                        byte[] f = archivo.bytes
+//                        def imagen = new Imagen(
+//                            nombre : archivo.originalFilename
+//                            , tipoContenido : archivo.contentType
+//                            , tamano : archivo.size
+//                            , archivo : f
+//                        )
+//                        log.debug "Mostrando imagen ${imagen.nombre}"
+////                        if (usuario.imagenes) {
+////                            usuario.imagenes?.clear()
+////                        } else {
+////                            usuario.imagenes = []
+////                        }
+//                        usuario.imagenes = []
+//                        usuario.imagenes << imagen
+//                    }
+//                }
+                
 
                 if (!usuario.hasErrors() && usuario.save(flush: true)) {
                     
@@ -231,18 +271,25 @@ class UsuarioController {
         }
     }
     
+    
     def olvidePassword = {
         log.debug "Recuperar contrasena"
+    }
+    
+    def recuperaPassword = {
         
         String correo = params.correo
         if (!correo) {
-			flash.error = message(code: 'usuario.correoNo')
-			return
+			flash.message = message(code: 'usuario.correoNo')
+			redirect action: "olvidePassword"
+                        return
 		}
                 
-        def usuario = Usuario.findByCorreo(correo)
-        if (!usuario) {
-			flash.error = message(code: 'usuario.correoNoUsuario')
+        Usuario usuario = Usuario.findByCorreo(correo)
+        
+        if (!usuario || usuario.accountLocked == true) {
+			flash.message = message(code: 'usuario.correoNoUsuario')
+			redirect action: "olvidePassword"
 			return
 		}
                 
@@ -255,7 +302,7 @@ class UsuarioController {
                    html    g.render(template:'/mail/recuperarContrasena', model:[usuario:usuario, url: url])
              }
              
-        [emailSent: true]
+        redirect(uri: "/usuario/correoSendRecupera")
         
     }
     
@@ -293,15 +340,52 @@ class UsuarioController {
                 return
             }
             
-            usuario.password = springSecurityService.encodePassword(password)
+            usuario.password = password
             usuario.save()
             codigoRegistro.delete()
-                      
+            
             springSecurityService.reauthenticate usuario.username
             flash.message = message(code: 'usuario.passActualizo')
             redirect(action: "ver", id: usuario.id)
         }
         
+    }
+    
+    def updatePass = {
+
+    }
+    
+    def updatePassword = {
+       
+       String password = params.passwordActual
+       String newPassword = params.password
+       String newPassword2 = params.password2
+       if (!password || !newPassword || !newPassword2 || newPassword != newPassword2) {
+          flash.message = message(code: 'usuario.introduzcaPassword')
+          redirect(action: updatePass)
+          return
+       }
+       
+       def principal = springSecurityService.principal
+       String username = principal.username
+       Usuario usuario = Usuario.findByUsername(username)
+       if (!springSecurityService.passwordEncoder.isPasswordValid(usuario.password, password, null /*salt*/)) {
+          flash.message = message(code: 'usuario.passActualIncorrecto')
+          redirect(action: updatePass)
+          return
+       }
+
+       if (springSecurityService.passwordEncoder.isPasswordValid(usuario.password, newPassword, null /*salt*/)) {
+          flash.message = message(code: 'usuario.passDiferenteActual')
+          redirect(action: updatePass)
+          return
+       }
+       
+       usuario.password = newPassword
+       usuario.save() // if you have password constraints check them here
+
+       flash.message = message(code: 'usuario.passActualizo')
+       redirect(action: "ver", id: usuario.id)
     }
     
     def elimina = {

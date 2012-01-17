@@ -12,7 +12,7 @@
             <br>
             <img src="${resource(dir: 'images', file: 'correcto.jpg')}" alt="" title="" width="140" height="160" border="0"/>
             <br>
-            <p><strong><g:message code="usuario.correoEnviadoRegistro" /></strong>.</p>
+            <p><strong><g:message code='usuario.correoEnviado'/></strong>.</p>
             <br>
             <br>
             <br>

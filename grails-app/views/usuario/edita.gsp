@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<title><g:message code="usuario.nuevo" /></title>
+		<title><g:message code="usuario.actualizaTitulo" /></title>
 	</head>
         
 	<body>
@@ -26,7 +26,10 @@
             <div class="hero-unitCuenta">
               
                               <div class="page-header">
-                                    <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small></h1>
+                                <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small>
+                                    <a href="${createLink(controller:'usuario', action:'updatePass')}" class="btn small primary" style="float: right; padding-top: 10px;">Cambiar mi contraseña</a>
+                                </h1>
+                                    
                               </div>  
             
 		
@@ -50,7 +53,7 @@
 
                             <g:form method="post" enctype="multipart/form-data">
                                     <fieldset>
-                                      <g:render template="form"/>
+                                      <g:render template="form_edita"/>
                                             
                                       <div class="input">
                                         <fieldset class="buttones">

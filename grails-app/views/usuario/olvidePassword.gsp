@@ -15,24 +15,14 @@
                 
                   <div class="modal-body">
                     
-                     <form action="olvidePassword" autocomplete='off' >
-                       
-                          
-                       
-                       <g:if test='${emailSent}'>
-                        <br/>
-                        <h4>
-                          <center>
-                        <g:message code='usuario.correoEnviado'/>
-                          </center>
-                        </h4>
-                       </g:if>
-                       
-                       <g:else>
-                         
+                     <form action="recuperaPassword" autocomplete='off' >
+         
                       <small><g:message code="usuario.olvidoPassInst" /></small>
                       
-                         <g:if test='${flash.message}'>
+                      <br>
+                      <br>
+                      
+                           <g:if test='${flash.message}'>
                             <div class="alert-message block-message error fade in" data-alert="alert">
                               <a class="close" href="#">&times;</a>
                               <center>
@@ -40,6 +30,7 @@
                               </center>
                             </div>
                           </g:if>
+                      
                           <fieldset>
                             
                             <div class="clearfix">
@@ -54,7 +45,6 @@
                         <div class="modal-footer">
                           <button class="btn large primary" type="submit"><g:message code="usuario.olvidePassEnviar" /></button>
                         </div>
-                       </g:else>
                      </form>
                   </div>
                 

@@ -40,4 +40,9 @@ class ImagenController {
             throw new RuntimeException('No se encontro la imagen')
         }
     }
+    
+    def update = {
+        def imagen = Imagen.get(params.id)
+        
+    }
 }

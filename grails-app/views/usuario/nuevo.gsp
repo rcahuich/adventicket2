@@ -19,26 +19,36 @@
                   <div class="page-header">
                     <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small></h1>
                   </div>      
-
-                              <g:hasErrors bean="${usuario}">
-
+                                
+              
+              
+                            <g:if test="${flash.message}">
                               <div class="alert-message block-message error fade in" data-alert="alert" >
                                 <a class="close" href="#">&times;</a>
-                                <g:eachError bean="${usuario}" var="error">
-                                  <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
-                                </g:eachError>
-                                <g:if test="${flash.error}">
-                                    ${flash.error}
-                                </g:if>
-                                <g:if test="${flash.message}">
-                                    ${flash.message}
-                                </g:if>
-                                <g:if test="${error in org.springframework.validation.FieldError}">
-                                  data-field-id="${error.field}"
-                                </g:if>
+                                    <p><strong>Ups... ha ocurrido un error. </strong> ${flash.message}</p>
                               </div>
-
-                            </g:hasErrors>
+                             </g:if>
+              
+                          <g:hasErrors bean="${usuario}">
+                              <div class="alert-message block-message error fade in" data-alert="alert" >
+                                
+                                <a class="close" href="#">&times;</a>
+                                
+                                  <g:eachError bean="${usuario}" var="error">
+                                    <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
+                                  </g:eachError>
+                                
+                                <g:if test="${flash.error}">
+                                  <p><strong>Ups... ha ocurrido un error. </strong> ${flash.error}</p>
+                                </g:if>
+                                
+                                
+                                <g:if test="${error in org.springframework.validation.FieldError}">
+                                  <p><strong>Ups... ha ocurrido un error. </strong> data-field-id="${error.field}"</p>
+                                </g:if>
+                                
+                              </div>
+                           </g:hasErrors>
 
                             <g:form action="crea" enctype="multipart/form-data">
                                     <fieldset>

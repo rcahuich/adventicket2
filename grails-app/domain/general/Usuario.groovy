@@ -26,8 +26,10 @@ class Usuario {
         static hasMany = [imagenes: Imagen, evento: Evento]
 
 	static constraints = {
-		username blank: false, unique: true
-		password blank: false
+		username blank: false, unique: true, validator: { val, obj ->
+                                                                obj.password == val ? 'userPassError' : true
+                                                            }
+                password blank: false
                 nombre   blank: false, maxSize: 64
                 apellidoPaterno blank: false, maxSize: 64
                 apellidoMaterno blank: true, maxSize: 64
@@ -38,7 +40,7 @@ class Usuario {
 
 	static mapping = {
                 table 'usuarios'
-		password column: '`password`'
+                password column: '`password`'
                 imagenes cascade:'all-delete-orphan'
 	}
 
@@ -67,25 +69,6 @@ class Usuario {
                 return "$nombre $apellidoPaterno $apellidoMaterno"
             }
         }
-        
-        static final passwordValidator = { String password, obj ->
-		if (obj.username && obj.username.equals(password)) {
-			return 'command.password.error.username'
-		}
-
-		if (password && password.length() >= 8 && password.length() <= 64 &&
-				(!password.matches('^.*\\p{Alpha}.*$') ||
-				!password.matches('^.*\\p{Digit}.*$') ||
-				!password.matches('^.*[!@#$%^&].*$'))) {
-			return 'command.password.error.strength'
-		}
-	}
-
-	static final password2Validator = { value, command ->
-		if (command.password != command.password2) {
-			return 'command.password2.error.mismatch'
-		}
-	}
         
         String toString() {
             return nombreCompleto

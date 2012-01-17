@@ -18,12 +18,11 @@ class BootStrap {
         if (!admin) {
             admin = new Usuario(
                 username:'admin',
-                password:'admin',
-                password2:'admin00',
+                password:'admin00',
                 nombre: 'Ruben A.',
                 apellidoPaterno: 'Cahuich',
                 apellidoMaterno: '',
-                fechaDeNacimiento: '07/12/2011',
+                fechaDeNacimiento: '07/10/2011',
                 sexo: 'Masculino',
                 correo: 'rcc@um.edu.mx'
             )
