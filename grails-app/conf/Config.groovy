@@ -122,3 +122,4 @@ grails.plugins.springsecurity.roleHierarchy = '''
    ROLE_EVENTO > ROLE_ASISTENTE
    ROLE_ASISTENTE > ROLE_USER
 '''
+

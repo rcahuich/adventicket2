@@ -21,6 +21,8 @@ class Usuario {
         Set imagenes
         //Eventos
         Set evento
+        boolean asistir = false
+        boolean talVez = false
         
         static transients = ['nombreCompleto']
         static hasMany = [imagenes: Imagen, evento: Evento]

@@ -9,12 +9,18 @@
 	<body>
           <div class="container">
           
-            <div class="hero-unitCuenta">
             <sec:ifAllGranted roles="ROLE_ADMIN">
-		<div class="tabs">
-                        <li><g:link class="list" action="lista">Lista de Usuarios</g:link></li>
-		</div>
+		<div class="span16">
+                            <ul class="breadcrumb">
+                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                              <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
+                              <li><a href="${createLink(controller: 'usuario', action:'lista')}"><g:message code="usuario.lista" /></a> <span class="divider">/</span></li>
+                              <li class="active"><g:message code="usuario.nuevo" /></li>
+                            </ul>
+                </div>
             </sec:ifAllGranted>
+            
+            <div class="hero-unitCuenta">
 		
                   <div class="page-header">
                     <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small></h1>

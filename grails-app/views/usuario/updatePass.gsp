@@ -53,7 +53,12 @@
                           </fieldset>
 
                         <div class="modal-footer">
+                          <div >
+                          
+                            
+                          </div>
                           <button class="btn large primary" type="submit"><g:message code="usuario.passNewActualizar" /></button>
+                          <button style="margin-top: 9px;"  class="btn"><a href="${createLink(controller:'usuario', action:'ver')}">  <g:message code="usuario.canelar" /></a></button>
                         </div>
                        
                      </form>

@@ -2,6 +2,7 @@
 
     <div class="topbar" data-dropdown="dropdown" >
       <div class="topbar-inner">
+        
         <div class="container">
           
           <a href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'logo1.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/></a>
@@ -80,9 +81,7 @@
               <ul class="dropdown-menu">
                 <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="menu.miCuenta" /></a></li>
                 <sec:ifAllGranted roles="ROLE_ADMIN">
-                    <li><a href="${createLink(controller:'usuario')}"><g:message code="usuario.lista" /></a></li>
-                    <li><a href="${createLink(controller:'evento')}"><g:message code="evento.lista" /></a></li>
-                    <li><a href="${createLink(controller:'tipoEvento')}"><g:message code="tipoEvento.lista" /></a></li>
+                    <li><a href="${createLink(controller:'admin', action:'admin')}"><g:message code="admin.inicio" /></a></li>
                 </sec:ifAllGranted>
                 <li class="divider"></li>
                 <li><a href="${createLink(controller:'logout')}"><g:message code="menu.cerrarSesion" /></a></li>

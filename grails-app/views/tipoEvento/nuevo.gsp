@@ -8,12 +8,17 @@
         
 	<body>
           <div class="container">
-          
+                  <sec:ifAllGranted roles="ROLE_ADMIN">
+		<div class="span16">
+                            <ul class="breadcrumb">
+                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                              <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
+                              <li><a href="${createLink(controller: 'tipoEvento', action:'lista')}"><g:message code="tipoEvento.lista" /></a> <span class="divider">/</span></li>
+                              <li class="active"><g:message code="tipoEvento.nuevo" /></li>
+                            </ul>
+                </div>
+            </sec:ifAllGranted>
             <div class="hero-unitCuenta">
-
-		<div class="tabs">
-                        <li><g:link class="list" action="lista"><g:message code="tipoEvento.lista" /></g:link></li>
-		</div>
 
 		
                   <div class="page-header">

@@ -9,18 +9,38 @@
         
 	<body>
           
-          <div class="container">
+          <div class="container-fluid">
+            
+             <div class="span16">
+                  <ul class="breadcrumb">
+                    <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                    <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
+                    <li class="active"><g:message code="tipoEvento.lista" /></li>
+                  </ul>
+             </div>
+
+             <div class="sidebar">
+               <div class="well">
+                  <h4>Panel de Control</h4>
+                  <ul>
+                    <li><a href="${createLink(controller:'usuario')}"><g:message code="usuario.lista" /></a></li>
+                    <li><a href="${createLink(controller:'evento')}"><g:message code="evento.lista" /></a></li>
+                    <li><a href="${createLink(controller:'tipoSubEvento')}"><g:message code="tipoSubEvento.lista" /></a></li>
+                  </ul>
+               </div>
+             </div>
+            
           
-            <div class="hero-unitCuenta">
+            <div class="content">
                 
+                
+                <div class="hero-unitPortal">
                 <ul class="tabs">
                   <li class="active"><a><g:message code="tipoEvento.lista" /></a></li>
                   <li><g:link action="nuevo"><g:message code="tipoEvento.nuevo" /></g:link></li>
                   <li><g:link controller="tipoSubEvento" ><g:message code="tipoEvento.tipoSubEvento" /></g:link></li>
                 </ul>
                 <br>
-                
-                <div id="list-tipoEvento" class="content scaffold-list" role="main">
 			<div class="page-header">
                           <h1><g:message code="tipoEvento.lista" /> <small><g:message code="tipoEvento.listasubTitulo" /></small></h1>
                         </div> 

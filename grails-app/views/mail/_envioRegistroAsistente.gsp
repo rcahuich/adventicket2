@@ -17,7 +17,6 @@ took a galley of type and scrambled it to make a type specimen book.
 </p>
 Podras iniciar sesion con:
 <br/>usuario: ${usuario.username}
-<br/>usuario: ${usuario.password}
 <p>
 En la sigueinte direccion: adventicket.com
 </p>

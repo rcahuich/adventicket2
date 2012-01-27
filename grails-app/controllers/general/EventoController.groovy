@@ -3,15 +3,18 @@ package general
 import grails.plugins.springsecurity.Secured
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
-@Secured(['ROLE_ASISTENTE'])
+//@Secured(['ROLE_ASISTENTE'])
 class EventoController {
 
+    def springSecurityService
+    
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
     def index = {
         redirect(action: "lista", params: params)
     }
     
+    @Secured(['ROLE_ADMIN'])
     def lista = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [eventos: Evento.list(params), totalEventos: Evento.count()]
@@ -26,11 +29,35 @@ class EventoController {
     
     def crea = {
         Evento.withTransaction {
+            log.debug "paramsss de Costo: $params.costo"
+            
             def evento = new Evento(params)
             
+            Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
+            evento.usuario = usuario
+            
+            if(!params.costo.equals('0')){
+                log.debug "Con costo"
+                evento.statusCosto = "SI"
+                evento.statusSolicitud = "ENVIADO"
+                evento.statusEvento = "ACTIVO"
+            }else{
+                log.debug "Sin costo"
+                evento.costo = 0 
+                evento.statusCosto = "NO"
+                evento.statusSolicitud = "ACEPTADO"
+                evento.statusEvento = "ACTIVO"
+             }
+            
             if (evento.save(flush: true)) {
-                flash.message = message(code: 'evento.creo', args: [evento.nombre])
-                redirect(action: "ver", id: evento.id)
+                
+                if(evento.statusCosto.equals("SI")){
+                    flash.message = message(code: 'evento.creo', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }else{
+                    flash.message = message(code: 'evento.creo', args: [evento.nombre])
+                    redirect( action: "ver", id: evento.id)
+                }
                                
             } else {
                 log.error("Hubo un error al crear el tipo de Evento ${evento.errors}")
@@ -45,6 +72,15 @@ class EventoController {
         if (!evento) {
             flash.message = message(code: 'evento.noVer', args: [evento.nombre])
             redirect(action: "lista")
+        }
+        
+        if(evento.statusSolicitud.equals("RECHAZADO") || evento.statusSolicitud.equals("CANCELADO") || evento.statusSolicitud.equals("ENVIADO") || evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY")){
+            flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
+            redirect( controller: "usuario", action: "ver")
+        }
+        
+        if(evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO")){
+             return [evento: evento]
         }
         else {
             return [evento: evento]
@@ -94,9 +130,57 @@ class EventoController {
             else {
                 
                 flash.message = message(code: 'evento.noActualiza', args: [evento.nombre])
-                redirect(action: "lista")
+                redirect(controller:"usuario", action: "ver")
             }
         }
+    }
+    
+    def asistir = {
+        log.debug "Para asistir"
+        Evento evento = Evento.get(params.id)
+        
+        if (springSecurityService.isLoggedIn()){
+        
+        Evento.withTransaction {
+            
+        log.debug "Usuario: ${springSecurityService.getPrincipal().id}"
+        Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
+        log.debug "Usuario: $usuario"
+        
+            if(evento){
+                
+                log.debug "Evento: $evento"
+                log.debug "Usuario: $usuario"
+                
+                if(!evento.findByAsistentes(usuario)){
+                    
+                    log.debug "El $usuario NO se ha registrado, por lo tanto SI puede asistir al evento"
+                    evento.asistentes = usuario
+                }else{
+                    log.debug "El $usuario YA se ha registrado, por lo tanto NO puede asistir al evento"
+                    flash.message = message(code: 'evento.asistirExiste', args: [evento.nombre])
+                    redirect(action: "ver", id: evento.id)
+                }
+                
+                if (!evento.hasErrors() && evento.save(flush: true)) {
+                    
+                    log.debug "El usuario: $usuario, asistira al evento: $evento"
+                    flash.message = message(code: 'evento.asistir', args: [evento.nombre])
+                    redirect(action: "ver", id: evento.id)
+               }
+
+                
+            } else {
+                
+                flash.message = message(code: 'evento.noAsistir', args: [evento.nombre])
+                redirect(action: "ver", id: evento.id)
+            }
+        
+            }
+        } else{
+                flash.message = message(code: 'evento.loguearse')
+                redirect(action: "ver", id: evento.id)
+            }
     }
     
     def elimina = {

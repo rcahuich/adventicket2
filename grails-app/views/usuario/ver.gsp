@@ -11,12 +11,14 @@
           
           <div class="container">
             <sec:ifAllGranted roles="ROLE_ADMIN">
-            <div class="hero-unitCuenta">
-			<ul class="tabs">
-				<li><g:link action="lista">Lista de Usuarios</g:link></li>
-				<li><g:link action="nuevo">Nuevo Usuario</g:link></li>
-			</ul>
-              </div>
+              <div class="span16">
+                  <ul class="breadcrumb">
+                    <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                    <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
+                    <li><a href="${createLink(controller: 'usuario', action:'lista')}"><g:message code="usuario.lista" /></a> <span class="divider">/</span></li>
+                    <li class="active"><g:fieldValue bean="${usuario}" field="nombreCompleto"/></li>
+                  </ul>
+             </div>
             </sec:ifAllGranted>
           </div>
           
@@ -46,7 +48,7 @@
                                 <div class="message" ></div>
                                 <div class="alert-message success fade in" data-alert="alert" role="status">
                                   <a class="close" href="#">&times;</a>
-                                  <p><strong>Muy bien! </strong><br/>${flash.message}</p>
+                                  <p><strong></strong><br/>${flash.message}</p>
                                 </div>
                                </g:if>
                                
@@ -56,6 +58,7 @@
                                     <h4><g:fieldValue bean="${usuario}" field="nombreCompleto"/></h4>
                                     </g:if>
                                     <br>
+                                    
                                     <sec:ifAllGranted roles="ROLE_ADMIN">
                                     <g:if test="${usuario?.username}">
                                     <g:message code="usuario.username" />: <g:fieldValue bean="${usuario}" field="username"/>
@@ -96,9 +99,10 @@
                                     </g:if>
                                     </sec:ifAllGranted>
                                     
-                                    <h3>Tus eventos</h3>
+                                    <h3>Bienvenido</h3>
+                                    
                                       <ul class="tabs" data-tabs="tabs">
-                                        <li class="active"><a href="#home">Home</a></li>
+                                        <li class="active"><a href="#home">Mis Eventos</a></li>
                                         <li><a href="#asistire">Asistire</a></li>
                                         <li><a href="#talvez">Tal vez Asista</a></li>
                                         <li><a href="#asistidos">Asistidos</a></li>
@@ -106,22 +110,58 @@
                                       </ul>
                                       <div id="my-tab-content" class="tab-content">
                                         <div class="active tab-pane" id="home">
-                                          <p>Bienvenido</p>
-                                          <p>Aquí podras encontrar los eventos los cuales te asististe o a los que posiblemente asistiras.</p>
-                                          <p>No pierdas los detalles que este sitio de puede ofrecer.</p>
-                                          <center><p>
-                                            
-                                          </p></center>
+                                         
+                                          <g:if test="${eventos}">
+                                              <p>Estos son lo eventos que has creado.</p>
+                                              <center><p>
+                                                <table class="bordered-table zebra-striped">
+                                                  <thead>
+                                                          <tr>
+
+                                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" />
+                                                                  <g:sortableColumn property="fechaInicio" title="${message(code: 'evento.fechaInicio')}" />
+                                                                  <g:sortableColumn property="status" title="${message(code: 'evento.status')}" />
+                                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.modifica')}" />
+
+                                                          </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                  <g:each in="${eventos}" status="i" var="evento">
+                                                          <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+                                                                  <td><g:link controller="evento" action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
+                                                                  <td><g:formatDate date="${evento?.fechaInicio}"/></td>
+                                                                  <td>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
+                                                                  <td><g:link controller="evento" action="edita" id="${evento.id}">Editar</g:link></td>
+
+                                                          </tr>
+                                                  </g:each>
+                                                  </tbody>
+                                              </table>
+                                              <div class="pagination">
+                                                      <g:paginate total="${eventosTotal}" />
+                                              </div>
+                                              </p></center>
+                                          </g:if>
+                                          
+                                          <g:else>
+                                              <p>Aun no tienes ningun evento creado.</p>
+                                          </g:else>
+                                        
                                         </div>
+                                        
                                         <div class="tab-pane" id="asistire">
                                           <p>Eventos a los cuales asistiras</p>
                                         </div>
+                                        
                                         <div class="tab-pane" id="talvez">
                                           <p>Eventos a los que tal vez asistas</p>
                                         </div>
+                                        
                                         <div class="tab-pane" id="asistidos">
                                           <p>Eventos a los que has asistido</p>
                                         </div>
+                                        
                                       </div>
                                     
                                </fieldset>

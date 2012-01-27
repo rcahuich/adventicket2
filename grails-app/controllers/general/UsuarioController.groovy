@@ -40,7 +40,6 @@ class UsuarioController {
 
     def crea = {
         
-        log.debug "Params : $params"
         
         
         Usuario.withTransaction {
@@ -157,7 +156,7 @@ class UsuarioController {
     def ver = {
         
         if(params.id == null){
-            params.id = springSecurityService.principal.id
+            params.id = springSecurityService.getPrincipal().id
         }
         
         def usuario = Usuario.get(params.id)
@@ -168,7 +167,9 @@ class UsuarioController {
         }
         else {
             def roles = obtieneListaDeRoles(usuario)
-            return [usuario: usuario, roles: roles]
+            def eventos = general.Evento.executeQuery("select evento from Evento evento where evento.usuario = :usuarioCurrent", [usuarioCurrent: usuario])
+            def eventosTotal = eventos.size()
+            return [usuario: usuario, roles: roles, eventos: eventos, eventosTotal: eventosTotal]
         }
     }
 
