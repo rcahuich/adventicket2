@@ -121,7 +121,7 @@
                                 <p>
                                     <g:if test="${evento?.costo}">
                                 <h4><g:message code="evento.costo" /></h4>
-                                       <h5><g:fieldValue bean="${evento}" field="costo"/></h5>
+                                       <h5>$<g:fieldValue bean="${evento}" field="costo"/></h5>
                                     </g:if>
                                 </p>
                               </div>

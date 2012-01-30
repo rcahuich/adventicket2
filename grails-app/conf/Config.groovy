@@ -122,4 +122,6 @@ grails.plugins.springsecurity.roleHierarchy = '''
    ROLE_EVENTO > ROLE_ASISTENTE
    ROLE_ASISTENTE > ROLE_USER
 '''
-
+grails.plugins.springsecurity.controllerAnnotations.staticRules = [
+   '/*': ['ROLE_USER']
+]

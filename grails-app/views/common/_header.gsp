@@ -5,12 +5,12 @@
         
         <div class="container">
           
-          <a href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'logo1.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/></a>
+          <a href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'logoPNG.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/></a>
           
           <ul class="nav">
-            <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a></li>
-            <li><a href="#"><g:message code="menu.nosotros" /></a></li>
-            <li><a href="#"><g:message code="menu.contactanos" /></a></li>
+            <li class="active"><a style="font-weight: bold"><g:message code="inicio.home" /></a></li>
+            <li><a href="#" style="font-weight: bold"><g:message code="menu.nosotros" /></a></li>
+            <li><a href="#"style="font-weight: bold"><g:message code="menu.contactanos" /></a></li>
           </ul>
           
           <form class="pull-left" action="">
@@ -25,6 +25,7 @@
                     <a href="#" class="close">&times;</a>
                       <h2><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="login.iniciaSesion" /></small></h2>
                   </div>
+                
                 
                   <div class="modal-body">
                      <form action="/adventicket/j_spring_security_check" method='POST' autocomplete='off' >

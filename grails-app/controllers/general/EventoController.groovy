@@ -41,7 +41,7 @@ class EventoController {
             if(!params.costo.equals('0')){
                 log.debug "Con costo"
                 evento.statusCosto = "SI"
-                evento.statusSolicitud = "ACEPTADO"//"ENVIADO"
+                evento.statusSolicitud = "ENVIADO"//"ENVIADO"
                 evento.statusEvento = "ACTIVO"
             }else{
                 log.debug "Sin costo"
@@ -76,19 +76,29 @@ class EventoController {
             flash.message = message(code: 'evento.noVer')
             redirect(uri: "/")
         }
-            log.debug "Evento: $evento"
-            if(evento.statusSolicitud.equals("RECHAZADO") || evento.statusSolicitud.equals("CANCELADO") || evento.statusSolicitud.equals("ENVIADO") || evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY")){
-                flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
-                redirect( controller: "usuario", action: "ver")
-            }
-
-            if(evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO")){
-                 return [evento: evento]
-            }
         
-//        else {
-//            return [evento: evento]
-//        }
+        if((evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO"))  
+            || (evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY"))){
+            log.debug "El evento aun no ha sido aceptado"
+            flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
+            redirect( controller: "usuario", action: "ver")
+        }
+        
+        if((evento.statusSolicitud.equals("RECHAZADO") && evento.statusEvento.equals("STANBY"))){
+            log.debug "El evento ha sido RECHAZADO"
+            flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
+            redirect( controller: "usuario", action: "ver")
+        }
+
+        if(evento.statusCosto.equals("NO") && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
+             log.debug "El evento es aceptado"
+             return [evento: evento]
+        }
+        
+        else {
+             flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
+             redirect( controller: "usuario", action: "ver")
+        }
     }
     
     @Secured(['ROLE_ASISTENTE'])
