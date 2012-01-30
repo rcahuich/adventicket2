@@ -9,7 +9,7 @@ class EventoController {
     def springSecurityService
     
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
-
+    @Secured(['ROLE_ADMIN'])
     def index = {
         redirect(action: "lista", params: params)
     }
@@ -20,6 +20,7 @@ class EventoController {
         [eventos: Evento.list(params), totalEventos: Evento.count()]
     }
     
+    @Secured(['ROLE_ASISTENTE'])
     def nuevo = {
         def evento = new Evento()
         evento.properties = params
@@ -27,6 +28,7 @@ class EventoController {
         return [evento: evento]
     }
     
+    @Secured(['ROLE_ASISTENTE'])
     def crea = {
         Evento.withTransaction {
             log.debug "paramsss de Costo: $params.costo"
@@ -39,7 +41,7 @@ class EventoController {
             if(!params.costo.equals('0')){
                 log.debug "Con costo"
                 evento.statusCosto = "SI"
-                evento.statusSolicitud = "ENVIADO"
+                evento.statusSolicitud = "ACEPTADO"//"ENVIADO"
                 evento.statusEvento = "ACTIVO"
             }else{
                 log.debug "Sin costo"
@@ -66,27 +68,30 @@ class EventoController {
         }
     }
     
+    
     def ver = {
         def evento = Evento.get(params.id)
         
         if (!evento) {
-            flash.message = message(code: 'evento.noVer', args: [evento.nombre])
-            redirect(action: "lista")
+            flash.message = message(code: 'evento.noVer')
+            redirect(uri: "/")
         }
+            log.debug "Evento: $evento"
+            if(evento.statusSolicitud.equals("RECHAZADO") || evento.statusSolicitud.equals("CANCELADO") || evento.statusSolicitud.equals("ENVIADO") || evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY")){
+                flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
+                redirect( controller: "usuario", action: "ver")
+            }
+
+            if(evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO")){
+                 return [evento: evento]
+            }
         
-        if(evento.statusSolicitud.equals("RECHAZADO") || evento.statusSolicitud.equals("CANCELADO") || evento.statusSolicitud.equals("ENVIADO") || evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY")){
-            flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
-            redirect( controller: "usuario", action: "ver")
-        }
-        
-        if(evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO")){
-             return [evento: evento]
-        }
-        else {
-            return [evento: evento]
-        }
+//        else {
+//            return [evento: evento]
+//        }
     }
     
+    @Secured(['ROLE_ASISTENTE'])
     def edita = {
         
         def evento = Evento.get(params.id)
@@ -99,6 +104,7 @@ class EventoController {
         }
     }
     
+    @Secured(['ROLE_ASISTENTE'])
     def actualiza = {
         Evento.withTransaction {
             def evento = Evento.get(params.id)
@@ -135,6 +141,7 @@ class EventoController {
         }
     }
     
+    @Secured(['ROLE_ASISTENTE'])
     def asistir = {
         log.debug "Para asistir"
         Evento evento = Evento.get(params.id)
@@ -142,7 +149,7 @@ class EventoController {
         if (springSecurityService.isLoggedIn()){
         
         Evento.withTransaction {
-            
+        
         log.debug "Usuario: ${springSecurityService.getPrincipal().id}"
         Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
         log.debug "Usuario: $usuario"
@@ -153,9 +160,9 @@ class EventoController {
                 log.debug "Usuario: $usuario"
                 
                 if(!evento.findByAsistentes(usuario)){
-                    
                     log.debug "El $usuario NO se ha registrado, por lo tanto SI puede asistir al evento"
                     evento.asistentes = usuario
+                    evento.asistentes.asistir = true
                 }else{
                     log.debug "El $usuario YA se ha registrado, por lo tanto NO puede asistir al evento"
                     flash.message = message(code: 'evento.asistirExiste', args: [evento.nombre])
@@ -183,6 +190,7 @@ class EventoController {
             }
     }
     
+    @Secured(['ROLE_ASISTENTE'])
     def elimina = {
         def evento = Evento.get(params.id)
         def nombre = evento.nombre
