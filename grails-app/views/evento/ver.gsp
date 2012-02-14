@@ -5,20 +5,21 @@
 	<head>
 		<meta name="layout" content="main">
 		<title><g:fieldValue bean="${evento}" field="nombre"/></title>
-                <style type="text/css">
+            <style type="text/css">
       /* Override some defaults */
-      html, body {
-        background-color: #eee;
-      }
-      body {
+       body {
         padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
       }
-      
+
+      .container {
+        width: 960px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+      }
+
       /* The white background content wrapper */
       .container > .content {
         background-color: #fff;
-        padding: 20px;
-        padding-top: 2px;
+        padding: 0px 20px;
+        margin: 0 0px; /* negative indent the amount of the padding to maintain the grid system */
         -webkit-border-radius: 0 0 6px 6px;
            -moz-border-radius: 0 0 6px 6px;
                 border-radius: 0 0 6px 6px;
@@ -35,16 +36,19 @@
       }
 
       /* Styles you shouldn't keep as they are for displaying this base example only */
-      .content .span10,
-      .content .span4 {
-        min-height: 500px;
+      .content .span10 {
+        min-height: 600px;
+        margin-left: 35px;
+        width: 550px;
       }
       /* Give a quick and non-cross-browser friendly divider */
       .content .span4 {
-        margin-left: 0;
-        width: 300px;
+        float: right;
+        margin-left: 20px;
         padding-left: 19px;
         border-left: 1px solid #eee;
+        min-height: 550px;
+        width: 300px;
       }
 
     </style>
@@ -55,7 +59,6 @@
           <div class="container">
           <g:hiddenField name="id" value="${evento?.id}" />
           
-            
               <div class="content">
                 
                 <div class="page-header">
@@ -66,55 +69,53 @@
                   
                   <div class="span10">
                     
-                    <fieldset>
                             <center>
                             <img style="width: 500px; height: 260px;" src="${resource(dir: 'images', file: 'telon-rojoP.jpg')}" />
                             <p>
                               <br>
                               <g:if test="${flash.message}">
-                                  <div class="message" ></div>
-                                  <div class="alert-message success fade in" data-alert="alert" role="status">
-                                    <a class="close" href="#">&times;</a>
+                                  <div class="alert alert-info fade in">
+                                    <a class="close" data-dismiss="alert" href="#">&times;</a>
                                     <p>${flash.message}</p>
                                   </div>
                               </g:if>
                             
                                 <sec:ifNotLoggedIn>
-                                    <a href="${createLink(controller:'usuario', action:'nuevo')}" class="btn info"><g:message code="menu.registrate" /></a> o
-                                    <a data-controls-modal="login" data-backdrop="true" data-keyboard="true" class="btn info"><g:message code="login.iniciaSesion" /></a> para asistir al evento
+                                    <a href="${createLink(controller:'usuario', action:'nuevo')}" class="btn btn-primary"><g:message code="menu.registrate" /></a> o
+                                    <a data-toggle="modal" href="#modalLogin" class="btn btn-primary"><g:message code="login.iniciaSesion" /></a> para asistir al evento
                                 </sec:ifNotLoggedIn>
 
                                 <sec:ifLoggedIn>
-                                  <g:link class="link azul" action="asistir" id="${evento?.id}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">Asistir</g:link>
-                                  <g:link class="link">Tal vez</g:link>
+                                  <g:link class="btn btn-primary" action="asistir" id="${evento?.id}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');">Asistir</g:link>
+                                  <g:link class="btn">Tal vez</g:link>
                                 </sec:ifLoggedIn>
                             
                              </p>
                              
                             </center>
                             <br>
-                            <ul class="tabs" data-tabs="tabs">
-                              <li class="active"><a href="#infoGen">Informacion General</a></li>
-                              <li><a href="#comentarios">Comentarios</a></li>
-                              <li><a href="#fotos">Fotos</a></li>
-                              <li><a href="#lugar">Lugar</a></li>
+                            
+                            <ul id="tab" class="nav nav-tabs">
+                              <li class="active"><a href="#infoGen" data-toggle="tab">Informacion General</a></li>
+                              <li><a href="#comentarios" data-toggle="tab">Comentarios</a></li>
+                              <li><a href="#fotos" data-toggle="tab">Fotos</a></li>
+                              <li><a href="#lugar" data-toggle="tab">Lugar</a></li>
                               
                             </ul>
                           
-                            <div id="my-tab-content" class="tab-content">
-                              <div class="active tab-pane" id="infoGen">
-                                
-                                <h4><g:message code="evento.fechaInicio" /></h4>
+                            <div id="myTabContent" class="tab-content">
+                              <div class="tab-pane fade in active" id="infoGen">
+                                <h3><i class="icon-calendar"></i> <g:message code="evento.fechaInicio" /></h3>
                                 <p>
                                     <g:if test="${evento?.fechaInicio}">
-                                       <h5><g:formatDate date="${evento?.fechaInicio}"/></h5>
+                                       <h4><g:formatDate date="${evento?.fechaInicio}"/></h4>
                                     </g:if>
                                 </p>
 
-                                <h4><g:message code="evento.fechaFin" /></h4>
+                                <h3><i class="icon-calendar"></i> <g:message code="evento.fechaFin" /></h3>
                                 <p>
                                     <g:if test="${evento?.fechaFin}">
-                                       <h5><g:formatDate date="${evento?.fechaFin}"/></h5>
+                                       <h4><g:formatDate date="${evento?.fechaFin}"/></h4>
                                     </g:if>
                                 </p>
 
@@ -125,31 +126,31 @@
                                     </g:if>
                                 </p>
                               </div>
-                              <div class="tab-pane" id="comentarios">
+                              <div class="tab-pane fade" id="comentarios">
                                 <p>
                                 <div class="fb-comments" data-href="http://escuelasabaticauniversitaria.org/" data-num-posts="2" data-width="570"></div>
                                 </p>
                               </div>
-                              <div class="tab-pane" id="fotos">
+                              <div class="tab-pane fade" id="fotos">
                                 <p>Fotos</p>
                               </div>
-                              <div class="tab-pane" id="lugar">
-                                <h4><g:message code="evento.lugar" /></h4>
+                              <div class="tab-pane fade" id="lugar">
+                                <h3><g:message code="evento.lugar" /></h3>
                                 <p>
                                     <g:if test="${evento?.lugarDescripcion}">
-                                       <h5><g:fieldValue bean="${evento}" field="lugarDescripcion"/></h5>
+                                       <h4><g:fieldValue bean="${evento}" field="lugarDescripcion"/></h4>
                                     </g:if>
                                
                                     <g:if test="${evento?.calle}">
-                                       <h5><g:fieldValue bean="${evento}" field="calle"/></h5>
+                                       <h4><g:fieldValue bean="${evento}" field="calle"/></h4>
                                     </g:if>
                                 
                                     <g:if test="${evento?.ciudad}">
-                                       <h5><g:fieldValue bean="${evento}" field="ciudad"/></h5>
+                                       <h4><g:fieldValue bean="${evento}" field="ciudad"/></h4>
                                     </g:if>
                                 
                                     <g:if test="${evento?.pais}">
-                                       <h5><g:fieldValue bean="${evento}" field="pais"/></h5>
+                                       <h4><g:fieldValue bean="${evento}" field="pais"/></h4>
                                     </g:if>
                                 </p>
 
@@ -157,9 +158,6 @@
                               
                             </div>
 
-                     </fieldset>
-                    
-                    
                   </div>
                   
                   <div class="span4">

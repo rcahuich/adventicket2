@@ -11,33 +11,11 @@
     <title><g:message code="admin.inicio" /></title>
   </head>
   <body>
-    
-
-          
-          <div class="container-fluid">
+          <div class="container">
 		
-                       <div class="span16">
-                            <ul class="breadcrumb">
-                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                              <li class="active"><g:message code="admin.inicio" /></li>
-                            </ul>
-                       </div>
-		
-                       <div class="sidebar">
-                         <div class="well">
-                            <h4>Panel de Control</h4>
-                            <ul>
-                              <li><a href="${createLink(controller:'usuario')}"><g:message code="usuario.lista" /></a></li>
-                              <li><a href="${createLink(controller:'evento')}"><g:message code="evento.lista" /></a></li>
-                              <li><a href="${createLink(controller:'tipoEvento')}"><g:message code="tipoEvento.lista" /></a></li>
-                              <li><a href="${createLink(controller:'tipoSubEvento')}"><g:message code="tipoSubEvento.lista" /></a></li>
-                            </ul>
-                         </div>
-                       </div>
-                          
                        <div class="content">
                          
-                             <div class="hero-unitPortal">
+                             <div class="hero-unit">
                                
                                <g:if test="${flash.message}">
                                 <div class="message" ></div>
@@ -50,28 +28,29 @@
                                
                                <fieldset>
                                     <h4>Administración</h4>
-                                      <ul class="tabs" data-tabs="tabs">
-                                        <li class="active"><a href="#home">Home</a></li>
-                                        <li><a href="#asistire">Asistire</a></li>
-                                        <li><a href="#talvez">Tal vez Asista</a></li>
-                                        <li><a href="#asistidos">Asistidos</a></li>
+                                    <br>
+                                      <ul id="tab" class="nav nav-tabs">
+                                        <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                                        <li><a href="#asistire" data-toggle="tab">Asistire</a></li>
+                                        <li><a href="#talvez" data-toggle="tab">Tal vez Asista</a></li>
+                                        <li><a href="#asistidos" data-toggle="tab">Asistidos</a></li>
                                         
                                       </ul>
-                                      <div id="my-tab-content" class="tab-content">
-                                        <div class="active tab-pane" id="home">
+                                      <div id="myTabContent" class="tab-content">
+                                        <div class="tab-pane fade in active" id="home">
                                           <p>Bienvenido</p>
                                           <p>Aquí podras administrar todo el sitio de AdvenTicket</p>
                                           <center><p>
                                             
                                           </p></center>
                                         </div>
-                                        <div class="tab-pane" id="asistire">
+                                        <div class="tab-pane fade" id="asistire">
                                           <p>Eventos a los cuales asistiras</p>
                                         </div>
-                                        <div class="tab-pane" id="talvez">
+                                        <div class="tab-pane fade" id="talvez">
                                           <p>Eventos a los que tal vez asistas</p>
                                         </div>
-                                        <div class="tab-pane" id="asistidos">
+                                        <div class="tab-pane fade" id="asistidos">
                                           <p>Eventos a los que has asistido</p>
                                         </div>
                                       </div>

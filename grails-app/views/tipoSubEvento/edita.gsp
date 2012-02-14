@@ -9,12 +9,7 @@
 	<body>
           <div class="container">
    
-            <div class="hero-unitCuenta">
-              
-              <div class="tabs">
-                        <li><g:link class="list" action="lista"><g:message code="tipoSubEvento.lista" /></g:link></li>
-              </div>
-              
+            <div class="hero-unit">
                               <div class="page-header">
                                     <h1><small><g:message code="tipoSubEvento.edita" /></small></h1>
                               </div>  
@@ -38,17 +33,18 @@
 
                             </g:hasErrors>
 
-                            <g:form method="post">
+                            <g:form class="form-horizontal" method="post">
                                     <fieldset>
+                                      <div class="control-group">
                                       <g:render template="form"/>
-                                            
-                                      <div class="input">
-                                        <fieldset class="buttones">
+                                      </div>
+                                      <div class="control-group">
+                                      <div class="controls">
                                             <g:hiddenField name="id" value="${tipoSubEvento?.id}" />
                                             <g:hiddenField name="version" value="${tipoSubEvento?.version}" />  
-                                            <g:actionSubmit class="actualizar" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                                            <g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'tipoSubEvento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                                        </fieldset>
+                                            <g:actionSubmit class="btn btn-success" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <g:actionSubmit class="btn btn-danger" action="elimina" value="${message(code: 'tipoSubEvento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                      </div>
                                       </div>
                                     </fieldset>
                             </g:form>

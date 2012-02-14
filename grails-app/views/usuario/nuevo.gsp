@@ -7,38 +7,26 @@
 	</head>
         
 	<body>
-          <div class="container">
           
-            <sec:ifAllGranted roles="ROLE_ADMIN">
-		<div class="span16">
-                            <ul class="breadcrumb">
-                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'usuario', action:'lista')}"><g:message code="usuario.lista" /></a> <span class="divider">/</span></li>
-                              <li class="active"><g:message code="usuario.nuevo" /></li>
-                            </ul>
-                </div>
-            </sec:ifAllGranted>
+          <div class="container">
             
-            <div class="hero-unitCuenta">
+            <div class="hero-unit">
 		
                   <div class="page-header">
-                    <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small></h1>
+                    <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small>
+                    </h1>
                   </div>      
-                                
-              
-              
                             <g:if test="${flash.message}">
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+                              <div class="alert alert-error fade in" >
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                     <p><strong>Ups... ha ocurrido un error. </strong> ${flash.message}</p>
                               </div>
-                             </g:if>
+                            </g:if>
               
                           <g:hasErrors bean="${usuario}">
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
+                              <div class="alert alert-error fade in" >
                                 
-                                <a class="close" href="#">&times;</a>
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                 
                                   <g:eachError bean="${usuario}" var="error">
                                     <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
@@ -56,15 +44,13 @@
                               </div>
                            </g:hasErrors>
 
-                            <g:form action="crea" enctype="multipart/form-data">
+                            <g:form action="crea" class="form-horizontal" enctype="multipart/form-data">
                                     <fieldset>
-                                            
                                             <g:render template="form"/>
-                                            
-                                            <div class="input">
-                                              <fieldset class="buttones">
-                                                <g:submitButton name="create" class="nuevo" value="${message(code: 'usuario.crearMiCuenta')}" />
-                                              </fieldset>
+                                            <div class="control-group"> 
+                                              <div class="controls">
+                                                  <g:submitButton  class="btn btn-primary" name="create" value="${message(code: 'usuario.crearMiCuenta')}" />
+                                              </div>
                                             </div>
                                     </fieldset>
                             </g:form>

@@ -8,19 +8,7 @@
         
 	<body>
           <div class="container">
-            
-            <sec:ifAllGranted roles="ROLE_ADMIN">
-		<div class="span16">
-                            <ul class="breadcrumb">
-                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'evento', action:'lista')}"><g:message code="evento.lista" /></a> <span class="divider">/</span></li>
-                              <li class="active"><g:message code="evento.nuevo" /></li>
-                            </ul>
-                </div>
-            </sec:ifAllGranted>
-          
-            <div class="hero-unitCuenta">
+            <div class="hero-unit">
 
 		
                   <div class="page-header">
@@ -29,8 +17,8 @@
 
                               <g:hasErrors bean="${evento}">
 
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+                              <div class="alert alert-error fade in" >
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                 <g:eachError bean="${evento}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
@@ -46,18 +34,21 @@
 
                             <g:form action="crea" >
                                     <fieldset>
-                                            
+                                            <div class="control-group" style="margin-left: 60px;">
                                             <g:render template="form"/>
+                                            </div>
                                             
-                                            <div class="input">
-                                              <fieldset class="buttones">
-                                                <g:submitButton name="create" class="nuevo" value="${message(code: 'evento.nuevoCrea')}" />
-                                              </fieldset>
+                                      <div class="well">
+                                            <div class="control-group"> 
+                                              <div class="controls">
+                                                <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'evento.nuevoCrea')}" />
+                                              </div>
+                                              </div>
                                             </div>
                                     </fieldset>
                             </g:form>
+                                      </div>
 		</div>
-            </div>
 	</body>
 
 </html>

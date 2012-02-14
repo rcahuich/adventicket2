@@ -16,7 +16,7 @@ class EventoController {
     
     @Secured(['ROLE_ADMIN'])
     def lista = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.max = Math.min(params.max ? params.int('max') : 2, 100)
         [eventos: Evento.list(params), totalEventos: Evento.count()]
     }
     
@@ -31,7 +31,6 @@ class EventoController {
     @Secured(['ROLE_ASISTENTE'])
     def crea = {
         Evento.withTransaction {
-            log.debug "paramsss de Costo: $params.costo"
             
             def evento = new Evento(params)
             
@@ -79,19 +78,19 @@ class EventoController {
         
         if((evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO"))  
             || (evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY"))){
-            log.debug "El evento aun no ha sido aceptado"
+            //log.debug "El evento aun no ha sido aceptado"
             flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
             redirect( controller: "usuario", action: "ver")
         }
         
         if((evento.statusSolicitud.equals("RECHAZADO") && evento.statusEvento.equals("STANBY"))){
-            log.debug "El evento ha sido RECHAZADO"
+            //log.debug "El evento ha sido RECHAZADO"
             flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
             redirect( controller: "usuario", action: "ver")
         }
 
         if(evento.statusCosto.equals("NO") && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-             log.debug "El evento es aceptado"
+             //log.debug "El evento es aceptado"
              return [evento: evento]
         }
         
@@ -153,18 +152,17 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def asistir = {
-        log.debug "Para asistir"
         Evento evento = Evento.get(params.id)
         
         if (springSecurityService.isLoggedIn()){
         
         Evento.withTransaction {
         
-        log.debug "Usuario: ${springSecurityService.getPrincipal().id}"
-        Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
+        def usuario = Usuario.get(springSecurityService.getPrincipal().id)
+        //def usuario =  springSecurityService.currentUser
         log.debug "Usuario: $usuario"
-        
-            if(evento){
+
+           if(evento){
                 
                 log.debug "Evento: $evento"
                 log.debug "Usuario: $usuario"
@@ -218,5 +216,9 @@ class EventoController {
             flash.message = message(code: 'evento.noElimino', args: [nombre])
             redirect(action: "ver", id: params.id)
         }
+    }
+    
+    def eventos = {
+        
     }
 }

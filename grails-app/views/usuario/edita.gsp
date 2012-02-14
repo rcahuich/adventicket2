@@ -8,36 +8,33 @@
         
 	<body>
           <div class="container">
+                      
+            <div class="span12">
+                            <ul class="breadcrumb">
+                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                              <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
+                              <li class="active"><g:message code="usuario.modificaPerfil" /></li>
+                            </ul>
+            </div>
             
-            <sec:ifAllGranted roles="ROLE_ADMIN">
-		<div class="tabs">
-                        <li><g:link class="list" action="lista"><g:message code="usuario.lista" /></g:link></li>
-		</div>
-              </sec:ifAllGranted>
+            </div>
+          
+          <div class="container">
             
-                <div class="span16">
-                                <ul class="breadcrumb">
-                                  <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                                  <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
-                                  <li class="active"><g:message code="usuario.modificaPerfil" /></li>
-                                </ul>
-                </div>
             
-            <div class="hero-unitCuenta">
+            <div class="hero-unit">
               
                               <div class="page-header">
                                 <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small>
-                                    <a href="${createLink(controller:'usuario', action:'updatePass')}" class="btn small primary" style="float: right; padding-top: 10px;">Cambiar mi contraseña</a>
                                 </h1>
-                                    
                               </div>  
             
 		
 
                               <g:hasErrors bean="${usuario}">
 
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+                              <div class="alert alert-error fade in" >
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                 <g:eachError bean="${usuario}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
@@ -51,19 +48,22 @@
 
                             </g:hasErrors>
 
-                            <g:form method="post" enctype="multipart/form-data">
+                            <g:form method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <fieldset>
+                                      <div class="control-group">
                                       <g:render template="form_edita"/>
-                                            
-                                      <div class="input">
-                                        <fieldset class="buttones">
+                                      </div>
+                                      <div class="well">
+                                      <div class="control-group"> 
+                                        <div class="controls">
                                             <g:hiddenField name="id" value="${usuario?.id}" />
                                             <g:hiddenField name="version" value="${usuario?.version}" />  
-                                            <g:actionSubmit class="actualizar" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <g:actionSubmit class="btn btn-success" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                                             <sec:ifAllGranted roles="ROLE_ADMIN">
-                                            <g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'usuario.cancelarCuenta')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                            <g:actionSubmit class="btn btn-danger" action="elimina" value="${message(code: 'usuario.cancelarCuenta')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                                             </sec:ifAllGranted>
-                                        </fieldset>
+                                        </div>
+                                      </div>
                                       </div>
                                     </fieldset>
                             </g:form>

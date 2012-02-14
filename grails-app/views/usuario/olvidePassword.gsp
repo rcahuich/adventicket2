@@ -15,7 +15,7 @@
                 
                   <div class="modal-body">
                     
-                     <form action="recuperaPassword" autocomplete='off' >
+                     <form class="form-horizontal" action="recuperaPassword" autocomplete='off' >
          
                       <small><g:message code="usuario.olvidoPassInst" /></small>
                       
@@ -23,27 +23,26 @@
                       <br>
                       
                            <g:if test='${flash.message}'>
-                            <div class="alert-message block-message error fade in" data-alert="alert">
-                              <a class="close" href="#">&times;</a>
+                            <div class="alert alert-error fade in">
+                              <a class="close" data-dismiss="alert" href="#">&times;</a>
                               <center>
                               <p>${flash.message}</p>
                               </center>
                             </div>
                           </g:if>
                       
-                          <fieldset>
+                              
                             
-                            <div class="clearfix">
-                              <label for="xlInput"><g:message code="usuario.olvidePassCorreo" /></label>
-                              <div class="input">
+                            <div class="control-group">
+                              <label class="control-label" for="input01"><g:message code="usuario.olvidePassCorreo" /></label>
+                              <div class="controls">
                                 <input class="input-large" type="email" required="" name='correo' id='correo' autofocus >
                               </div>
                             </div><!-- /clearfix -->
                             
-                          </fieldset>
 
                         <div class="modal-footer">
-                          <button class="btn large primary" type="submit"><g:message code="usuario.olvidePassEnviar" /></button>
+                          <button class="btn btn-primary" type="submit"><g:message code="usuario.olvidePassEnviar" /></button>
                         </div>
                      </form>
                   </div>

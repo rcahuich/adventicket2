@@ -40,8 +40,6 @@ class UsuarioController {
 
     def crea = {
         
-        
-        
         Usuario.withTransaction {
             
             String password = params.password
@@ -203,8 +201,12 @@ class UsuarioController {
                     }
                 }
                 //Si cambio password
-                if (usuario.password != params.password) {
-                    usuario.password = springSecurityService.encodePassword(params.password)
+                    log.debug "usuario.password $usuario.password"
+                    log.debug "params.password $params.password"
+                
+                if (usuario.password != params.password && params.password != null) {
+                    log.debug "Cambio passs"
+                    usuario.password = params.password
                 }
                 params.remove('password')
                 usuario.properties = params

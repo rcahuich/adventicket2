@@ -125,3 +125,4 @@ grails.plugins.springsecurity.roleHierarchy = '''
 grails.plugins.springsecurity.controllerAnnotations.staticRules = [
    '/*': ['ROLE_USER']
 ]
+

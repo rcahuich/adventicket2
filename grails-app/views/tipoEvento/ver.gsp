@@ -11,23 +11,18 @@
           
           <div class="container">
            
-            <div class="hero-unitCuenta">
-			<ul class="tabs">
-				<li><g:link action="lista"><g:message code="tipoEvento.lista" /></g:link></li>
-				<li><g:link action="nuevo"><g:message code="tipoEvento.nuevo" /></g:link></li>
-			</ul>
+            <div class="hero-unit">
               
                   <div class="page-header">
                     <h1><small><g:message code="tipoEvento.verDetalles" /></small></h1>
                   </div>
             
                         <g:if test="${flash.message}">
-                                <div class="message" ></div>
-                                <div class="alert-message success fade in" data-alert="alert" role="status">
-                                  <a class="close" href="#">&times;</a>
+                                <div class="alert alert-info fade in">
+                                  <a class="close" data-dismiss="alert" href="#">&times;</a>
                                   <p><strong>Muy bien! </strong>${flash.message}</p>
                                 </div>
-                               </g:if>
+                        </g:if>
                                
                                
                                <fieldset>
@@ -39,9 +34,13 @@
                                     
                                </fieldset>
                                
-                               <fieldset class="buttones">
+                               <fieldset>
+                                 <div class="control-group"> 
+                                   <div class="controls">
                                     <g:hiddenField name="id" value="${tipoEvento?.id}" />
-                                    <g:link class="editar" action="edita" id="${tipoEvento?.id}"><g:message code="tipoEvento.edita" /></g:link>
+                                    <g:link class="btn btn-success" action="edita" id="${tipoEvento?.id}"><g:message code="tipoEvento.edita" /></g:link>
+                                   </div>
+                                 </div>  
                                </fieldset>
             
             </div>

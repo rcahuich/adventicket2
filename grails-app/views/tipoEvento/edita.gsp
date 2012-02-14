@@ -9,11 +9,7 @@
 	<body>
           <div class="container">
    
-            <div class="hero-unitCuenta">
-              
-              <div class="tabs">
-                        <li><g:link class="list" action="lista"><g:message code="tipoEvento.lista" /></g:link></li>
-              </div>
+            <div class="hero-unit">
               
                               <div class="page-header">
                                     <h1><small><g:message code="tipoEvento.edita" /></small></h1>
@@ -23,8 +19,8 @@
 
                               <g:hasErrors bean="${tipoEvento}">
 
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+                              <div class="alert alert-error fade in" >
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                 <g:eachError bean="${tipoEvento}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
@@ -38,17 +34,19 @@
 
                             </g:hasErrors>
 
-                            <g:form method="post">
+                            <g:form method="post" class="form-horizontal">
                                     <fieldset>
+                                      <div class="control-group">
                                       <g:render template="form"/>
-                                            
-                                      <div class="input">
-                                        <fieldset class="buttones">
+                                      </div>
+                                      <br>
+                                      <div class="control-group"> 
+                                        <div class="controls">
                                             <g:hiddenField name="id" value="${tipoEvento?.id}" />
                                             <g:hiddenField name="version" value="${tipoEvento?.version}" />  
-                                            <g:actionSubmit class="actualizar" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                                            <g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'tipoEvento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                                        </fieldset>
+                                            <g:actionSubmit class="btn btn-success" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <g:actionSubmit class="btn btn-danger" action="elimina" value="${message(code: 'tipoEvento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                        </div>
                                       </div>
                                     </fieldset>
                             </g:form>

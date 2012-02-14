@@ -9,18 +9,7 @@
 	<body>
           <div class="container">
                   
-            <sec:ifAllGranted roles="ROLE_ADMIN">
-		<div class="span16">
-                            <ul class="breadcrumb">
-                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'tipoEvento', action:'lista')}"><g:message code="tipoSubEvento.lista" /></a> <span class="divider">/</span></li>
-                              <li class="active"><g:message code="tipoSubEvento.nuevo" /></li>
-                            </ul>
-                </div>
-            </sec:ifAllGranted>
-            
-            <div class="hero-unitCuenta">
+            <div class="hero-unit">
 
 		
                   <div class="page-header">
@@ -29,8 +18,8 @@
 
                               <g:hasErrors bean="${tipoSubEvento}">
 
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+                              <div class="alert alert-error fade in">
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                 <g:eachError bean="${tipoSubEvento}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
@@ -44,16 +33,16 @@
 
                             </g:hasErrors>
 
-                            <g:form action="crea" >
+                            <g:form action="crea" class="form-horizontal">
                                     <fieldset>
-                                            
+                                          <div class="control-group">
                                             <g:render template="form"/>
-                                            
-                                            <div class="input">
-                                              <fieldset class="buttones">
-                                                <g:submitButton name="create" class="nuevo" value="${message(code: 'tipoSubEvento.nuevoCrea')}" />
-                                              </fieldset>
-                                            </div>
+                                          </div>  
+                                          <div class="control-group"</div>
+                                              <div class="controls">
+                                                <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'tipoSubEvento.nuevoCrea')}" />
+                                              </div>
+                                          </div>
                                     </fieldset>
                             </g:form>
 		</div>

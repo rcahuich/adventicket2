@@ -24,8 +24,8 @@
                           <fieldset>
                             
                          <g:if test='${flash.message}'>
-                            <div class="alert-message block-message error fade in" data-alert="alert">
-                              <a class="close" href="#">&times;</a>
+                            <div class="alert alert-error fade in">
+                              <a class="close" data-dismiss="alert" href="#">&times;</a>
                               <center>
                               <p>${flash.message}</p>
                               </center>

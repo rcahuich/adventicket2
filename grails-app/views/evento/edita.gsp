@@ -7,14 +7,20 @@
 	</head>
         
 	<body>
+          
+          <div class="container">
+            <div class="span12">
+              <ul class="breadcrumb">
+                <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+                <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
+                <li class="active"><g:message code="evento.edita" /> </li>
+              </ul>
+            </div>
+          </div>
           <div class="container">
    
-            <div class="hero-unitCuenta">
-              
-              <div class="tabs">
-                        <li><g:link class="list" action="lista"><g:message code="evento.lista" /></g:link></li>
-              </div>
-              
+            <div class="hero-unit">
+             
                               <div class="page-header">
                                     <h1><small><g:message code="evento.edita" /></small></h1>
                               </div>  
@@ -23,8 +29,8 @@
 
                               <g:hasErrors bean="${evento}">
 
-                              <div class="alert-message block-message error fade in" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+                              <div class="alert alert-error fade in" >
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                 <g:eachError bean="${evento}" var="error">
                                   <p><strong>Ups... ha ocurrido un error. </strong><g:message error="${error}"/></p>
                                 </g:eachError>
@@ -38,17 +44,18 @@
 
                             </g:hasErrors>
 
-                            <g:form method="post">
+                            <g:form class="form-horizontal" method="post">
                                     <fieldset>
-                                      <g:render template="form"/>
-                                            
-                                      <div class="input">
-                                        <fieldset class="buttones">
+                                      <div class="control-group">
+                                        <g:render template="form"/>
+                                      </div>  
+                                      <div class="control-group">
+                                        <div class="controls">
                                             <g:hiddenField name="id" value="${evento?.id}" />
                                             <g:hiddenField name="version" value="${evento?.version}" />  
-                                            <g:actionSubmit class="actualizar" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                                            <g:actionSubmit class="eliminar" action="elimina" value="${message(code: 'evento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                                        </fieldset>
+                                            <g:actionSubmit class="btn btn-success" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <g:actionSubmit class="btn btn-danger" action="elimina" value="${message(code: 'evento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                        </div>
                                       </div>
                                     </fieldset>
                             </g:form>

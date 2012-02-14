@@ -1,131 +1,86 @@
 <%@ page import="general.Evento" %>
 
-<div class="page-header">
-    <h2>1. <small> <g:message code="evento.nombreTitulo" /></small></h2>
+<legend>1. <g:message code="evento.nombreTitulo" /></legend>
+<div style="margin-left: 50px;">
+            <label class="control-label" for="input01"><g:message code="evento.nombre" /> *</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" name="nombre" required="" value="${evento?.nombre}" autofocus>
+            </div>
+            <br>
+            <label class="control-label" for="input01"><g:message code="evento.descripcion" /> *</label>
+            <div class="controls">
+              <textarea id="textarea" rows="5" type="text" class="input-xlarge" name="descripcion" required="" value=""></textarea>
+            </div>
+</div>            
+<legend>2. <g:message code="evento.lugarTitulo" /></legend>
+<div style="margin-left: 50px;">
+            <label class="control-label" for="input01"><g:message code="evento.lugarDescripcion" /> *</label>
+            <div class="controls">
+              <input class="input-xlarge" name="lugarDescripcion" type="text" required="" value="${evento?.lugarDescripcion}">
+            </div>
+            <br>
+            <label class="control-label" for="input01"><g:message code="evento.calle" /> *</label>
+            <div class="controls">
+              <input class="input-xlarge" name="calle" type="text" required="" value="${evento?.calle}">
+            </div>
+            <br>
+            <label class="control-label" for="input01"><g:message code="evento.ciudad" /> *</label>
+            <div class="controls">
+              <input class="input-xlarge" name="ciudad" type="text" required="" value="${evento?.ciudad}">
+            </div>
+            <br>
+            <label class="control-label" for="input01"><g:message code="evento.pais" /> *</label>
+            <div class="controls">
+              <g:select name="pais" from="${evento.constraints.pais.inList}" value="${evento?.pais}" valueMessagePrefix="evento.pais"  />
+            </div>
 </div>
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'nombre', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="evento.nombre" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="nombre" type="text" required="" value="${evento?.nombre}" autofocus/>
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="page-header">
-    <h2>2. <small> <g:message code="evento.lugarTitulo" /></small></h2>
-</div>
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'lugarDescripcion', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="evento.lugarDescripcion" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="lugarDescripcion" type="text" required="" value="${evento?.lugarDescripcion}" />
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'calle', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="evento.calle" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="calle" type="text" required="" value="${evento?.calle}" />
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'ciudad', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="evento.ciudad" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <input class="xlarge" id="xlInput" name="ciudad" type="text" required="" value="${evento?.ciudad}" />
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'pais', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="evento.pais" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input">
-                    <g:select name="pais" from="${evento.constraints.pais.inList}" value="${evento?.pais}" valueMessagePrefix="evento.pais"  />
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="page-header">
-    <h2>3. <small> <g:message code="evento.fechaTitulo" /></small></h2>
-</div>
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'fechaInicio', 'error')} required">
-            <label for="mediumSelect">
-              <g:message code="evento.fechaInicio" />
-              <span class="required-indicator">*</span>
-            </label>
-            <div class="input">
+<legend>3. <g:message code="evento.fechaTitulo" /></legend>
+<div style="margin-left: 50px;">
+            <label class="control-label" for="input01"><g:message code="evento.fechaInicio" /> *</label>
+            <div class="controls">
               <g:datePicker class="small" name="fechaInicio" precision="minute"  value="${evento?.fechaInicio}"/>
             </div>
-</div><!-- /clearfix -->
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'fechaFin', 'error')} required">
-            <label for="mediumSelect">
-              <g:message code="evento.fechaFin" />
-              <span class="required-indicator">*</span>
-            </label>
-            <div class="input">
+            <br>
+            <label class="control-label" for="input01"><g:message code="evento.fechaFin" /> *</label>
+            <div class="controls">
               <g:datePicker class="small" name="fechaFin" precision="minute"  value="${evento?.fechaFin}"/>
             </div>
-</div><!-- /clearfix -->
-
-<div class="page-header">
-    <h2>4. <small> <g:message code="evento.tipoEventoTitulo" /></small></h2>
+            <br>
 </div>
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'tipoSubEvento', 'error')} required">
-                  <label for="xlInput">
-                    <g:message code="evento.tipoEvento" />
-                    <span class="required-indicator">*</span>
-                  </label>
-                  <div class="input"> 
-                    <g:select id="tipoSubEvento" class="span9" name="tipoSubEvento.id" from="${general.TipoSubEvento.list()}" optionKey="id" required="" value="${evento?.tipoSubEvento?.id}" class="many-to-one"/>
-                  </div>
-</div><!-- /clearfix -->
-
-<div class="page-header">
-    <h2>5. <small> <g:message code="evento.costoTitulo" /></small></h2>
+<legend>4. <g:message code="evento.tipoEventoTitulo" /></legend>
+<div style="margin-left: 50px;">
+            <label class="control-label" for="input01"><g:message code="evento.tipoEvento" /> *</label>
+            <div class="controls">
+              <g:select id="tipoSubEvento" class="span9" name="tipoSubEvento.id" from="${general.TipoSubEvento.list()}" optionKey="id" required="" value="${evento?.tipoSubEvento?.id}" class="many-to-one"/>
+            </div>
+            <br>
 </div>
-
-<div class="clearfix ${hasErrors(bean: evento, field: 'costo', 'error')} required">
-        
-  <label for="xlInput">
-        <a id="si" href="#si">Si</a> | <a id="no" href="#no">No</a>
-  </label>
-  <br></br>
-  <div id="divSi" style="display:none">
-            
-          <label for="xlInput">
-            <g:message code="evento.costo" />
-          </label>
-          <div class="input">
-            <g:field type="number" class="span3" name="costo" value="${evento.costo}" step="0.01"/>
-            <p>
-              El costo de evento implica que se realizara un pago como inscripcion al evento.
-            </p>
-          </div>
-            
-  </div>
-  
-  <div id="divNo">
-    <div class="input">
-      El evento se creara automaticamente y podra hacerlo publico.
-    </div>
-  </div>
-  
+<legend>5. <g:message code="evento.costoTitulo" /></legend>
+<div style="margin-left: 50px;">
+            <label class="control-label" for="input01">
+              <div class="btn-group" data-toggle="buttons-radio">
+                                <a id="si" href="#si" class="btn btn-primary">Si</a>
+                                <a id="no" href="#no" class="btn btn-primary">No</a>
+              </div>
+            </label>
+            <div class="controls">
+            <div id="divSi" style="display:none">
+                    <label for="xlInput">
+                      <g:message code="evento.costo" />
+                    </label>
+                    <div class="input">
+                      <g:field type="number" class="span3" name="costo" value="${evento.costo}" step="0.01"/>
+                      <p>
+                        El costo de evento implica que se realizara un pago como inscripcion al evento.
+                      </p>
+                    </div>
+            </div>
+            <div id="divNo">
+              <div class="input">
+                El evento se creara automaticamente y podra hacerlo publico.
+              </div>
+            </div>
+            </div>
 </div>
           
 

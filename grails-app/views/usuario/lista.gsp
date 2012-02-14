@@ -9,48 +9,28 @@
         
 	<body>
           
-          <div class="container-fluid">
+          <div class="container">
             
-                       <div class="span16">
-                            <ul class="breadcrumb">
-                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller: 'admin', action:'admin')}"><g:message code="admin.inicio" /></a> <span class="divider">/</span></li>
-                              <li class="active"><g:message code="usuario.lista" /></li>
-                            </ul>
-                       </div>
-		
-                       <div class="sidebar">
-                         <div class="well">
-                            <h4>Panel de Control</h4>
-                            <ul>
-                              <li><a href="${createLink(controller:'evento')}"><g:message code="evento.lista" /></a></li>
-                              <li><a href="${createLink(controller:'tipoEvento')}"><g:message code="tipoEvento.lista" /></a></li>
-                              <li><a href="${createLink(controller:'tipoSubEvento')}"><g:message code="tipoSubEvento.lista" /></a></li>
-                            </ul>
-                         </div>
-                       </div>
-            
-            <div class="content">
-                
-                
-                <div class="hero-unitPortal">
-                        <ul class="tabs">
-                            <li class="active"><a>Usuarios</a></li>
-                            <li><g:link class="create" action="nuevo">Nuevo Usuario</g:link></li>
-                        </ul>
-                          <br>
-			<div class="page-header">
+                <div class="hero-unit">
+                        <div class="page-header">
                           <h1><g:message code="usuario.lista" /> <small><g:message code="usuario.listaDeUsuarios" /></small></h1>
                         </div> 
-                <br>        
+                <br>
+
                 <g:if test="${flash.message}">
-			<div class="alert-message info" data-alert="alert" >
-                                <a class="close" href="#">&times;</a>
+			<div class="alert alert-info fade in" >
+                                <a class="close" data-dismiss="alert" href="#">&times;</a>
                                     ${flash.message}
                         </div>
                 </g:if>
+                
+                  <div class="well form-search">
+                    <a class="btn btn-primary" href="${createLink(controller:'usuario', action:'nuevo')}"><i class="icon-plus-sign icon-white"></i> <g:message code="usuario.nuevo" /></a>
+                    <input type="text" class="input-medium search-query">
+                    <button type="submit" class="btn">Buscar</button>
+                  </div>
                         
-			<table class="bordered-table zebra-striped">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 					
@@ -86,7 +66,6 @@
 			</div>
 		</div>
                 
-                </div>
              </div>   
 	</body>
 </html>
