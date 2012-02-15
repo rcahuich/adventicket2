@@ -9,7 +9,7 @@
             <br>
             <label class="control-label" for="input01"><g:message code="evento.descripcion" /> *</label>
             <div class="controls">
-              <textarea id="textarea" rows="5" type="text" class="input-xlarge" name="descripcion" required="" value=""></textarea>
+              <textarea id="textarea" rows="5" type="text" class="input-xlarge" name="descripcion" required="" value="${evento?.descripcion}"></textarea>
             </div>
 </div>            
 <legend>2. <g:message code="evento.lugarTitulo" /></legend>

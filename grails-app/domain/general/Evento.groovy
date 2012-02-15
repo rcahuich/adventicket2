@@ -3,6 +3,20 @@ package general
 class Evento {
     
     String nombre
+    String descripcion
+    String quienesPuedenAsistir
+    Integer capacidad
+    String nombreConferencias
+    String nombrePonentes
+    BigDecimal costo = new BigDecimal('0')
+    String queIncluyeElPago
+    Integer numeroComidas
+    BigDecimal costoComida = new BigDecimal('0')
+    Date cierreInscripciones
+    //Si hay descuento por pago anticipado
+    boolean descuento = false
+    BigDecimal costoPagoAnticipado = new BigDecimal('0')
+    Date finPagoAnticipado
     //Lugar del Evento
     String lugarDescripcion
     String calle
@@ -14,12 +28,15 @@ class Evento {
     //Tipo de Evento
     TipoSubEvento tipoSubEvento
     //Costo
-    BigDecimal costo = new BigDecimal('0')
     Usuario usuario
     Set asistentes
     String statusSolicitud
     String statusEvento
     String statusCosto
+    //Donde tener contacto para el evento
+    String contacto
+    String telefono
+    String correo
     
     static belongsTo = Usuario
     static hasMany = [asistentes: Usuario]
@@ -29,6 +46,7 @@ class Evento {
         fechaFin(validator: { val, obj ->
                     val?.after(obj.fechaInicio)
                 })
+        
         statusSolicitud inList: ["ACEPTADO", "RECHAZADO", "CANCELADO", "ENVIADO"]
         statusEvento inList: ["ACTIVO", "INACTIVO", "STANBY"]
         statusCosto inList: ["SI", "NO"]
