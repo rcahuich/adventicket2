@@ -38,16 +38,18 @@
                                             <g:render template="form"/>
                                             </div>
                                             
-                                      <div class="well">
-                                            <div class="control-group"> 
-                                              <div class="controls">
-                                                <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'evento.nuevoCrea')}" />
-                                              </div>
+                                            <div class="well">
+                                              <div class="control-group"> 
+                                                <div class="controls">
+                                                  <center>
+                                                  <g:submitButton id="fat-btn" data-loading-text="Enviando solicitud..." name="create" class="btn btn-large btn-primary" value="${message(code: 'evento.nuevoCrea')}" />
+                                                  </center>
+                                                </div>
                                               </div>
                                             </div>
                                     </fieldset>
                             </g:form>
-                                      </div>
+                   </div>
 		</div>
 	</body>
 

@@ -5,14 +5,13 @@ class Evento {
     String nombre
     String descripcion
     String quienesPuedenAsistir
-    Integer capacidad
+    Integer capacidad = 0
     String nombreConferencias
     String nombrePonentes
     BigDecimal costo = new BigDecimal('0')
     String queIncluyeElPago
-    Integer numeroComidas
+    Integer numeroComidas = 0
     BigDecimal costoComida = new BigDecimal('0')
-    Date cierreInscripciones
     //Si hay descuento por pago anticipado
     boolean descuento = false
     BigDecimal costoPagoAnticipado = new BigDecimal('0')
@@ -25,6 +24,7 @@ class Evento {
     //Fechas
     Date fechaInicio
     Date fechaFin
+    Date cierreInscripciones
     //Tipo de Evento
     TipoSubEvento tipoSubEvento
     //Costo
@@ -43,10 +43,21 @@ class Evento {
     
 
     static constraints = {
+        nombre blank:false
+        descripcion blank:false, maxSize: 600
+        quienesPuedenAsistir blank:false, maxSize: 600
+        nombreConferencias blank:true, maxSize: 600
+        nombrePonentes blank:true, maxSize: 600
+        queIncluyeElPago maxSize: 600
         fechaFin(validator: { val, obj ->
                     val?.after(obj.fechaInicio)
                 })
-        
+        finPagoAnticipado(validator: { val, obj ->
+                    if(obj.descuento == true){val?.after(obj.fechaFin)}
+                })
+        cierreInscripciones(validator: { val, obj ->
+                    val?.before(obj.fechaInicio)
+                })
         statusSolicitud inList: ["ACEPTADO", "RECHAZADO", "CANCELADO", "ENVIADO"]
         statusEvento inList: ["ACTIVO", "INACTIVO", "STANBY"]
         statusCosto inList: ["SI", "NO"]
@@ -63,6 +74,8 @@ class Evento {
                     ,'Panama','Puerto Rico','Republica Dominicana'
                     ,'Saint Kitts & Nevis','St. Lucia','St. Vicente & Las Gradinas'
                     ,'Surinam','Trinidad y Tobago','Venezuela','Otro...']
+        telefono matches:"[0-9]{10}"
+        correo mail:true
     }
     
     static mapping = {
