@@ -9,7 +9,8 @@ class IndexController {
     def springSecurityService
     
     def index = {
-        def eventos = general.Evento.executeQuery("select evento from Evento evento where evento.fechaInicio >= :fechaActual and evento.statusCosto = :statusCosto and evento.statusSolicitud = :statusSolicitud and evento.statusEvento = :statusEvento ", [fechaActual: new Date(), statusCosto:"NO", statusSolicitud:"ACEPTADO",statusEvento:"ACTIVO", max:4])
+        log.debug "Pagina de inicio"
+        def eventos = general.Evento.executeQuery("select evento from Evento evento where evento.fechaInicio >= :fechaActual and evento.statusSolicitud = :statusSolicitud and evento.statusEvento = :statusEvento ", [fechaActual: new Date(), statusSolicitud:"ACEPTADO",statusEvento:"ACTIVO", max:4])
         [eventos: eventos]
     }
     

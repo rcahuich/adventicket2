@@ -30,33 +30,34 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def crea = {
+        log.debug "Params: $params"
         Evento.withTransaction {
             
             def evento = new Evento(params)
             
             Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
             evento.usuario = usuario
+        log.debug "parmas de precio: $params.precio"
+        log.debug "ahora con el evento precio: $evento.precio"
             
-            if(!params.costo.equals('0')){
+            if(evento.precio == true){
                 log.debug "Con costo"
-                evento.statusCosto = "SI"
-                evento.statusSolicitud = "ENVIADO"//"ENVIADO"
+                evento.statusSolicitud = "ENVIADO"//"ACEPTADO", "RECHAZADO", "CANCELADO", "ENVIADO"
                 evento.statusEvento = "ACTIVO"
             }else{
                 log.debug "Sin costo"
-                evento.costo = 0 
-                evento.statusCosto = "NO"
+                evento.costo = 0
                 evento.statusSolicitud = "ACEPTADO"
                 evento.statusEvento = "ACTIVO"
              }
             
             if (evento.save(flush: true)) {
                 
-                if(evento.statusCosto.equals("SI")){
-                    flash.message = message(code: 'evento.creo', args: [evento.nombre])
+                if(evento.precio == true){
+                    flash.message = message(code: 'evento.creoConPrecio', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }else{
-                    flash.message = message(code: 'evento.creo', args: [evento.nombre])
+                    flash.message = message(code: 'evento.creoSinPrecio', args: [evento.nombre])
                     redirect( action: "ver", id: evento.id)
                 }
                                
@@ -76,26 +77,43 @@ class EventoController {
             redirect(uri: "/")
         }
         
-        if((evento.statusCosto.equals("SI") && evento.statusSolicitud.equals("ENVIADO") && evento.statusEvento.equals("ACTIVO"))  
-            || (evento.statusEvento.equals("INACTIVO") || evento.statusEvento.equals("STANBY"))){
-            //log.debug "El evento aun no ha sido aceptado"
-            flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
-            redirect( controller: "usuario", action: "ver")
-        }
+        log.debug "REGLAS"
+        log.debug "precio: $evento.precio"
+        log.debug "statusSolicitud $evento.statusSolicitud"
+        log.debug "statusEvento $evento.statusEvento"
         
-        if((evento.statusSolicitud.equals("RECHAZADO") && evento.statusEvento.equals("STANBY"))){
-            //log.debug "El evento ha sido RECHAZADO"
-            flash.message = message(code:'evento.noAcceso', args: [evento.nombre])
+        if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
+            log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+            flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
             redirect( controller: "usuario", action: "ver")
         }
-
-        if(evento.statusCosto.equals("NO") && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-             //log.debug "El evento es aceptado"
+        else
+        if(evento.statusSolicitud.equals("RECHAZADO")){
+            log.debug "El evento ha sido RECHAZADO"
+            flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
+            redirect( controller: "usuario", action: "ver")
+        }
+        else
+        if(evento.statusSolicitud.equals("CANCELADO")){
+            log.debug "El evento ha sido CANCELADO"
+            flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
+            redirect( controller: "usuario", action: "ver")
+        }
+        else
+        if(evento.statusEvento.equals("STANBY")){
+            log.debug "El evento ha sido puesto en STANBY"
+            flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
+            redirect( controller: "usuario", action: "ver")
+        }
+        else
+        if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
+             log.debug "El evento es aceptado"
              return [evento: evento]
         }
         
         else {
              flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
+             log.debug "ELSE"
              redirect( controller: "usuario", action: "ver")
         }
     }

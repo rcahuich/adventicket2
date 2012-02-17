@@ -97,43 +97,82 @@
                             
                             <ul id="tab" class="nav nav-tabs">
                               <li class="active"><a href="#infoGen" data-toggle="tab">Informacion General</a></li>
+                              <li><a href="#fechas" data-toggle="tab">Fechas del Evento</a></li>
                               <li><a href="#comentarios" data-toggle="tab">Comentarios</a></li>
                               <li><a href="#fotos" data-toggle="tab">Fotos</a></li>
                               <li><a href="#lugar" data-toggle="tab">Lugar</a></li>
-                              
+                              <g:if test="${evento?.costo}">
+                              <li><a href="#costos" data-toggle="tab">Costos</a></li>
+                              </g:if>
                             </ul>
                           
                             <div id="myTabContent" class="tab-content">
+                              
                               <div class="tab-pane fade in active" id="infoGen">
-                                <h3><i class="icon-calendar"></i> <g:message code="evento.fechaInicio" /></h3>
                                 <p>
-                                    <g:if test="${evento?.fechaInicio}">
-                                       <h4><g:formatDate date="${evento?.fechaInicio}"/></h4>
+                                    <g:if test="${evento?.descripcion}">
+                                       <h3><g:message code="evento.descripcion" /></h3>
+                                       <h4><g:fieldValue bean="${evento}" field="descripcion"/></h4>
                                     </g:if>
                                 </p>
-
-                                <h3><i class="icon-calendar"></i> <g:message code="evento.fechaFin" /></h3>
                                 <p>
-                                    <g:if test="${evento?.fechaFin}">
-                                       <h4><g:formatDate date="${evento?.fechaFin}"/></h4>
+                                    <g:if test="${evento?.quienesPuedenAsistir}">
+                                       <h3><g:message code="evento.quienesPuedenAsistir" /></h3>
+                                       <h4><g:fieldValue bean="${evento}" field="quienesPuedenAsistir"/></h4>
                                     </g:if>
                                 </p>
-
                                 <p>
-                                    <g:if test="${evento?.costo}">
-                                <h4><g:message code="evento.costo" /></h4>
-                                       <h5>$<g:fieldValue bean="${evento}" field="costo"/></h5>
+                                    <g:if test="${evento?.capacidad}">
+                                       <h3><g:message code="evento.capacidad" /></h3>
+                                       <h4><g:fieldValue bean="${evento}" field="capacidad"/></h4>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.nombreConferencias}">
+                                       <h3><g:message code="evento.nombreConferencias" /></h3>
+                                       <h4><g:fieldValue bean="${evento}" field="nombreConferencias"/></h4>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.nombrePonentes}">
+                                       <h3><g:message code="evento.nombrePonentes" /></h3>
+                                       <h4><g:fieldValue bean="${evento}" field="nombrePonentes"/></h4>
                                     </g:if>
                                 </p>
                               </div>
+                              
+                              <div class="tab-pane fade" id="fechas">
+                                <p>
+                                    <g:if test="${evento?.fechaInicio}">
+                                       <h3><i class="icon-calendar"></i> <g:message code="evento.fechaInicio" /></h3>
+                                       <h4><g:formatDate date="${evento?.fechaInicio}"/></h4>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.fechaFin}">
+                                       <h3><i class="icon-calendar"></i> <g:message code="evento.fechaFin" /></h3>
+                                       <h4><g:formatDate date="${evento?.fechaFin}"/></h4>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.cierreInscripciones}">
+                                       <h3><i class="icon-calendar"></i> <g:message code="evento.cierreInscripciones" /></h3>
+                                       <h4><g:formatDate date="${evento?.cierreInscripciones}"/></h4>
+                                    </g:if>
+                                </p>
+                                
+                              </div>
+                              
                               <div class="tab-pane fade" id="comentarios">
                                 <p>
                                 <div class="fb-comments" data-href="http://escuelasabaticauniversitaria.org/" data-num-posts="2" data-width="570"></div>
                                 </p>
                               </div>
+                              
                               <div class="tab-pane fade" id="fotos">
                                 <p>Fotos</p>
                               </div>
+                              
                               <div class="tab-pane fade" id="lugar">
                                 <h3><g:message code="evento.lugar" /></h3>
                                 <p>
@@ -153,9 +192,32 @@
                                        <h4><g:fieldValue bean="${evento}" field="pais"/></h4>
                                     </g:if>
                                 </p>
-
                               </div>
                               
+                              <g:if test="${evento?.costo}">
+                              <div class="tab-pane fade" id="costos">
+                                <p>
+                                    <g:if test="${evento?.costo}">
+                                       <h3><g:message code="evento.costo" /></h3>
+                                       <h4>$<g:fieldValue bean="${evento}" field="costo"/></h4>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.queIncluyeElPago}">
+                                       <h3><g:message code="evento.queIncluyeElPago" /></h3>
+                                       <h4><g:fieldValue bean="${evento}" field="queIncluyeElPago"/></h4>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.descuento}">
+                                       <h3><g:message code="evento.costoPagoAnticipado" /></h3>
+                                       <h4>$<g:fieldValue bean="${evento}" field="costoPagoAnticipado"/></h4>
+                                       <h3><g:message code="evento.finPagoAnticipado" /></h3>
+                                       <h4><h4><g:formatDate date="${evento?.finPagoAnticipado}"/></h4></h4>
+                                    </g:if>
+                                </p>
+                              </div>
+                              </g:if>
                             </div>
 
                   </div>

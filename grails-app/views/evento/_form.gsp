@@ -9,12 +9,12 @@
             <br>
             <label class="control-label" for="input01"><g:message code="evento.descripcion" /> *</label>
             <div class="controls" style="margin-left: 30px;">
-              <textarea id="textarea" rows="3" type="text" class="span9" name="descripcion" required="" value="${evento?.descripcion}"></textarea>
+              <g:textArea type="text" class="span9" name="descripcion" rows="2" required="" value="${evento?.descripcion}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.quienesPuedenAsistir" /> *</label>
             <div class="controls" style="margin-left: 30px;">
-              <textarea id="textarea" rows="2" type="text" class="span9" name="quienesPuedenAsistir" required="" value="${evento?.quienesPuedenAsistir}"></textarea>
+              <g:textArea type="text" class="span9" name="quienesPuedenAsistir" rows="2" required="" value="${evento?.quienesPuedenAsistir}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.capacidad" /> *</label>
@@ -24,12 +24,12 @@
             <br>
             <label class="control-label" for="input01"><g:message code="evento.nombreConferencias" /> </label>
             <div class="controls" style="margin-left: 30px;">
-              <textarea id="textarea" rows="4" type="text" class="span9" name="nombreConferencias"  value="${evento?.nombreConferencias}"></textarea>
+              <g:textArea type="text" class="span9" name="nombreConferencias" rows="4" value="${evento?.nombreConferencias}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.nombrePonentes" /> </label>
             <div class="controls" style="margin-left: 30px;">
-              <textarea id="textarea" rows="4" type="text" class="span9" name="nombrePonentes" value="${evento?.nombrePonentes}"></textarea>
+              <g:textArea type="text" class="span9" name="nombrePonentes" rows="4" value="${evento?.nombrePonentes}"/>
             </div>
             <br>
             <label class="control-label" for="input01">
@@ -40,7 +40,12 @@
                                 <a id="si" href="#si" class="btn btn-primary">Si</a>
                                 <a id="no" href="#no" class="btn btn-primary">No</a>
               </div>
+              <div style="display:none">
+                                <input type="radio" name="precio" value="true" id="radioSiCosto"/> Si 
+                                <input type="radio" name="precio" value="false" id="radioNoCosto"/> No
+              </div>                  
             </label>
+            
             <div class="controls" style="margin-left: 30px;">
             <div id="divSi" style="display:none">
                     <label class="control-label" for="xlInput">
@@ -55,7 +60,7 @@
                     <br>
                     <label class="control-label" for="input01"><g:message code="evento.queIncluyeElPago" /> *</label>
                     <div class="controls">
-                      <textarea id="textarea" rows="2" type="text" class="span9" name="queIncluyeElPago" value="${evento?.queIncluyeElPago}"></textarea>
+                      <g:textArea type="text" class="span9" name="queIncluyeElPago" rows="2" value="${evento?.queIncluyeElPago}"/>
                     </div>
                     <br>
                     <label class="control-label" for="input01">
@@ -65,7 +70,12 @@
                       <div class="btn-group" data-toggle="buttons-radio">
                                         <a id="siDescuento" href="#siDescuento" class="btn btn-primary">Si</a>
                                         <a id="noDescuento" href="#noDescuento" class="btn btn-primary">No</a>
+                                        
                       </div>
+                      <div style="display:none">
+                                <input type="radio" name="descuento" value="true" id="radioSiDescuento"/> Si 
+                                <input type="radio" name="descuento" value="false" id="radioNoDescuento" checked/> No
+                      </div>  
                     </label>
                     <div class="controls" style="margin-left: 30px;">
                     <div id="divSiDescuento" style="display:none">
@@ -81,7 +91,7 @@
                               <g:datePicker class="small" name="finPagoAnticipado" precision="minute"  value="${evento?.finPagoAnticipado}"/>
                             </div>
                     </div>
-                    <div id="divNoDescuento">
+                    <div id="divNoDescuento" style="display:none">
                       <div class="input">
                         <g:message code="evento.costoPagoAnticipadoMensajeNO" />
                       </div>
@@ -89,7 +99,7 @@
                     </div>
                     
             </div>
-            <div id="divNo">
+            <div id="divNo" style="display:none">
               <div class="input">
                 <g:message code="evento.costoMensajeNoCosto" />
               </div>
@@ -104,6 +114,10 @@
                                 <a id="siComida" href="#siComida" class="btn btn-primary">Si</a>
                                 <a id="noComida" href="#noComida" class="btn btn-primary">No</a>
               </div>
+              <div style="display:none">
+                                <input type="radio" name="comidas" value="true" id="radioSiComida"/> Si 
+                                <input type="radio" name="comidas" value="false" id="radioNoComida"/> No
+              </div>  
             </label>
             <div class="controls" style="margin-left: 30px;">
             <div id="divSiComida" style="display:none">
@@ -116,7 +130,7 @@
                     <br>
                     
             </div>
-            <div id="divNoComida">
+            <div id="divNoComida" style="display:none">
               <div class="input">
                 <g:message code="evento.incluyeComidaMensajeNoComida" />
               </div>
@@ -200,49 +214,56 @@
 	</label>
 	
 </div>-->
-
+<!--Costos-->
 <r:script>
     $(document).ready(function(){
       $("a#si").click(function(e){
         e.preventDefault();
         $("#divNo").slideUp();
         $("#divSi").slideDown();
-        $("input#costo").focus();
+        document.getElementById("radioSiCosto").checked=true
       });
       $("a#no").click(function(e){
         e.preventDefault();
         $("#divSi").slideUp();
         $("#divNo").slideDown();
+        document.getElementById("radioNoCosto").checked=true
         
       });
     });
 </r:script>
+<!--Comidas-->
 <r:script>
     $(document).ready(function(){
       $("a#siComida").click(function(e){
         e.preventDefault();
         $("#divNoComida").slideUp();
         $("#divSiComida").slideDown();
+        document.getElementById("radioSiComida").checked=true
       });
       $("a#noComida").click(function(e){
         e.preventDefault();
         $("#divSiComida").slideUp();
         $("#divNoComida").slideDown();
+        document.getElementById("radioNoComida").checked=true
         
       });
     });
 </r:script>
+<!--Descuento-->
 <r:script>
     $(document).ready(function(){
       $("a#siDescuento").click(function(e){
         e.preventDefault();
         $("#divNoDescuento").slideUp();
         $("#divSiDescuento").slideDown();
+        document.getElementById("radioSiDescuento").checked=true
       });
       $("a#noDescuento").click(function(e){
         e.preventDefault();
         $("#divSiDescuento").slideUp();
         $("#divNoDescuento").slideDown();
+        document.getElementById("radioNoDescuento").checked=true
         
       });
     });

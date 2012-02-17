@@ -2,14 +2,19 @@ package general
 
 class Evento {
     
+    //Informacion General
     String nombre
     String descripcion
     String quienesPuedenAsistir
     Integer capacidad = 0
     String nombreConferencias
     String nombrePonentes
+    //Costos
+    boolean precio = false
     BigDecimal costo = new BigDecimal('0')
     String queIncluyeElPago
+    //Comidas
+    boolean comidas = false
     Integer numeroComidas = 0
     BigDecimal costoComida = new BigDecimal('0')
     //Si hay descuento por pago anticipado
@@ -27,16 +32,15 @@ class Evento {
     Date cierreInscripciones
     //Tipo de Evento
     TipoSubEvento tipoSubEvento
-    //Costo
-    Usuario usuario
-    Set asistentes
-    String statusSolicitud
-    String statusEvento
-    String statusCosto
     //Donde tener contacto para el evento
     String contacto
     String telefono
     String correo
+    //Status
+    Usuario usuario
+    Set asistentes
+    String statusSolicitud
+    String statusEvento
     
     static belongsTo = Usuario
     static hasMany = [asistentes: Usuario]
@@ -53,14 +57,13 @@ class Evento {
                     val?.after(obj.fechaInicio)
                 })
         finPagoAnticipado(validator: { val, obj ->
-                    if(obj.descuento == true){val?.after(obj.fechaFin)}
+                    if(obj.descuento == true){val?.before(obj.fechaInicio)}
                 })
         cierreInscripciones(validator: { val, obj ->
                     val?.before(obj.fechaInicio)
                 })
         statusSolicitud inList: ["ACEPTADO", "RECHAZADO", "CANCELADO", "ENVIADO"]
         statusEvento inList: ["ACTIVO", "INACTIVO", "STANBY"]
-        statusCosto inList: ["SI", "NO"]
         pais inList:['Mexico','Anguila','Antigua & Barbuda','Antillas Holandesas'
                     ,'Aruba','Bahamas','Barbados'
                     ,'Belize','Colombia','Costa Rica'
