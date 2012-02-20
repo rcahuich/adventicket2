@@ -103,7 +103,7 @@
        
        <hr class="soften">
        
-       <div class="marketing" style="padding-left: 40px;">
+       <div class="marketing" style="padding-left:25px;">
          <div class="row">
             <div class="span4">
               <img class="bs-icon" src="${resource(dir: 'img/iconIndex/', file: 'glyphicons_042_group.png')}">

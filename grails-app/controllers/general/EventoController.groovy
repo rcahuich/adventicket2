@@ -82,40 +82,45 @@ class EventoController {
         log.debug "statusSolicitud $evento.statusSolicitud"
         log.debug "statusEvento $evento.statusEvento"
         
-        if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
-            log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
-            flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
-            redirect( controller: "usuario", action: "ver")
-        }
-        else
-        if(evento.statusSolicitud.equals("RECHAZADO")){
-            log.debug "El evento ha sido RECHAZADO"
-            flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
-            redirect( controller: "usuario", action: "ver")
-        }
-        else
-        if(evento.statusSolicitud.equals("CANCELADO")){
-            log.debug "El evento ha sido CANCELADO"
-            flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
-            redirect( controller: "usuario", action: "ver")
-        }
-        else
-        if(evento.statusEvento.equals("STANBY")){
-            log.debug "El evento ha sido puesto en STANBY"
-            flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
-            redirect( controller: "usuario", action: "ver")
-        }
-        else
-        if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-             log.debug "El evento es aceptado"
-             return [evento: evento]
-        }
+        if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
+                log.debug "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                return [evento: evento]
+        }else{
+                if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
+                    log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+                    flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if(evento.statusSolicitud.equals("RECHAZADO")){
+                    log.debug "El evento ha sido RECHAZADO"
+                    flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if(evento.statusSolicitud.equals("CANCELADO")){
+                    log.debug "El evento ha sido CANCELADO"
+                    flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if(evento.statusEvento.equals("STANBY")){
+                    log.debug "El evento ha sido puesto en STANBY"
+                    flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
+                    log.debug "El evento es aceptado"
+                    return [evento: evento]
+                }
+                else {
+                    flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
+                    log.debug "ELSE"
+                    redirect( controller: "usuario", action: "ver")
+                }
+            }
         
-        else {
-             flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
-             log.debug "ELSE"
-             redirect( controller: "usuario", action: "ver")
-        }
     }
     
     @Secured(['ROLE_ASISTENTE'])

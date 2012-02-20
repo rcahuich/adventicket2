@@ -28,13 +28,13 @@ environments {
     }
     test {
         dataSource {
-            //dbCreate = "update"
-            //url = "jdbc:h2:mem:testDb"
+            
         }
     }
     production {
         dataSource {
-
+            dbCreate = 'update'
+            url = 'jdbc:postgresql://rigel.um.edu.mx/adventicket'
         }
     }
 }

@@ -39,16 +39,16 @@
       .content .span10 {
         min-height: 600px;
         margin-left: 35px;
-        width: 550px;
+        width: 650px;
       }
       /* Give a quick and non-cross-browser friendly divider */
-      .content .span4 {
+      .content .span2 {
         float: right;
         margin-left: 20px;
         padding-left: 19px;
         border-left: 1px solid #eee;
         min-height: 550px;
-        width: 300px;
+        width: 200px;
       }
 
     </style>
@@ -79,22 +79,9 @@
                                     <p>${flash.message}</p>
                                   </div>
                               </g:if>
-                            
-                                <sec:ifNotLoggedIn>
-                                    <a href="${createLink(controller:'usuario', action:'nuevo')}" class="btn btn-primary"><g:message code="menu.registrate" /></a> o
-                                    <a data-toggle="modal" href="#modalLogin" class="btn btn-primary"><g:message code="login.iniciaSesion" /></a> para asistir al evento
-                                </sec:ifNotLoggedIn>
-
-                                <sec:ifLoggedIn>
-                                  <g:link class="btn btn-primary" action="asistir" id="${evento?.id}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');">Asistir</g:link>
-                                  <g:link class="btn">Tal vez</g:link>
-                                </sec:ifLoggedIn>
-                            
                              </p>
                              
                             </center>
-                            <br>
-                            
                             <ul id="tab" class="nav nav-tabs">
                               <li class="active"><a href="#infoGen" data-toggle="tab">Informacion General</a></li>
                               <li><a href="#fechas" data-toggle="tab">Fechas del Evento</a></li>
@@ -165,7 +152,7 @@
                               
                               <div class="tab-pane fade" id="comentarios">
                                 <p>
-                                <div class="fb-comments" data-href="http://escuelasabaticauniversitaria.org/" data-num-posts="2" data-width="570"></div>
+                                <div class="fb-comments" data-href="http://escuelasabaticauniversitaria.org/" data-num-posts="2" data-width="620"></div>
                                 </p>
                               </div>
                               
@@ -222,7 +209,29 @@
 
                   </div>
                   
-                  <div class="span4">
+                  <div class="span2">
+                    
+                    
+                    <sec:ifNotLoggedIn>
+                      <center>
+                        <a href="${createLink(controller:'usuario', action:'nuevo')}" class="btn btn-primary" style="width: 150px;"><g:message code="menu.registrate" /></a> 
+                        <br />
+                        o
+                        <br />
+                        <a data-toggle="modal" href="#modalLogin" class="btn btn-primary" style="width: 150px";><g:message code="login.iniciaSesion" /></a> 
+                        <br />
+                        para asistir al evento
+                      </center>
+                    </sec:ifNotLoggedIn>
+                    <br />
+                    <sec:ifLoggedIn>
+                      <g:link class="btn btn-primary" action="asistir" style="width: 150px;" id="${evento?.id}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');">Asistir</g:link>
+                        <br />
+                        <br />
+                      <g:link class="btn" style="width: 150px;">Tal vez</g:link>
+                    </sec:ifLoggedIn>
+                    
+                    <br />
                     
                     <h4>Comparte</h4>
                     <!-- AddThis Button BEGIN -->

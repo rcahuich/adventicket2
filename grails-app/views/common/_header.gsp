@@ -8,7 +8,6 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="${createLink(uri: '/')}" >AdvenTicket</a>
           <a class="brandImg" href="${createLink(uri: '/')}" ><img src="${resource(dir: 'images', file: 'logoPNG.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/> </a>
           
           <div class="nav-collapse">

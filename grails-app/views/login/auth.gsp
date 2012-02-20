@@ -6,7 +6,7 @@
 
 <body>
   
-<div id="login" class="well" style="margin-left: 400px; margin-right: 400px;">
+<div id="login" class="hero-unit">
                   
                   <div class="modal-header">
                       <h2><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="login.iniciaSesion" /></small></h2>

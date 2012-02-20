@@ -5,23 +5,19 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><g:layoutTitle default="Grails"/></title>
-
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'iasd2.png')}" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
 		
                 <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}" type="text/css">
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-responsive.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'docs.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'prettify.css')}" type="text/css">
-                
-                <r:require module="jquery-ui"/>
                     
-                    <!-- Le javascript
-                ================================================== -->
-                <!-- Placed at the end of the document so the pages load faster -->
+                <!-- JS javascript  -->
                 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
                 <script src="/adventicket/js/jquery.js"></script>
                 <script src="/adventicket/js/google-code-prettify/prettify.js"></script>
