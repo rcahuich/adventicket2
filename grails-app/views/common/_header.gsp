@@ -24,59 +24,10 @@
             <ul class="nav pull-right">
               <sec:ifNotLoggedIn>
 
-                <div id="modalLogin" class="modal hide fade">
-                    <div class="modal-header">
-                      <a class="close" data-dismiss="modal">&times;</a>
-                        <h2><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="login.iniciaSesion" /></small></h2>
-                    </div>
-                    <div class="modal-body">
-                       <form action="/adventicket/j_spring_security_check" method='POST' autocomplete='off' >
-                         <g:if test='${flash.message}'>
-                              <div class="alert-message block-message error fade in" data-alert="alert">
-                                <a class="close" href="#">&times;</a>
-                                <p>${flash.message}</p>
-                              </div>
-                            </g:if>
-                          <fieldset>
-                            <div class="clearfix">
-                              <label for="xlInput"><g:message code="login.username" /></label>
-                              <div class="input">
-                                <input class="input-large" type="text" placeholder="usuario" name='j_username' id='username' autofocus >
-                              </div>
-                            </div><!-- /clearfix -->
-                            <div class="clearfix">
-                              <label for="xlInput"><g:message code="login.password" /></label>
-                              <div class="input">
-                                <input class="input-large" type="password" placeholder="contrasena" name='j_password' id='password'>
-                              </div>
-                            </div><!-- /clearfix -->
-
-
-                          </fieldset>
-
-                          <div class="modal-footer">
-                            <div style="float: left; margin-top: 3px;">
-                              <div style="margin-bottom: 6px;">
-                              <g:message code="login.registrate" /><a href="${createLink(controller:'usuario', action:'nuevo')}">  <g:message code="menu.registrate" /></a>
-                              </div>
-                              <a href="${createLink(controller:'usuario', action:'olvidePassword')}">  <g:message code="login.recuperarPass" /></a>
-                            </div>
-
-                            <button class="btn large primary" type="submit"><g:message code="login.entrar" /></button>
-                          </div>
-                       </form>
-                    </div>
-                </div>
-
                <li class="divider-vertical"></li>
                <li><a href="${createLink(controller:'usuario', action:'nuevo')}"><g:message code="menu.registrate" /></a></li>
-
-  <!--             <li>
-                <a data-toggle="modal" href="#modalLogin" class="" ><g:message code="login.iniciaSesion" /></a>
-               </li>-->
-               <li>
-                <a href="${createLink(controller:'login', action:'auth')}" ><g:message code="login.iniciaSesion" /></a>
-               </li>
+<!--               <li><a href="${createLink(controller:'login', action:'auth')}"><g:message code="login.iniciaSesion" /></a></li>-->
+               <a data-toggle="modal" href="#modalLogin" class="btn btn-primary"><g:message code="login.iniciaSesion" /></a>
 
               </sec:ifNotLoggedIn>
 

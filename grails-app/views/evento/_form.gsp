@@ -1,41 +1,41 @@
 <%@ page import="general.Evento" %>
 
 <legend>1. <g:message code="evento.informacionGeneral" /></legend>
-<div style="margin-left: 50px;">
+<div >
             <label class="control-label" for="input01"><g:message code="evento.nombre" /> *</label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls" >
               <input type="text" class="input-xlarge" name="nombre" required="" value="${evento?.nombre}" autofocus>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.descripcion" /> *</label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls">
               <g:textArea type="text" class="span9" name="descripcion" rows="2" required="" value="${evento?.descripcion}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.quienesPuedenAsistir" /> *</label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls" >
               <g:textArea type="text" class="span9" name="quienesPuedenAsistir" rows="2" required="" value="${evento?.quienesPuedenAsistir}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.capacidad" /> *</label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls">
               <g:field type="number" class="input-mini" name="capacidad" required="" value="${evento.capacidad}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.nombreConferencias" /> </label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls" >
               <g:textArea type="text" class="span9" name="nombreConferencias" rows="4" value="${evento?.nombreConferencias}"/>
             </div>
             <br>
             <label class="control-label" for="input01"><g:message code="evento.nombrePonentes" /> </label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls" >
               <g:textArea type="text" class="span9" name="nombrePonentes" rows="4" value="${evento?.nombrePonentes}"/>
             </div>
             <br>
             <label class="control-label" for="input01">
               <g:message code="evento.costoTitulo" />
             </label>
-            <label class="control-label" for="input01" style="margin-left: 30px;">
+            <label class="control-label" for="input01" ">
               <div class="btn-group" data-toggle="buttons-radio">
                                 <a id="si" href="#si" class="btn btn-primary">Si</a>
                                 <a id="no" href="#no" class="btn btn-primary">No</a>
@@ -46,7 +46,7 @@
               </div>                  
             </label>
             
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls">
             <div id="divSi" style="display:none">
                     <label class="control-label" for="xlInput">
                       <g:message code="evento.costo" />
@@ -109,7 +109,7 @@
             <label class="control-label" for="input01">
               <g:message code="evento.incluiraComida" />
             </label>
-            <label class="control-label" for="input01" style="margin-left: 30px;">
+            <label class="control-label" for="input01">
               <div class="btn-group" data-toggle="buttons-radio">
                                 <a id="siComida" href="#siComida" class="btn btn-primary">Si</a>
                                 <a id="noComida" href="#noComida" class="btn btn-primary">No</a>
@@ -119,7 +119,7 @@
                                 <input type="radio" name="comidas" value="false" id="radioNoComida"/> No
               </div>  
             </label>
-            <div class="controls" style="margin-left: 30px;">
+            <div class="controls">
             <div id="divSiComida" style="display:none">
                     <div class="controls">
                       <g:message code="evento.incluyeComida" /> :<g:field type="number" class="input-mini" name="numeroComidas" value="${evento.numeroComidas}"/> <g:message code="evento.costoComida" /> <g:field type="number" class="input-mini" name="costoComida" value="${evento.costoComida}" step="0.01"/>
@@ -140,7 +140,7 @@
             
 </div>            
 <legend>2. <g:message code="evento.lugarTitulo" /></legend>
-<div style="margin-left: 50px;">
+<div >
             <label class="control-label" for="input01"><g:message code="evento.lugarDescripcion" /> *</label>
             <div class="controls" style="margin-left: 30px;">
               <input class="input-xlarge" name="lugarDescripcion" type="text" required="" value="${evento?.lugarDescripcion}">
@@ -163,7 +163,7 @@
             <br>
 </div>
 <legend>3. <g:message code="evento.fechaTitulo" /></legend>
-<div style="margin-left: 50px;">
+<div >
             <label class="control-label" for="input01"><g:message code="evento.fechaInicio" /> *</label>
             <div class="controls" style="margin-left: 30px;">
               <g:datePicker class="small" name="fechaInicio" precision="minute"  value="${evento?.fechaInicio}"/>
@@ -181,7 +181,7 @@
             <br>
 </div>
 <legend>4. <g:message code="evento.tipoEventoTitulo" /></legend>
-<div style="margin-left: 50px;">
+<div >
             <label class="control-label" for="input01"><g:message code="evento.tipoEvento" /> *</label>
             <div class="controls" style="margin-left: 30px;">
               <g:select id="tipoSubEvento" class="span9" name="tipoSubEvento.id" from="${general.TipoSubEvento.list()}" optionKey="id" required="" value="${evento?.tipoSubEvento?.id}" class="many-to-one"/>
@@ -189,7 +189,7 @@
             <br>
 </div>
 <legend>5. <g:message code="evento.contactos" /></legend>
-<div style="margin-left: 50px;">
+<div >
             <label class="control-label" for="input01"><g:message code="evento.contacto" /> *</label>
             <div class="controls" style="margin-left: 30px;">
               <input class="input-xlarge" name="contacto" type="text" required="" value="${evento?.contacto}">

@@ -34,9 +34,8 @@
           </g:if>
       <!-- Contenedor Principal -->
       
-     <div class="hero-unit">
+     <div class="well">
        
-       <div class="marketing">
        <div class="row">
           <div class="span9">
               
@@ -69,7 +68,6 @@
               </div>
           </div>
          <div class="span3" style="margin-left: 25px;">
-              <img class="bs-icon" src="${resource(dir: 'img/iconIndex/', file: 'glyphicons_155_show_thumbnails.png')}">
               <h3>Eventos por Venir</h3>
               <br>
               <p>
@@ -92,7 +90,6 @@
               </p>
           </div>
         </div>
-        </div>
        
       <header class="jumbotron masthead">
         <ul class="quick-links">
@@ -103,25 +100,20 @@
        
        <hr class="soften">
        
-       <div class="marketing" style="padding-left:25px;">
-         <div class="row">
+         <div class="row" style="padding-left:25px;">
             <div class="span4">
-              <img class="bs-icon" src="${resource(dir: 'img/iconIndex/', file: 'glyphicons_042_group.png')}">
               <h3>Administra a tus Asistentes</h3>
               <p>Like you, we love building awesome products on the web. We love it so much, we decided to help people just like us do it easier, better, and faster. Bootstrap is built for you.</p>
             </div>
             <div class="span4">
-              <img class="bs-icon" src="${resource(dir: 'img/iconIndex/', file: 'glyphicons_266_book_open.png')}">
               <h3>Facil de encontrar</h3>
               <p>Bootstrap is designed to help people of all skill level&mdash;designer or developer, huge nerd or early beginner. Use it as a complete kit or use to start something more complex.</p>
             </div>
             <div class="span4">
-              <img class="bs-icon" src="${resource(dir: 'img/iconIndex/', file: 'glyphicons_155_show_thumbnails.png')}">
               <h3>Siguenos en...</h3>
               <p>Bootstrap is designed to help people of all skill level&mdash;designer or developer, huge nerd or early beginner. Use it as a complete kit or use to start something more complex.</p>
             </div>
           </div><!--/row-->
-        </div>
        </div> <!-- /containerUnit -->
     </div> <!-- /container -->
 

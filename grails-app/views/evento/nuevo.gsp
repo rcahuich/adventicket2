@@ -8,7 +8,7 @@
         
 	<body>
           <div class="container">
-            <div class="hero-unit">
+            <div class="well">
 
 		
                   <div class="page-header">
@@ -34,15 +34,15 @@
 
                             <g:form action="crea" >
                                     <fieldset>
-                                            <div class="control-group" style="margin-left: 60px;">
+                                            <div class="control-group" style="margin-left: 30px;">
                                             <g:render template="form"/>
                                             </div>
                                             
-                                            <div class="well">
+                                            <div class="hero-unit">
                                               <div class="control-group"> 
                                                 <div class="controls">
                                                   <center>
-                                                  <g:submitButton id="fat-btn" data-loading-text="Enviando solicitud..." name="create" class="btn btn-large btn-primary" value="${message(code: 'evento.nuevoCrea')}" />
+                                                  <g:submitButton name="create" class="btn btn-large btn-primary" value="${message(code: 'evento.nuevoCrea')}" />
                                                   </center>
                                                 </div>
                                               </div>

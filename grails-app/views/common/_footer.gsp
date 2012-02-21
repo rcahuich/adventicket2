@@ -1,5 +1,5 @@
 
-    <footer class="footer">
+    <footer class="footer well">
         <p class="pull-right"><a href="${createLink(uri: '/')}">adventicket.com</a></p>
         <p>&copy; ADVENTicket 2011
         <br>

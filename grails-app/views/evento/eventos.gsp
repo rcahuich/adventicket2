@@ -52,7 +52,7 @@
                 <p>Like you, we love building awesome products on the web. We love it so much, we decided to help people just like us do it easier, better, and faster. Bootstrap is built for you.</p>
               </div>
               <div class="span9">
-                <div class="well form-search">
+                <div class="form-search">
                   <div class="btn-group" data-toggle="buttons-radio">
                     <a id="buscar" href="#buscar" class="btn btn-small" >Buscar</a>
                     <a id="buscaquedaAvanzada" href="#buscaquedaAvanzada" class="btn btn-small">Busqueda Avanzada</a>
