@@ -13,24 +13,20 @@
 
     <!-- Estilos -->
     <meta name="layout" content="main"/>
-    
 
-    <!-- Iconos Touch -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
   </head>
 
   <body>
     <div class="container">
+      <section>
       <!-- Contenedor Principal -->
+      
          <ul class="breadcrumb">
           <li><a href="${createLink(uri: '/')}">Inicio</a> <span class="divider">/</span></li>
           <li class="active">Buscar más Eventos</li>
          </ul>
       
-     <div class="hero-unit">
+     <div class="well">
        
           <g:if test='${flash.message}'>
             <div class="alert alert-info fade in">
@@ -113,7 +109,8 @@
        
          <hr class="soften">
          
-       </div> <!-- /containerUnit -->
+       </div> <!-- well -->
+       </section>
     </div> <!-- /container -->
 
   </body>

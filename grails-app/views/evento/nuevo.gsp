@@ -8,6 +8,7 @@
         
 	<body>
           <div class="container">
+            <section>
             <div class="well">
 
 		
@@ -50,6 +51,7 @@
                                     </fieldset>
                             </g:form>
                    </div>
+              </section>
 		</div>
 	</body>
 

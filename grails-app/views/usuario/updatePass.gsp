@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  
+<section>
 <div id="login" class="well" style="margin-left: 400px; margin-right: 400px;">
                   
                   <div class="modal-header">
@@ -68,5 +68,6 @@
                 
 
               </div>
+  </section>
 </body>
 </html>

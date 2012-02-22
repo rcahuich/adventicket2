@@ -26,12 +26,12 @@
                             </div>
                        </g:if>
       
-                      <label class="control-label" for="input01"><g:message code="login.username" /></label>
+                      
                         <div class="controls">
                          <input id="username" type="text" class="input-large" name="j_username" required="" placeholder="usuario" autoFocus>
                         </div>
                         <br /> 
-                        <label class="control-label" for="input01"><g:message code="login.password" /></label>
+                        
                         <div class="controls">
                           <input id='password' type="password" class="input-large" name="j_password" required="" placeholder="contraseña" >
                         </div>

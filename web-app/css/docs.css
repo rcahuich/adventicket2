@@ -10,7 +10,6 @@
 -------------------------------------------------- */
 body {
   position: relative;
-  padding-top: 90px;
   background-color: #E8E8E8;
   background-image: url(../img/grid-18px-masked.png);
   background-repeat: repeat-x;
@@ -265,9 +264,9 @@ hr.soften {
 /* Footer
 -------------------------------------------------- */
 .footer {
+  display: block;
   background-color: #ffffff;
-  margin-top: 5px;
-  padding: 15px 0 20px;
+  padding-top: 20px;
   border-top: 1px solid #e5e5e5;
   display: block;
   line-height: 1;
@@ -279,6 +278,40 @@ hr.soften {
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
 }
+
+footer .b-corp {
+    display: inline;
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 215px;
+}
+footer .social {
+    display: inline;
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 215px;
+}
+footer .map {
+    float: left;
+    font-size: 10px;
+    line-height: 2em;
+    margin-left: 100px;
+    margin-right: 20px;
+    width: 215px;
+}
+footer .address {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline;
+    float: left;
+    color: #5C5C5C;
+    font-family: "proxima-nova-n4","proxima-nova",sans-serif;
+    font-style: normal;
+    font-size: 0.776em;
+}
+
 .footer p {
   margin-bottom: 0;
   color: #555;

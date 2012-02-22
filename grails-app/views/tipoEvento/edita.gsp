@@ -8,8 +8,8 @@
         
 	<body>
           <div class="container">
-   
-            <div class="hero-unit">
+            <section>
+            <div class="well">
               
                               <div class="page-header">
                                     <h1><small><g:message code="tipoEvento.edita" /></small></h1>
@@ -51,6 +51,7 @@
                                     </fieldset>
                             </g:form>
 		</div>
+              </section>
             </div>
         </body>
 </html>

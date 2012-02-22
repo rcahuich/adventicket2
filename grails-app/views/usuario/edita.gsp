@@ -8,21 +8,19 @@
         
 	<body>
           <div class="container">
-                      
-            <div class="span12">
-                            <ul class="breadcrumb">
-                              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
-                              <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
-                              <li class="active"><g:message code="usuario.modificaPerfil" /></li>
-                            </ul>
-            </div>
-            
+            <section>          
+            <ul class="breadcrumb">
+              <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
+              <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
+              <li class="active"><g:message code="usuario.modificaPerfil" /></li>
+            </ul>
+            </section>
             </div>
           
           <div class="container">
             
             
-            <div class="hero-unit">
+            <div class="well">
               
                               <div class="page-header">
                                 <h1><g:message code="usuario.actualizaTitulo" /> <small><g:message code="usuario.actualiza" /></small>
@@ -53,7 +51,7 @@
                                       <div class="control-group">
                                       <g:render template="form_edita"/>
                                       </div>
-                                      <div class="well">
+                                      <div class="hero-unit">
                                       <div class="control-group"> 
                                         <div class="controls">
                                             <g:hiddenField name="id" value="${usuario?.id}" />
@@ -68,6 +66,7 @@
                                     </fieldset>
                             </g:form>
 		</div>
+            
             </div>
         </body>
 </html>

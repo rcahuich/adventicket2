@@ -7,8 +7,8 @@
 
 <body>
   
+<section>                  
 <div id="login" class="well" style="margin-left: 400px; margin-right: 400px;">
-                  
                   <div class="modal-header">
                       <h3><g:message code="usuario.passNewTitulo" /></h3>
                   </div>
@@ -53,7 +53,7 @@
                      </form>
                   </div>
                 
-
               </div>
+</section>
 </body>
 </html>

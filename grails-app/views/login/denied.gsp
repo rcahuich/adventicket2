@@ -5,8 +5,8 @@
 
 <body >
   <div class="container">
-
-        <div class="alert-message block-message error">
+    <section>
+        <div class="well">
           <center>
             <br>
             <br>
@@ -18,5 +18,6 @@
           </center>
 
         </div>
+      </section>
   </div>
 </body>

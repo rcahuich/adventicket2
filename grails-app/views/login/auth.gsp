@@ -6,7 +6,7 @@
 
 <body>
   <div class="container">
-    
+    <section>
     <div class="marketing well">
       
       <form action="/adventicket/j_spring_security_check" method='POST' autocomplete='off' >
@@ -46,6 +46,7 @@
           </p>
         </center>
       </form>
+      </section>
     </div>
 
   </body>

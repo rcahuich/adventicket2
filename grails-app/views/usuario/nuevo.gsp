@@ -9,8 +9,8 @@
 	<body>
           
           <div class="container">
-            
-            <div class="hero-unit">
+            <section>
+            <div class="well">
 		
                   <div class="page-header">
                     <h1><g:message code="usuario.nuevaTituloCuenta" /> <small><g:message code="usuario.nuevaCuenta" /></small>
@@ -55,6 +55,7 @@
                                     </fieldset>
                             </g:form>
 		</div>
+              </section>
             </div>
 	</body>
 

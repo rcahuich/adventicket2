@@ -10,8 +10,8 @@
 	<body>
           
           <div class="container">
-           
-            <div class="hero-unit">
+           <section>
+            <div class="well">
               
                   <div class="page-header">
                     <h1><small><g:message code="tipoEvento.verDetalles" /></small></h1>
@@ -44,7 +44,7 @@
                                </fieldset>
             
             </div>
-           
+           </section>
           </div>
 	</body>
 </html>

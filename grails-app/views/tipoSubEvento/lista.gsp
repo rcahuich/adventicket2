@@ -10,8 +10,8 @@
 	<body>
           
           <div class="container">
-                      
-                <div class="hero-unit">
+              <section>        
+                <div class="well">
 
 			<div class="page-header">
                           <h1><g:message code="tipoSubEvento.lista" /> <small><g:message code="tipoSubEvento.listasubTitulo" /></small></h1>
@@ -54,6 +54,7 @@
 				<g:paginate total="${totalTipoSubEventos}" />
 			</div>
 		</div>
+                </section>
              </div>   
 	</body>
 </html>

@@ -9,6 +9,7 @@
 	<body>
           
           <div class="container">
+            <section>
             <div class="span12">
               <ul class="breadcrumb">
                 <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
@@ -16,10 +17,11 @@
                 <li class="active"><g:message code="evento.edita" /> </li>
               </ul>
             </div>
+            </section>
           </div>
           <div class="container">
    
-            <div class="hero-unit">
+            <div class="well">
              
                               <div class="page-header">
                                     <h1><small><g:message code="evento.edita" /></small></h1>

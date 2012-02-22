@@ -8,8 +8,8 @@
         
 	<body>
           <div class="container">
-
-            <div class="hero-unit">
+            <section>
+            <div class="well">
 
 		
                   <div class="page-header">
@@ -47,6 +47,7 @@
                                     </fieldset>
                             </g:form>
 		</div>
+              </section>
             </div>
 	</body>
 

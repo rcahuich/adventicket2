@@ -57,6 +57,7 @@
 	<body>
           
           <div class="container">
+            <section>
           <g:hiddenField name="id" value="${evento?.id}" />
           
               <div class="content">
@@ -250,7 +251,7 @@
                   
                 </div>
               </div>
-
+          </section>
           </div> <!-- /container -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {

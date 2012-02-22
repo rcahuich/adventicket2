@@ -7,9 +7,11 @@
 	</head>
 	<body>
           <div class="container">
-            <div class="hero-unit">
+            <section>
+            <div class="well">
 		<g:renderException exception="${exception}" />
             </div>
+              </section>
           </div>
 	</body>
 </html>

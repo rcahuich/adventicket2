@@ -76,8 +76,9 @@
 	</head>
 	<body>
           <div class="container">
-            <div class="content">
-            <div class="hero-unit">
+            <section>
+    
+            <div class="well">
                       
 		<div id="status" role="complementary">
 			<h1>Estatus de la Aplicación</h1>
@@ -112,7 +113,7 @@
 			</div>
 		</div>
                       </div>
-                      </div>
+                 </section>
              </div>
 	</body>
 </html>

@@ -5,8 +5,8 @@
 
 <body >
   <div class="container">
-
-    <div class="hero-unit">
+<section>
+    <div class="well">
           <center>
             <br>
             <br>
@@ -18,6 +18,6 @@
             <br>
           </center>
     </div>
-        
+   </section>     
   </div>
 </body>

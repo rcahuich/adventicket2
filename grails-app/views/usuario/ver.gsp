@@ -10,12 +10,13 @@
   <body>
     
     <div class="container">
+      <section>
         <ul class="breadcrumb">
           <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
           <li class="active"><g:message code="usuario.miPerfil" /></li>
         </ul>
 
-      <div class="hero-unit">
+      <div class="well">
       <div class="marketing">
         <div class="row">
           <div class="span3">
@@ -162,6 +163,7 @@
         </div>
       </div>
       </div>
+        </section>
      </div>
 </body>
 </html>

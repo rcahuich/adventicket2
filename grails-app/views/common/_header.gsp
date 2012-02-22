@@ -1,20 +1,22 @@
 <!-- Menu -->
 
-    <div class="navbar navbar-fixed-top" >
-      <div class="navbar-inner">
+    <div id="navBarr" class="navbar navbar-fixed-top" >
+      <div  class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brandImg" href="${createLink(uri: '/')}" ><img src="${resource(dir: 'images', file: 'logoPNG.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/> </a>
+          <a class="brandImg" href="${createLink(uri: '/#home')}" ><img src="${resource(dir: 'images', file: 'logoPNG.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/> </a>
           
           <div class="nav-collapse">
             
             <ul class="nav">
-              <li><a href="#" ><g:message code="menu.nosotros" /></a></li>
-              <li><a href="#"><g:message code="menu.contactanos" /></a></li>
+              <li ><a href="#home"> <i class="icon-home icon-white"></i></a></li>
+              <li ><a href="${createLink(uri: '/#nosotros')}" ><g:message code="menu.nosotros" /></a></li> 
+              <li><a href="${createLink(uri: '/#contactanos')}"><g:message code="menu.contactanos" /></a></li>
+              <li><a href="${createLink(uri: '/')}"><i class="icon-refresh icon-white"></i></a></li>
             </ul>
           
             <form class="navbar-search pull-left" action="">
@@ -27,7 +29,7 @@
                <li class="divider-vertical"></li>
                <li><a href="${createLink(controller:'usuario', action:'nuevo')}"><g:message code="menu.registrate" /></a></li>
 <!--               <li><a href="${createLink(controller:'login', action:'auth')}"><g:message code="login.iniciaSesion" /></a></li>-->
-               <a data-toggle="modal" href="#modalLogin" class="btn btn-primary"><g:message code="login.iniciaSesion" /></a>
+               <a data-toggle="modal" href="/#modalLogin" class="btn"><g:message code="login.iniciaSesion" /></a>
 
               </sec:ifNotLoggedIn>
 

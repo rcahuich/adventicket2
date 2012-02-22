@@ -12,10 +12,10 @@
   </head>
   <body>
           <div class="container">
-		
+            <section>
                        <div class="content">
                          
-                             <div class="hero-unit">
+                             <div class="well">
                                
                                <g:if test="${flash.message}">
                                 <div class="message" ></div>
@@ -59,7 +59,7 @@
                              
                           </div>
                   </div>
-            
+            </section>
              </div>
   </body>
 </html>
