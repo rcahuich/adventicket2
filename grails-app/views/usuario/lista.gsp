@@ -24,6 +24,27 @@
                         </div>
                 </g:if>
                 
+                  <g:form class="well form-search" action="search">
+                    <table>
+                      <tbody>
+                        <tr class="prop">             
+                          <td class="name" valign="top">Title:</td>             
+                          <td class="value" valign="top"><input name="title" type="text" ></td>          
+                        </tr>
+                        <tr class="prop">             
+                          <td class="name" valign="top">Publisher:</td>             
+                          <td class="value" valign="top"><input name="publisher" type="text" ></td>          
+                        </tr>
+                    </tbody>      
+                    </table>
+                    <g:submitToRemote 
+                      oncomplete="showSpinner(false)" 
+                      onloading="showSpinner(true)" 
+                      update="searchresults" 
+                      url="[controller:'book', action:'search']" value="Search">
+                    </g:submitToRemote>
+                  </g:form>
+                
                   <div class="well form-search">
                     <a class="btn btn-primary" href="${createLink(controller:'usuario', action:'nuevo')}"><i class="icon-plus-sign icon-white"></i> <g:message code="usuario.nuevo" /></a>
                     <input type="text" class="input-medium search-query">

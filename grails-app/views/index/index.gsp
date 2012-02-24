@@ -40,6 +40,8 @@
     <script src="/adventicket/js/bootstrap-carousel.js"></script>
     <script src="/adventicket/js/bootstrap-typeahead.js"></script>
     <script src="/adventicket/js/application.js"></script>
+    <script src="/adventicket/js/prototype/prototype.js"></script>
+    
     
   </head>
 
@@ -102,13 +104,14 @@
     <div class="container">
           
      <g:if test='${flash.message}'>
-        <div class="alert-message error" data-alert="alert">
-          <a class="close" href="#">&times;</a>
+        <div class="alert alert-error fade in">
+          <a class="close" data-dismiss="alert" href="#">&times;</a>
           <center>
           <p>${flash.message}</p>
           </center>
         </div>
      </g:if>
+      
      <g:render template="/common/loggin" />
      <section id="home"> 
      <div class="well">
@@ -195,108 +198,102 @@
       <section id="nosotros">
         <div class="well">
           <div class="page-header">
-          <h1>Nosotros <small>Empresa altamente efectiva</small></h1>
+              <h1>Nosotros <small>Empresa altamente efectiva</small></h1>
           </div>
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
+          <div class="row">
+            <div class="span3 columns">
+              <p>Phasellus sollicitudin feugiat metus nec gravida. Sed in nulla arcu, at egestas nunc. Aliquam blandit rutrum arcu sed iaculis. Curabitur vel sem ipsum. Cras egestas adipiscing tortor vitae congue. Donec at nibh magna. Ut tortor elit, auctor id varius vel, lacinia vel odio.</p>
+            </div>
+            <div class="span9 columns">
+              <p>Phasellus sollicitudin feugiat metus nec gravida. Sed in nulla arcu, at egestas nunc. Aliquam blandit rutrum arcu sed iaculis. Curabitur vel sem ipsum. Cras egestas adipiscing tortor vitae congue. Donec at nibh magna. Ut tortor elit, auctor id varius vel, lacinia vel odio.</p>
+              <br />
+              <img class="small-bs-icon" src="${resource(dir: 'images', file: 'nosotros.jpg')}">
+              <br />
+              <br />
+              <p>Phasellus sollicitudin feugiat metus nec gravida. Sed in nulla arcu, at egestas nunc. Aliquam blandit rutrum arcu sed iaculis. Curabitur vel sem ipsum. Cras egestas adipiscing tortor vitae congue. Donec at nibh magna. Ut tortor elit, auctor id varius vel, lacinia vel odio.</p>
+            </div>
+          </div>
       </section>
       
       <section id="contactanos">
         <div class="well">
           <div class="page-header">
-          <h1>Contactanos <small>Empresa altamente efectiva</small></h1>
+              <h1>Contactanos <small>Empresa altamente efectiva</small></h1>
           </div>
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
-          <br/>
-          Hola
+          <div class="row">
+            <div class="span3 columns">
+              <img class="small-bs-icon" src="${resource(dir: 'images', file: 'contactanos.jpg')}">
+            </div>
+            <div class="span9 columns">
+              <p>Phasellus sollicitudin feugiat metus nec gravida. Sed in nulla arcu, at egestas nunc. Aliquam blandit rutrum arcu sed iaculis. Curabitur vel sem ipsum. Cras egestas adipiscing tortor vitae congue. Donec at nibh magna. Ut tortor elit, auctor id varius vel, lacinia vel odio.</p>
+              
+              	<g:form onClick="validarEmail(document.getElementById('email').value);"
+                name="solicitudInformacion" 
+                action="solicitud"
+                class="form-horizontal" 
+                >
+                  <fieldset>
+                    <legend>Solicitar Información</legend>
+                    <br />
+                      <div id="mensajeEnviado" style="font-size: 13px; text-align: center; text-decoration: underline;">
+                      </div>
+                    <br />
+                    <div class="control-group">
+                      <label class="control-label" for="input01">Nombre *</label>
+                      <div class="controls">
+                        <input type="text" required="" name="nombre" class="input-xlarge">
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label" for="input01">E-mail *</label>
+                      <div class="controls">
+                        <input type="email" required="" name="email" class="input-xlarge" >
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label" for="textarea">Comentario *</label>
+                      <div class="controls">
+                        <textarea class="input-xlarge" required="" name="comentario" rows="3"></textarea>
+                      </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                      <button type="reset" class="btn">Limpiar</button>
+                      <g:submitToRemote
+                        type="submit"
+                        class="btn btn-primary"
+                        update="mensajeEnviado" 
+                        value="Enviar"
+                        url="[controller:'index', action:'solicitud']"
+                        onLoading="showSpinner(true)"  
+                        onComplete="showSpinner(false)">
+                        <img id="spinner" style="display: none" src="${resource(dir: 'images', file: 'spinner.gif')}"/>
+                      </g:submitToRemote>
+                    </div>
+                  </fieldset>
+                
+              </g:form>
+              
+            </div>
+          </div>
       </section>
        
     </div> <!-- /container -->
-
+    
+    <g:render template="/common/footer" />
   </body>
+<g:javascript>
+           function showSpinner(visible) {
+              $('spinner').style.display = visible ? "inline" : "none";
+           }
+           Ajax.Responders.register({
+           onLoading: function() {
+                 showSpinner(true);
+           },
+           onComplete: function() {
+             if(!Ajax.activeRequestCount) showSpinner(false);
+           }
+           });
+</g:javascript>
+
 </html>

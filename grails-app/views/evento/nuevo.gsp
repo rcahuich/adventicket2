@@ -11,11 +11,11 @@
             <section>
             <div class="well">
 
-		
-                  <div class="page-header">
-                    <h1><g:message code="evento.nuevoTitulo" /><small> <g:message code="evento.nuevo" /></small></h1>
-                  </div>      
-
+              <div class="marketing">
+                    <h1><g:message code="evento.nuevoTitulo" /></h1>
+                    <p class="marketing-byline"><g:message code="evento.nuevo" /></p>
+              </div>
+              <hr class="soften">
                               <g:hasErrors bean="${evento}">
 
                               <div class="alert alert-error fade in" >

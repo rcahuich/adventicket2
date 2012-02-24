@@ -34,11 +34,6 @@
                 <script src="/adventicket/js/bootstrap-typeahead.js"></script>
                 <script src="/adventicket/js/application.js"></script>
                 
-                
-                
-
-                
-                    
                 <r:layoutResources/>
 		<g:layoutHead/>
         </head>
@@ -55,7 +50,7 @@
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
                 
                 
-                  <g:render template="/common/footer" />
+                <g:render template="/common/footer" />
          
                 
                 <r:layoutResources/>

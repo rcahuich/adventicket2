@@ -13,7 +13,7 @@
           <div class="nav-collapse">
             
             <ul class="nav">
-              <li ><a href="#home"> <i class="icon-home icon-white"></i></a></li>
+              <li ><a href="${createLink(uri: '/#home')}"> <i class="icon-home icon-white"></i></a></li>
               <li ><a href="${createLink(uri: '/#nosotros')}" ><g:message code="menu.nosotros" /></a></li> 
               <li><a href="${createLink(uri: '/#contactanos')}"><g:message code="menu.contactanos" /></a></li>
               <li><a href="${createLink(uri: '/')}"><i class="icon-refresh icon-white"></i></a></li>
