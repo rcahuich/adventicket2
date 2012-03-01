@@ -111,22 +111,26 @@
                                     <center><p>
                                       <table class="table table-bordered">
                                         <thead>
-                                          <tr>
+                                         <tr>
 
                                             <g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" />
                                             <g:sortableColumn property="fechaInicio" title="${message(code: 'evento.fechaInicio')}" />
                                             <g:sortableColumn property="status" title="${message(code: 'evento.status')}" />
-                                            <g:sortableColumn property="nombre" title="${message(code: 'evento.modifica')}" />
+                                            <g:if test="${statusSolicitud == 'ACEPTADO'}">
+                                              <g:sortableColumn property="statusSolicitud" title="${message(code: 'evento.modifica')}" />
+                                            </g:if>
 
                                         </tr>
                                         </thead>
                                         <tbody>
                                             <g:each in="${eventos}" status="i" var="evento">
                                               <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                                                <td><g:link controller="evento" action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
+                                              <td><g:link controller="evento" action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
                                               <td><g:formatDate date="${evento?.fechaInicio}"/></td>
                                               <td>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
-                                              <td><g:link controller="evento" action="edita" id="${evento.id}">Editar</g:link></td>
+                                              <g:if test="${statusSolicitud == 'ACEPTADO'}">
+                                                <td><g:link controller="evento" action="edita" id="${evento.id}">Editar</g:link></td>
+                                              </g:if>
                                               </tr>
                                             </g:each>
                                         </tbody>

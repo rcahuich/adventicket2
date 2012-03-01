@@ -24,40 +24,49 @@
                                     ${flash.message}
                         </div>
                 </g:if>
-                      <form class="well form-search">
-                        <a class="btn btn-primary" href="${createLink(controller:'evento', action:'nuevo')}"><i class="icon-plus-sign icon-white"></i> <g:message code="evento.nuevo" /></a>
-                        <input type="text" class="input-medium search-query">
-                        <button type="submit" class="btn">Buscar</button>
-                      </form>
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-					
-						<g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" />
-						<g:sortableColumn property="nombre" title="${message(code: 'evento.fechaInicio')}" />
-						<g:sortableColumn property="nombre" title="${message(code: 'evento.costo')}" />
-						<g:sortableColumn property="nombre" title="${message(code: 'evento.usuario')}" />
-                                                <g:sortableColumn property="status" title="${message(code: 'evento.status')}" />
-						<g:sortableColumn property="nombre" title="${message(code: 'evento.modifica')}" />
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${eventos}" status="i" var="evento">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
-						<td><g:formatDate date="${evento?.fechaInicio}"/></td>
-						<td>${fieldValue(bean: evento, field: "costo")}</td>
-                                                <td><g:link controller="usuario" action="ver" id="${evento?.usuario?.id}">${fieldValue(bean: evento, field: "usuario.username")}</g:link></td>
-                                                <td>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
-                                                <td><g:link action="edita" id="${evento.id}">Editar</g:link></td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-                        
+                
+                <div class="hero-unit">
+                    <a class="btn btn-primary" href="${createLink(controller:'evento', action:'nuevo')}"><i class="icon-plus-sign icon-white"></i> <g:message code="evento.nuevo" /></a>
+                    |   Buscar por Nombre:
+                    <g:remoteField class="input-medium search-query"
+                                   name="search" 
+                                   update="resultados" 
+                                   paramName="nombre" 
+                                   url="[controller:'evento', action:'busquedaPorNombre']">
+                    </g:remoteField>
+                </div>
+                
+                <div id="resultados">
+                    <g:if test="${resultados}">
+
+                    </g:if>
+                    <g:else>
+                          <table class="table table-bordered">
+                                  <thead>
+                                          <tr>
+                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" />
+                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.fechaInicio')}" />
+                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.costo')}" />
+                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.usuario')}" />
+                                                  <g:sortableColumn property="status" title="${message(code: 'evento.status')}" />
+                                                  <g:sortableColumn property="nombre" title="${message(code: 'evento.modifica')}" />
+                                          </tr>
+                                  </thead>
+                                  <tbody>
+                                  <g:each in="${eventos}" status="i" var="evento">
+                                          <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                                                  <td><g:link action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
+                                                  <td><g:formatDate date="${evento?.fechaInicio}"/></td>
+                                                  <td>${fieldValue(bean: evento, field: "costo")}</td>
+                                                  <td><g:link controller="usuario" action="ver" id="${evento?.usuario?.id}">${fieldValue(bean: evento, field: "usuario.username")}</g:link></td>
+                                                  <td>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
+                                                  <td><g:link action="edita" id="${evento.id}">Editar</g:link></td>
+                                          </tr>
+                                  </g:each>
+                                  </tbody>
+                          </table>
+                      </g:else>
+                </div>   
 			<div class="pagination">
 				<g:paginate total="${totalEventos}" />
 			</div>

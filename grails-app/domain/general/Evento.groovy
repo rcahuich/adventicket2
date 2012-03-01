@@ -26,6 +26,7 @@ class Evento {
     String calle
     String ciudad
     String pais
+    String lugarCompleto
     //Fechas
     Date fechaInicio
     Date fechaFin
@@ -42,6 +43,7 @@ class Evento {
     String statusSolicitud
     String statusEvento
     
+    static transients = ['lugarCompleto']
     static belongsTo = Usuario
     static hasMany = [asistentes: Usuario]
     
@@ -85,6 +87,10 @@ class Evento {
         table 'eventos'
     }
     
+    String getLugarCompleto() {
+                return "$lugarDescripcion, $calle, $ciudad, $pais"
+        }
+        
     String toString() {
         return nombre
     }

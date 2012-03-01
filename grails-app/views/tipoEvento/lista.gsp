@@ -26,10 +26,9 @@
                         </div>
                 </g:if>
                 
-                  <form class="well form-search">
+                  <form class="hero-unit">
                     <a class="btn btn-primary" href="${createLink(controller:'tipoEvento', action:'nuevo')}"><i class="icon-plus-sign icon-white"></i> <g:message code="tipoEvento.nuevo" /></a>
-                    <input type="text" class="input-medium search-query">
-                    <button type="submit" class="btn">Buscar</button>
+                   
                   </form>
                         
 			<table class="table table-bordered">

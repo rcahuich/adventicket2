@@ -56,42 +56,42 @@
                   <br>
                   
                   <div id="divBuscar">
-                    <form class="form-horizontal">
+                    <g:form class="form-horizontal" name="busqueda" url="[controller:'evento', action:'eventos']">
                       <div class="control-group">
                       <br>
                         <label class="control-label" for="input01">Nombre del Evento </label>
                         <div class="controls">
-                          <input type="text" class="input-large search-query">
+                          <input type="text" name="nombreEvento" value="${params.nombreEvento}" class="input-large search-query">
                         </div>
                         <br>
                         <div class="controls">
                           <button type="submit" id="fat-btn" data-loading-text="buscando..." class="btn btn-small btn-primary">Buscar</button>
                         </div>
                       </div>
-                    </form>
+                    </g:form>
                   </div>
                   <div id="divBusquedaAvanzada" style="display:none">
-                    <form class="form-horizontal">
+                    <g:form class="form-horizontal" name="busqueda" url="[controller:'evento', action:'eventos']">
                       <div class="control-group">
                         <br>
                         <label class="control-label" for="input01">Nombre del Evento </label>
                         <div class="controls">
-                          <input type="text" class="input-large search-query">
+                          <input type="text" name="nombreEventoAvanzada" value="${params.nombreEventoAvanzada}" class="input-large search-query">
                         </div>
                         <br>
                         <label class="control-label" for="input01"><g:message code="evento.tipoEvento" /></label>
                         <div class="controls">
-                          <g:select id="tipoSubEvento" class="span9" name="tipoSubEvento.id" from="${general.TipoSubEvento.list()}" optionKey="id" required="" value="${evento?.tipoSubEvento?.id}" class="many-to-one"/>
+                          <g:select id="tipoSubEvento" class="span9" name="tipoSubEventoId" from="${general.TipoSubEvento.list()}" optionKey="id" required="" value="${evento?.tipoSubEvento?.id}" class="many-to-one"/>
                         </div>
                         <br>
                         <label class="control-label" for="input01">Desde el </label>
                         <div class="controls">
-                          <g:datePicker class="small" name="fechaInicio" precision="day"  value=""/>
+                          <g:datePicker class="small" name="fechaInicioAvanzada" precision="day"  value="${params.fechaInicioAvanzada}"/>
                         </div>
                         <br>
                         <label class="control-label" for="input01">Hasta el </label>
                         <div class="controls">
-                          <g:datePicker class="small" name="fechaFin" precision="day"  value=""/>
+                          <g:datePicker class="small" name="fechaFinAvanzada" precision="day"  value="${params.fechaFinAvanzada}"/>
                         </div>
                         <br>
                         <div class="controls">
@@ -99,13 +99,21 @@
                         </div>
                         
                       </div>
-                    </form>
+                    </g:form>
                   </div>
                 </div>
                 
               </div>
             </div><!--/row-->
-          </div>
+         <hr class="soften">
+              
+              <g:if test="${eventosBusqueda}">
+                <g:render template="resultadosEventosBusqueda"/>
+              </g:if>
+              <g:elseif test="${busquedaAvanzada}">
+                <g:render template="resultadosEventosBusquedaAvanzada"/>
+              </g:elseif>
+         
        
          <hr class="soften">
          

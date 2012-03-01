@@ -1,5 +1,6 @@
 package general
 
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
@@ -242,6 +243,42 @@ class EventoController {
     }
     
     def eventos = {
-        
+        // Busqueda por nombre
+        if(params.nombreEvento){
+            log.debug "Params $params"
+            log.debug "Nombre del Evento antes de entrar $params.nombreEventoAvanzada"
+            params.nombreEventoAvanzada = ""
+            log.debug "Nombre del Evento despues de entrar $params.nombreEventoAvanzada"
+            def lista = Evento.findAllByNombreIlike(wrapSearchParm(params.nombreEvento))
+        }
+        //Busqueda Avanzada
+        def listaAvanzada
+        if (params.nombreEventoAvanzada){
+                log.debug "Busqueda Avanzada"
+                log.debug "Params $params"
+                log.debug "Nombre del Evento antes de entrar $params.nombreEvento"
+                params.nombreEvento = ""
+                log.debug "Nombre del Evento despues de entrar $params.nombreEvento"
+                log.debug "Con todos los datos"
+                listaAvanzada = Evento.findAllByNombreIlikeAndtipoSubEventoIdIlike(wrapSearchParm(params.nombreEventoAvanzada), wrapSearchParm(params.tipoSubEventoId))
+                listaAvanzada = Evento.findAllByFechaInicioBetween(params.fechaInicioAvanzada, params.fechaFinAvanzada)
+                log.debug "listaAvanzada $listaAvanzada"
+            }
+         else {
+             log.debug "=D"
+         }
+        [eventosBusqueda:lista, busquedaAvanzada:listaAvanzada]
     }
+    
+    //Busquedas
+     def String wrapSearchParm(value) {
+             '%'+value+'%'
+     }
+
+     def busquedaPorNombre = {
+         log.debug "Buscando eventos: $params.nombre"
+         def lista = Evento.findAllByNombreIlike(wrapSearchParm(params.nombre))
+         render(template:'resultadosPorNombreEvento', model:[resultados:lista])
+     }
+     
 }

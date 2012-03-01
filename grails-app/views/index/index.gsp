@@ -41,7 +41,7 @@
     <script src="/adventicket/js/bootstrap-typeahead.js"></script>
     <script src="/adventicket/js/application.js"></script>
     <script src="/adventicket/js/prototype/prototype.js"></script>
-    
+    <r:layoutResources/>
     
   </head>
 
@@ -65,9 +65,9 @@
                 <li><a href="${createLink(uri: '/')}"><i class="icon-refresh icon-white"></i></a></li>
               </ul>
               
-              <form class="navbar-search pull-left" action="">
-                <input type="text" class="search-query span3" placeholder="Busca tu evento">
-              </form>
+              <g:form class="navbar-search pull-left" name="busqueda" url="[controller:'evento', action:'eventos']">
+                <input type="text" name="nombreEvento" value="${params.nombreEvento}" class="search-query span3" placeholder="Busca tu evento">
+              </g:form>
               
               <ul class="nav pull-right">
                 <sec:ifNotLoggedIn>
@@ -145,7 +145,7 @@
                   <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
                 </div>
              </div>
-             <div class="span3" style="margin-left: 25px;">
+             <div class="span4" style="margin-left: 25px;">
                   <h3>Eventos por Venir</h3>
                   <br>
                   <p>
@@ -281,7 +281,7 @@
     </div> <!-- /container -->
     
     <g:render template="/common/footer" />
-  </body>
+    <r:layoutResources/>
 <g:javascript>
            function showSpinner(visible) {
               $('spinner').style.display = visible ? "inline" : "none";
@@ -295,5 +295,7 @@
            }
            });
 </g:javascript>
+
+  </body>
 
 </html>

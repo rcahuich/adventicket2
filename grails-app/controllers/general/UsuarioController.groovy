@@ -503,4 +503,14 @@ class UsuarioController {
 		createLink(base: "$request.scheme://$request.serverName:$request.serverPort$request.contextPath", controller: 'usuario', action: action, params: linkParams)
     }
     
+    //Busquedas
+     def String wrapSearchParm(value) {
+             '%'+value+'%'
+     }
+
+     def busquedaPorNombre = {
+             def lista = Usuario.findAllByNombreIlike(wrapSearchParm(params.nombre))
+             render(template:'resultadosPorNombre', model:[resultados:lista])
+     }
+    
 }

@@ -18,10 +18,11 @@
               <li><a href="${createLink(uri: '/#contactanos')}"><g:message code="menu.contactanos" /></a></li>
               <li><a href="${createLink(uri: '/')}"><i class="icon-refresh icon-white"></i></a></li>
             </ul>
-          
-            <form class="navbar-search pull-left" action="">
-              <input type="text" class="search-query span3" placeholder="Busca tu evento">
-            </form>
+
+            <g:form class="navbar-search pull-left" name="busqueda" url="[controller:'evento', action:'eventos']">
+              <input type="text" name="nombreEvento" value="${params.nombreEvento}" class="search-query span3" placeholder="Busca tu evento">
+            </g:form>
+            
           
             <ul class="nav pull-right">
               <sec:ifNotLoggedIn>

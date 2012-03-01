@@ -40,6 +40,24 @@
                   </ul>
                 </li>
                 <li><a href="${createLink(controller:'index', action:'index2')}"><i class="icon-info-sign"></i> Acerca de</a></li>
+                <li>
+                  <sec:ifLoggedIn>
+
+                    <li class="divider-vertical"></li>
+                    <li id="fat-menu" class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><g:message code="menu.bienvenido" /> <sec:username /> <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="${createLink(controller:'usuario', action:'ver')}"><i class="icon-user"></i> <g:message code="menu.miCuenta" /></a></li>
+                        <sec:ifAllGranted roles="ROLE_ADMIN">
+                            <li><a href="${createLink(controller:'admin', action:'admin')}"><i class="icon-cog"></i> <g:message code="admin.inicio" /></a></li>
+                        </sec:ifAllGranted>
+                        <li class="divider"></li>
+                        <li><a href="${createLink(controller:'logout')}"><i class="icon-off"></i> <g:message code="menu.cerrarSesion" /></a></li>
+                      </ul>
+                    </li>
+
+              </sec:ifLoggedIn>
+                </li>
               </ul>
             </div>
           </div>

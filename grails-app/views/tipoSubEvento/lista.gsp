@@ -24,10 +24,9 @@
                                     ${flash.message}
                         </div>
                 </g:if>
-                          <form class="well form-search">
+                          <form class="hero-unit">
                             <a class="btn btn-primary" href="${createLink(controller:'tipoSubEvento', action:'nuevo')}"><i class="icon-plus-sign icon-white"></i> <g:message code="tipoSubEvento.nuevo" /></a>
-                            <input type="text" class="input-medium search-query">
-                            <button type="submit" class="btn">Buscar</button>
+                           
                           </form>
 			<table class="table table-bordered">
 				<thead>
