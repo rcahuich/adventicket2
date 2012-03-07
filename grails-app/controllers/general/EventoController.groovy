@@ -283,15 +283,25 @@ class EventoController {
         }
     }
     
+    def aceptarEventos = {
+        render (view:'listaPorAceptar')
+    }
+    
+    def listaEventosPorAceptar = {
+        def lista
+        if (params.filter.equals("todos"))
+            lista = Evento.list()
+        else
+        lista = Evento.findAllByStatusSolicitud(params.filter)
+
+        render(template:'resultados', model:[resultados:lista])
+    }
     
     //Busquedas
      def String wrapSearchParm(value) {
              '%'+value+'%'
      }
-     
-//    def buscaEventos = {
-//		 render (view:'eventos')
-//    }
+
 
     def buscarEventos = {
         println "Entrando a busqueda normal"

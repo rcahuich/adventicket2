@@ -23,7 +23,7 @@
                   <ul class="dropdown-menu">
                     <li><a href="${createLink(controller:'evento', action:'lista')}"><i class="icon-th-list"></i> <g:message code="evento.lista" /></a></li>
                     <li><a href="${createLink(controller:'evento', action:'nuevo')}"><i class="icon-plus-sign"></i> <g:message code="evento.nuevo" /></a></li>
-                    <li><a href="${createLink(controller:'evento', action:'nuevo')}"><i class="icon-plus-sign"></i> <g:message code="evento.porAceptar" /></a></li>
+                    <li><a href="${createLink(controller:'evento', action:'aceptarEventos')}"><i class="icon-check"></i> <g:message code="evento.porAceptar" /></a></li>
                   </ul>
                 </li>
                 <li class="dropdown">
