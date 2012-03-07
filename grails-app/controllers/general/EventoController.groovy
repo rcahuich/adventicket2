@@ -1,6 +1,7 @@
 package general
 
 import grails.converters.JSON
+import grails.gorm.*
 import grails.plugins.springsecurity.Secured
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
@@ -17,7 +18,7 @@ class EventoController {
     
     @Secured(['ROLE_ADMIN'])
     def lista = {
-        params.max = Math.min(params.max ? params.int('max') : 2, 100)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [eventos: Evento.list(params), totalEventos: Evento.count()]
     }
     
@@ -38,8 +39,8 @@ class EventoController {
             
             Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
             evento.usuario = usuario
-        log.debug "parmas de precio: $params.precio"
-        log.debug "ahora con el evento precio: $evento.precio"
+            log.debug "parmas de precio: $params.precio"
+            log.debug "ahora con el evento precio: $evento.precio"
             
             if(evento.precio == true){
                 log.debug "Con costo"
@@ -126,15 +127,55 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def edita = {
-        
         def evento = Evento.get(params.id)
-        if (!evento) {
-            flash.message = message(code: 'evento.noEdita', args: [evento.nombre])
-            redirect(action: "lista")
+      if (!evento) {
+            flash.message = message(code: 'evento.noVer')
+            redirect(uri: "/")
         }
-        else {
-            return [evento: evento]
-        }
+        
+        log.debug "REGLAS"
+        log.debug "precio: $evento.precio"
+        log.debug "statusSolicitud $evento.statusSolicitud"
+        log.debug "statusEvento $evento.statusEvento"
+        
+        if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
+                log.debug "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                return [evento: evento]
+        }else{
+                if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
+                    log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+                    flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if(evento.statusSolicitud.equals("RECHAZADO")){
+                    log.debug "El evento ha sido RECHAZADO"
+                    flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if(evento.statusSolicitud.equals("CANCELADO")){
+                    log.debug "El evento ha sido CANCELADO"
+                    flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if(evento.statusEvento.equals("STANBY")){
+                    log.debug "El evento ha sido puesto en STANBY"
+                    flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
+                    redirect( controller: "usuario", action: "ver")
+                }
+                else
+                if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
+                    log.debug "El evento es aceptado"
+                    return [evento: evento]
+                }
+                else {
+                    flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
+                    log.debug "ELSE"
+                    redirect( controller: "usuario", action: "ver")
+                }
+            }
     }
     
     @Secured(['ROLE_ASISTENTE'])
@@ -242,43 +283,117 @@ class EventoController {
         }
     }
     
-    def eventos = {
-        // Busqueda por nombre
-        if(params.nombreEvento){
-            log.debug "Params $params"
-            log.debug "Nombre del Evento antes de entrar $params.nombreEventoAvanzada"
-            params.nombreEventoAvanzada = ""
-            log.debug "Nombre del Evento despues de entrar $params.nombreEventoAvanzada"
-            def lista = Evento.findAllByNombreIlike(wrapSearchParm(params.nombreEvento))
-        }
-        //Busqueda Avanzada
-        def listaAvanzada
-        if (params.nombreEventoAvanzada){
-                log.debug "Busqueda Avanzada"
-                log.debug "Params $params"
-                log.debug "Nombre del Evento antes de entrar $params.nombreEvento"
-                params.nombreEvento = ""
-                log.debug "Nombre del Evento despues de entrar $params.nombreEvento"
-                log.debug "Con todos los datos"
-                listaAvanzada = Evento.findAllByNombreIlikeAndtipoSubEventoIdIlike(wrapSearchParm(params.nombreEventoAvanzada), wrapSearchParm(params.tipoSubEventoId))
-                listaAvanzada = Evento.findAllByFechaInicioBetween(params.fechaInicioAvanzada, params.fechaFinAvanzada)
-                log.debug "listaAvanzada $listaAvanzada"
-            }
-         else {
-             log.debug "=D"
-         }
-        [eventosBusqueda:lista, busquedaAvanzada:listaAvanzada]
-    }
     
     //Busquedas
      def String wrapSearchParm(value) {
              '%'+value+'%'
      }
+     
+//    def buscaEventos = {
+//		 render (view:'eventos')
+//    }
 
+    def buscarEventos = {
+        println "Entrando a busqueda normal"
+        //params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
+        if(params?.nombreEvento || (params.fechaInicio && params.fechaFin)){
+            def resultado = buscar(params)
+            [eventosBusqueda: resultado.lista]
+        }else{
+           //Sin busqueda
+        }
+    }
+    
      def busquedaPorNombre = {
          log.debug "Buscando eventos: $params.nombre"
          def lista = Evento.findAllByNombreIlike(wrapSearchParm(params.nombre))
          render(template:'resultadosPorNombreEvento', model:[resultados:lista])
      }
+     
+     def buscar(params) {
+        println "[${obtieneUsuario()}] Buscando Eventos"
+        println "Parametros $params"
+        def eventos = []
+        //def cantidad = 0
+        def nombre = String.valueOf(params.nombreEvento)
+        def tipoEvento = String.valueOf(params.tipoSubEvento)
+        def fechas = fechasDeBusqueda(params)
+        def fechaInicial = fechas.fechaInicio
+        def fechaFinal = fechas.fechaFin
+        if (params?.nombreEvento) {
+            if (params?.tipoSubEvento) {
+                println "Buscando Eventos con Nombre y fechas"
+                eventos = Evento.buscarEvento.findAllByNombreIlikeAndTipoSubEventoIlike(nombre, tipoEvento).buscaPorFecha(fechaInicial, fechaFinal).list(params)
+                println "eventos --- $eventos"
+                //cantidad = Evento.buscaPorNombre(params?.nombreEvento).buscaPorFecha(fechaInicial, fechaFinal).count()
+            } else {
+                println "Buscando Eventos solo con Nombre"
+                eventos = Evento.buscarEvento.findAllByNombreIlike(wrapSearchParm(params.nombreEvento))
+                println "eventos --- $eventos"
+                //cantidad = Evento.buscarEvento.findAllByNombreIlike(wrapSearchParm(params.nombreEvento)).count()
+            }
+        } else {
+            if (params?.tipoSubEvento) {
+                println "Buscando Eventos solo por Fecha y Tipo"
+                eventos = Evento.buscarEvento.findAllByTipoSubEventoIlike(tipoEvento).buscaPorFecha(fechaInicial, fechaFinal).list(params)
+                println "eventos -- $eventos"
+            } else {
+                println "Buscando todos los Eventos..."
+                eventos = Evento.executeQuery("select evento from Evento evento where evento.fechaInicio >= :fechaActual and evento.statusSolicitud = :statusSolicitud and evento.statusEvento = :statusEvento ", [fechaActual: new Date(), statusSolicitud:"ACEPTADO",statusEvento:"ACTIVO"])
+                println "eventos -- $eventos"
+            }
+        }
+
+        return [lista:eventos]
+    }
+    
+    def fechasDeBusqueda(params) {
+        def fechaInicial
+        def fechaFinal
+        if (params?.fechaInicial) {
+            fechaInicial = new Date().parse('dd/MM/yyyy',params.fechaInicial)
+        }
+        if (params?.fechaFinal) {
+            fechaFinal = new Date().parse('dd/MM/yyyy',params.fechaFinal)
+        }
+        def cal = Calendar.instance
+        if (fechaInicial && fechaFinal) {
+            cal.time = fechaInicial
+            cal.set(Calendar.HOUR,0)
+            cal.set(Calendar.MINUTE,0)
+            cal.set(Calendar.SECOND,0)
+            fechaInicial = cal.time
+            cal.time = fechaFinal
+            cal.set(Calendar.HOUR,23)
+            cal.set(Calendar.MINUTE,59)
+            cal.set(Calendar.SECOND,59)
+            fechaFinal = cal.time
+        } else if (fechaInicial) {
+            cal.time = fechaInicial
+            cal.set(Calendar.HOUR,0)
+            cal.set(Calendar.MINUTE,0)
+            cal.set(Calendar.SECOND,0)
+            fechaInicial = cal.time
+            cal.set(Calendar.HOUR,23)
+            cal.set(Calendar.MINUTE,59)
+            cal.set(Calendar.SECOND,59)
+            fechaFinal = cal.time
+        } else if (fechaFinal) {
+            cal.time = fechaFinal
+            cal.set(Calendar.HOUR,0)
+            cal.set(Calendar.MINUTE,0)
+            cal.set(Calendar.SECOND,0)
+            fechaInicial = cal.time
+            cal.set(Calendar.HOUR,23)
+            cal.set(Calendar.MINUTE,59)
+            cal.set(Calendar.SECOND,59)
+            fechaFinal = cal.time
+        }
+        return [fechaInicial: fechaInicial, fechaFinal: fechaFinal]
+    }
+     
+    def obtieneUsuario() {
+        return springSecurityService.authentication.name
+    }
      
 }

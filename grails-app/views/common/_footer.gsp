@@ -2,11 +2,11 @@
     <footer class="footer">
       <div class="container" >
         
-        <div class="row" style="padding-left: 10px;">
-          <div class="span3 columns">
+        <div class="row">
+          <div class="span4 columns">
               <a href="${createLink(uri: '/')}" ><img src="${resource(dir: 'images', file: 'logo1.png')}" alt="" title="" width="140" height="37" border="0" style="float: left"/> </a>
           </div>
-          <div class="span3 columns">
+          <div class="span4 columns">
               <img class="small-bs-icon" src="${resource(dir: 'img/social', file: 'google_plus_32.png')}">
               <img class="small-bs-icon" src="${resource(dir: 'img/social', file: 'facebook_32.png')}">
               <img class="small-bs-icon" src="${resource(dir: 'img/social', file: 'twitter_32.png')}">

@@ -19,7 +19,7 @@
               <li><a href="${createLink(uri: '/')}"><i class="icon-refresh icon-white"></i></a></li>
             </ul>
 
-            <g:form class="navbar-search pull-left" name="busqueda" url="[controller:'evento', action:'eventos']">
+            <g:form class="navbar-search pull-left" name="busqueda" url="[controller:'evento', action:'buscarEventos']">
               <input type="text" name="nombreEvento" value="${params.nombreEvento}" class="search-query span3" placeholder="Busca tu evento">
             </g:form>
             
@@ -28,8 +28,7 @@
               <sec:ifNotLoggedIn>
 
                <li class="divider-vertical"></li>
-               <li><a href="${createLink(controller:'usuario', action:'nuevo')}"><g:message code="menu.registrate" /></a></li>
-<!--               <li><a href="${createLink(controller:'login', action:'auth')}"><g:message code="login.iniciaSesion" /></a></li>-->
+               <a href="${createLink(controller:'usuario', action:'nuevo')}" class="btn btn-inverse"><g:message code="menu.registrate" /></a>
                <a data-toggle="modal" href="/#modalLogin" class="btn"><g:message code="login.iniciaSesion" /></a>
 
               </sec:ifNotLoggedIn>

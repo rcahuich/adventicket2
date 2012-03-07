@@ -3,7 +3,6 @@ dataSource {
     driverClassName = "org.postgresql.Driver"
     username = "tomcat"    
     password = "tomcat00"
-    
 }
 
 hibernate {
@@ -20,7 +19,7 @@ environments {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
             //url = 'jdbc:postgresql://localhost/ticket'
-            url = 'jdbc:postgresql://localhost:5433/ticket'
+            url = 'jdbc:postgresql://localhost:5432/ticket'
         }
         hibernate {
             show_sql=false

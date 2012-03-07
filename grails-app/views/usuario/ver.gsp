@@ -112,14 +112,10 @@
                                       <table class="table table-bordered">
                                         <thead>
                                          <tr>
-
                                             <g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" />
                                             <g:sortableColumn property="fechaInicio" title="${message(code: 'evento.fechaInicio')}" />
                                             <g:sortableColumn property="status" title="${message(code: 'evento.status')}" />
-                                            <g:if test="${statusSolicitud == 'ACEPTADO'}">
-                                              <g:sortableColumn property="statusSolicitud" title="${message(code: 'evento.modifica')}" />
-                                            </g:if>
-
+                                            <g:sortableColumn property="statusSolicitud" title="${message(code: 'evento.modifica')}" />
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -128,9 +124,7 @@
                                               <td><g:link controller="evento" action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
                                               <td><g:formatDate date="${evento?.fechaInicio}"/></td>
                                               <td>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
-                                              <g:if test="${statusSolicitud == 'ACEPTADO'}">
-                                                <td><g:link controller="evento" action="edita" id="${evento.id}">Editar</g:link></td>
-                                              </g:if>
+                                              <td><g:link controller="evento" action="edita" id="${evento.id}">Editar</g:link></td>
                                               </tr>
                                             </g:each>
                                         </tbody>

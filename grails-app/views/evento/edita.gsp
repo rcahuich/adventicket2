@@ -18,9 +18,7 @@
               </ul>
             </div>
             </section>
-          </div>
-          <div class="container">
-   
+    
             <div class="well">
              
                               <div class="page-header">

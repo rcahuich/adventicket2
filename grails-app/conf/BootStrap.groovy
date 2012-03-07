@@ -29,6 +29,27 @@ class BootStrap {
             admin.save(flush:true)
             UsuarioRol.create(admin, rolAdmin, true)
         }
+        
+        println "Creando Tipos de Eventos Inicial"
+        def tipoEvento = TipoEvento.findByNombre("Campamentos")
+        if (!tipoEvento) {
+            tipoEvento = new TipoEvento(
+            nombre: 'Campamentos'
+            )
+            tipoEvento.save(flush:true)
+            println "Tipo de Evento creado > $tipoEvento"
+        }    
+        
+        println "Creando SubTiposEvento Inicial"
+        def tipoSubEvento = TipoSubEvento.findByNombre("Jovenes")
+        if (!tipoSubEvento) {
+            tipoSubEvento = new TipoSubEvento(
+                nombre: 'Jovenes',
+                tipoEvento: tipoEvento
+            )    
+            tipoSubEvento.save(flush:true)
+            println "SubTipo de Evento creado > $tipoSubEvento"
+        }
 
         log.debug "Aplicacion inicializada"
     }

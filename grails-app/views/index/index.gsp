@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'prettify.css')}" type="text/css">
     
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="/adventicket/js/smoothscroll.js"></script>
     <script src="/adventicket/js/jquery.js"></script>
     <script src="/adventicket/js/google-code-prettify/prettify.js"></script>
     <script src="/adventicket/js/bootstrap-transition.js"></script>
@@ -65,7 +64,7 @@
                 <li><a href="${createLink(uri: '/')}"><i class="icon-refresh icon-white"></i></a></li>
               </ul>
               
-              <g:form class="navbar-search pull-left" name="busqueda" url="[controller:'evento', action:'eventos']">
+              <g:form class="navbar-search pull-left" name="busqueda" url="[controller:'evento', action:'buscarEventos']">
                 <input type="text" name="nombreEvento" value="${params.nombreEvento}" class="search-query span3" placeholder="Busca tu evento">
               </g:form>
               
@@ -73,8 +72,7 @@
                 <sec:ifNotLoggedIn>
 
                  <li class="divider-vertical"></li>
-                 <li><a href="${createLink(controller:'usuario', action:'nuevo')}"><g:message code="menu.registrate" /></a></li>
-  <!--               <li><a href="${createLink(controller:'login', action:'auth')}"><g:message code="login.iniciaSesion" /></a></li>-->
+                 <a href="${createLink(controller:'usuario', action:'nuevo')}" class="btn btn-inverse"><g:message code="menu.registrate" /></a>
                  <a data-toggle="modal" href="/#modalLogin" class="btn"><g:message code="login.iniciaSesion" /></a>
 
                 </sec:ifNotLoggedIn>
@@ -160,7 +158,7 @@
                           </g:each>
                           </tbody>
                     </table>
-                  <a style="float: right" class="btn" href="${createLink(controller:'evento', action:'eventos')}">Ver más Eventos... &raquo;</a>
+                  <a style="float: right" class="btn" href="${createLink(controller:'evento', action:'buscarEventos')}">Ver más Eventos... &raquo;</a>
                   </g:if>
                   <g:else>
                       <p>Aun no hay ningun evento.</p>

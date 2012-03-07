@@ -87,6 +87,20 @@ class Evento {
         table 'eventos'
     }
     
+    static namedQueries = {
+        buscarEvento {
+            def now = new Date()
+            like 'statusSolicitud', "ACEPTADO"
+            like 'statusEvento', "ACTIVO"
+            gt 'fechaInicio', now
+        }
+
+        buscaPorFecha { fechaInicio, fechaFin ->
+            between 'fechaInicio', fechaInicio, fechaFin
+        }
+
+    }
+    
     String getLugarCompleto() {
                 return "$lugarDescripcion, $calle, $ciudad, $pais"
         }
