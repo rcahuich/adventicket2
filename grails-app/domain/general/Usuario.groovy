@@ -1,6 +1,6 @@
 package general
 
-class Usuario {
+class Usuario implements java.io.Serializable {
 
 	transient springSecurityService
 

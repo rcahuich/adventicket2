@@ -5,23 +5,23 @@
 <table class="table table-bordered">
     <thead>
             <tr>
-                    <g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" />
-                    <g:sortableColumn property="nombre" title="${message(code: 'evento.fechaInicio')}" />
-                    <g:sortableColumn property="nombre" title="${message(code: 'evento.costo')}" />
-                    <g:sortableColumn property="nombre" title="${message(code: 'evento.usuario')}" />
-                    <g:sortableColumn property="status" title="${message(code: 'evento.status')}" />
-                    <g:sortableColumn property="nombre" title="${message(code: 'evento.modifica')}" />
+                    <h5><g:sortableColumn property="nombre" title="${message(code: 'evento.nombre')}" /></h5>
+                    <h5><g:sortableColumn property="nombre" title="${message(code: 'evento.fechaInicio')}" /></h5>
+                    <h5><g:sortableColumn property="nombre" title="${message(code: 'evento.costo')}" /></h5>
+                    <h5><g:sortableColumn property="nombre" title="${message(code: 'evento.usuario')}" /></h5>
+                    <h5><g:sortableColumn property="status" title="${message(code: 'evento.status')}" /></h5>
+                    <h5><g:sortableColumn property="nombre" title="${message(code: 'evento.modifica')}" /></h5>
             </tr>
     </thead>
     <tbody>
     <g:each in="${resultados}" status="i" var="evento">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                    <td><g:link action="ver" id="${evento.id}">${fieldValue(bean: evento, field: "nombre")}</g:link></td>
-                    <td><g:formatDate date="${evento?.fechaInicio}"/></td>
-                    <td>${fieldValue(bean: evento, field: "costo")}</td>
-                    <td><g:link controller="usuario" action="ver" id="${evento?.usuario?.id}">${fieldValue(bean: evento, field: "usuario.username")}</g:link></td>
-                    <td>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
-                    <td><g:link action="edita" id="${evento.id}">Editar</g:link></td>
+                    <td><g:link action="ver" id="${evento.id}"><h5>${fieldValue(bean: evento, field: "nombre")}</h5></g:link></td>
+                    <td><h5><g:formatDate date="${evento?.fechaInicio}"/></h5></td>
+                    <td><h5><g:checkBox name="precio" value="${evento?.precio}" disabled="true"/></h5></td>
+                    <td><g:link controller="usuario" action="ver" id="${evento?.usuario?.id}"><h5>${fieldValue(bean: evento, field: "usuario.username")}</h5></g:link></td>
+                    <td><h5>${fieldValue(bean: evento, field: "statusSolicitud")}</td>
+                    <td><g:link action="edita" id="${evento.id}"><h5>Editar</h5></g:link></td>
             </tr>
     </g:each>
     </tbody>

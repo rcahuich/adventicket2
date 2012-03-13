@@ -43,7 +43,10 @@ class UsuarioRol implements Serializable {
 	}
 
 	static void removeAll(Usuario usuario) {
-		executeUpdate 'DELETE FROM UsuarioRol WHERE usuario=:usuario', [usuario: usuario]
+		//executeUpdate 'DELETE FROM UsuarioRol WHERE usuario=:usuario', [usuario: usuario]
+            for(rol in UsuarioRol.findAllByUsuario(usuario)) {
+            rol.delete()
+        }    
 	}
 
 	static void removeAll(Rol rol) {

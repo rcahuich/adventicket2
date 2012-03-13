@@ -32,22 +32,22 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def crea = {
-        log.debug "Params: $params"
+        println "Params: $params"
         Evento.withTransaction {
             
             def evento = new Evento(params)
             
             Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
             evento.usuario = usuario
-            log.debug "parmas de precio: $params.precio"
-            log.debug "ahora con el evento precio: $evento.precio"
+            println "parmas de precio: $params.precio"
+            println "ahora con el evento precio: $evento.precio"
             
             if(evento.precio == true){
-                log.debug "Con costo"
+                println "Con costo"
                 evento.statusSolicitud = "ENVIADO"//"ACEPTADO", "RECHAZADO", "CANCELADO", "ENVIADO"
                 evento.statusEvento = "ACTIVO"
             }else{
-                log.debug "Sin costo"
+                println "Sin costo"
                 evento.costo = 0
                 evento.statusSolicitud = "ACEPTADO"
                 evento.statusEvento = "ACTIVO"
@@ -70,7 +70,6 @@ class EventoController {
         }
     }
     
-    
     def ver = {
         def evento = Evento.get(params.id)
         
@@ -79,46 +78,50 @@ class EventoController {
             redirect(uri: "/")
         }
         
-        log.debug "REGLAS"
-        log.debug "precio: $evento.precio"
-        log.debug "statusSolicitud $evento.statusSolicitud"
-        log.debug "statusEvento $evento.statusEvento"
+        println "REGLAS"
+        println "precio: $evento.precio"
+        println "statusSolicitud $evento.statusSolicitud"
+        println "statusEvento $evento.statusEvento"
         
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
-                log.debug "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                println "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                if(evento.precio == true && (evento.statusSolicitud.equals("ENVIADO") || evento.statusSolicitud.equals("RECHAZADO") || evento.statusSolicitud.equals("CANCELADO"))){
+                render (view:'solicitud', model:[evento:evento])
+            }else{
                 return [evento: evento]
+            }
         }else{
                 if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
-                    log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+                    println "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
                     flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("RECHAZADO")){
-                    log.debug "El evento ha sido RECHAZADO"
+                    println "El evento ha sido RECHAZADO"
                     flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("CANCELADO")){
-                    log.debug "El evento ha sido CANCELADO"
+                    println "El evento ha sido CANCELADO"
                     flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusEvento.equals("STANBY")){
-                    log.debug "El evento ha sido puesto en STANBY"
+                    println "El evento ha sido puesto en STANBY"
                     flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-                    log.debug "El evento es aceptado"
+                    println "El evento es aceptado"
                     return [evento: evento]
                 }
                 else {
                     flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
-                    log.debug "ELSE"
+                    println "ELSE"
                     redirect( controller: "usuario", action: "ver")
                 }
             }
@@ -133,46 +136,46 @@ class EventoController {
             redirect(uri: "/")
         }
         
-        log.debug "REGLAS"
-        log.debug "precio: $evento.precio"
-        log.debug "statusSolicitud $evento.statusSolicitud"
-        log.debug "statusEvento $evento.statusEvento"
+        println "REGLAS"
+        println "precio: $evento.precio"
+        println "statusSolicitud $evento.statusSolicitud"
+        println "statusEvento $evento.statusEvento"
         
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
-                log.debug "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                println "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
                 return [evento: evento]
         }else{
                 if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
-                    log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+                    println "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
                     flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("RECHAZADO")){
-                    log.debug "El evento ha sido RECHAZADO"
+                    println "El evento ha sido RECHAZADO"
                     flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("CANCELADO")){
-                    log.debug "El evento ha sido CANCELADO"
+                    println "El evento ha sido CANCELADO"
                     flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusEvento.equals("STANBY")){
-                    log.debug "El evento ha sido puesto en STANBY"
+                    println "El evento ha sido puesto en STANBY"
                     flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-                    log.debug "El evento es aceptado"
+                    println "El evento es aceptado"
                     return [evento: evento]
                 }
                 else {
                     flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
-                    log.debug "ELSE"
+                    println "ELSE"
                     redirect( controller: "usuario", action: "ver")
                 }
             }
@@ -195,7 +198,7 @@ class EventoController {
                 
                 evento.properties = params
                 
-               if (!evento.hasErrors() && evento.save(flush: true)) {
+               if (!evento.hasErrors() && evento.save(flush: true) ) {
                 
                     flash.message = message(code: 'evento.actualiza', args: [evento.nombre])
                     redirect(action: "ver", id: evento.id)
@@ -217,34 +220,34 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def asistir = {
+        println "[${obtieneUsuario()}] Asistir"
         Evento evento = Evento.get(params.id)
-        
         if (springSecurityService.isLoggedIn()){
         
         Evento.withTransaction {
-        
-        def usuario = Usuario.get(springSecurityService.getPrincipal().id)
+        def id = springSecurityService.getPrincipal().id
+        def usuario = Usuario.get(id)
         //def usuario =  springSecurityService.currentUser
-        log.debug "Usuario: $usuario"
+        println "Usuario: $usuario"
 
            if(evento){
                 
-                log.debug "Evento: $evento"
-                log.debug "Usuario: $usuario"
+                println "Evento: $evento"
+                println "Usuario: $usuario"
                 
                 if(!evento.findByAsistentes(usuario)){
-                    log.debug "El $usuario NO se ha registrado, por lo tanto SI puede asistir al evento"
+                    println "El $usuario NO se ha registrado, por lo tanto SI puede asistir al evento"
                     evento.asistentes = usuario
                     evento.asistentes.asistir = true
                 }else{
-                    log.debug "El $usuario YA se ha registrado, por lo tanto NO puede asistir al evento"
+                    println "El $usuario YA se ha registrado, por lo tanto NO puede asistir al evento"
                     flash.message = message(code: 'evento.asistirExiste', args: [evento.nombre])
                     redirect(action: "ver", id: evento.id)
                 }
                 
                 if (!evento.hasErrors() && evento.save(flush: true)) {
                     
-                    log.debug "El usuario: $usuario, asistira al evento: $evento"
+                    println "El usuario: $usuario, asistira al evento: $evento"
                     flash.message = message(code: 'evento.asistir', args: [evento.nombre])
                     redirect(action: "ver", id: evento.id)
                }
@@ -283,10 +286,12 @@ class EventoController {
         }
     }
     
+    @Secured(['ROLE_ADMIN'])
     def aceptarEventos = {
         render (view:'listaPorAceptar')
     }
     
+    @Secured(['ROLE_ADMIN'])
     def listaEventosPorAceptar = {
         def lista
         if (params.filter.equals("todos"))
@@ -295,6 +300,99 @@ class EventoController {
         lista = Evento.findAllByStatusSolicitud(params.filter)
 
         render(template:'resultados', model:[resultados:lista])
+    }
+    
+    @Secured(['ROLE_ADMIN'])
+    def eventoAceptado = {
+        Evento.withTransaction {
+        def evento = Evento.get(params.id)
+        
+        evento.statusSolicitud = "ACEPTADO"
+        evento.statusEvento = "ACTIVO"
+        
+        println "[${obtieneUsuario()}] Evento: $evento | ACEPTADO"
+        
+        if (evento.save(flush: true)) {
+                try {
+                        sendMail {
+                        to      "${evento.usuario.correo}"
+                        subject "Su evento: ${evento.nombre} ha sido aceptado"
+                        html    g.render(template:'/mail/eventoAceptado', model:[evento:evento])
+                        }
+                            flash.message = message(code:"evento.siAceptadoMail",args:[evento.usuario.nombre])
+                        } catch(Exception e) {
+                            log.error "Problema al enviar el mail $e.message", e
+                            flash.message = message(code:"evento.noAceptadoMail",args:[evento.usuario.correo])
+                    }
+                    redirect( action: "ver", id: evento.id)
+            } else {
+                log.error("Hubo un error al ACEPTAR el evento ${evento.errors}")
+                flash.message = "Hubo un error al ACEPTAR el evento"
+                redirect (action:"aceptarEventos")
+            }   
+        }
+    }
+    
+    @Secured(['ROLE_ADMIN'])
+    def eventoRechazado = {
+        Evento.withTransaction {
+        def evento = Evento.get(params.id)
+        
+        evento.statusSolicitud = "RECHAZADO"
+        evento.statusEvento = "STANBY"
+        
+        println "[${obtieneUsuario()}] Evento: $evento | RECHAZADO"
+        
+        if (evento.save(flush: true)) {
+                try {
+                        sendMail {
+                        to      "${evento.usuario.correo}"
+                        subject "Su evento: ${evento.nombre} ha sido rechazado"
+                        html    g.render(template:'/mail/eventoRechazado', model:[evento:evento])
+                        }
+                            flash.message = message(code:"evento.siRechazadoMail",args:[evento.usuario.nombre])
+                        } catch(Exception e) {
+                            log.error "Problema al enviar el mail $e.message", e
+                            flash.message = message(code:"evento.noRechazadoMail",args:[evento.usuario.correo])
+                    }
+                    redirect (action:"aceptarEventos")
+            } else {
+                log.error("Hubo un error al ACEPTAR el evento ${evento.errors}")
+                flash.message = "Hubo un error al ACEPTAR el evento"
+                redirect (action:"aceptarEventos")
+            }   
+        }
+    }
+    
+    @Secured(['ROLE_ADMIN'])
+    def eventoCancelado = {
+        Evento.withTransaction {
+        def evento = Evento.get(params.id)
+        
+        evento.statusSolicitud = "CANCELADO"
+        evento.statusEvento = "INACTIVO"
+            
+        println "[${obtieneUsuario()}] Evento: $evento | CANCELADO"
+        
+        if (evento.save(flush: true)) {
+                try {
+                        sendMail {
+                        to      "${evento.usuario.correo}"
+                        subject "Su evento: ${evento.nombre} ha sido cancelado"
+                        html    g.render(template:'/mail/eventoCancelado', model:[evento:evento])
+                        }
+                            flash.message = message(code:"evento.siCanceladoMail",args:[evento.usuario.nombre])
+                        } catch(Exception e) {
+                            log.error "Problema al enviar el mail $e.message", e
+                            flash.message = message(code:"evento.noCanceladoMail",args:[evento.usuario.correo])
+                    }
+                    redirect (action:"aceptarEventos")
+            } else {
+                log.error("Hubo un error al ACEPTAR el evento ${evento.errors}")
+                flash.message = "Hubo un error al ACEPTAR el evento"
+                redirect (action:"aceptarEventos")
+            }   
+        }
     }
     
     //Busquedas
@@ -315,7 +413,7 @@ class EventoController {
     }
     
      def busquedaPorNombre = {
-         log.debug "Buscando eventos: $params.nombre"
+         println "Buscando eventos: $params.nombre"
          def lista = Evento.findAllByNombreIlike(wrapSearchParm(params.nombre))
          render(template:'resultadosPorNombreEvento', model:[resultados:lista])
      }

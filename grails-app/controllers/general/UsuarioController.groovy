@@ -173,23 +173,23 @@ class UsuarioController {
 
     @Secured(['ROLE_USER'])
     def edita = {
-        
+        println "Editando"
         def usuario = Usuario.get(params.id)
+        println "Usuario: $usuario"
         if (!usuario) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
             redirect(action: "lista")
         }
         else {
             def roles = obtieneListaDeRoles(usuario)
-
             return [usuario: usuario, roles: roles]
         }
     }
 
     @Secured(['ROLE_USER'])
     def actualiza = {
+        def usuario = Usuario.get(params.id)
         Usuario.withTransaction {
-            def usuario = Usuario.get(params.id)
             if (usuario) {
                 if (params.version) {
                     def version = params.version.toLong()
@@ -200,49 +200,33 @@ class UsuarioController {
                         return
                     }
                 }
-                //Si cambio password
-                    log.debug "usuario.password $usuario.password"
-                    log.debug "params.password $params.password"
                 
                 if (usuario.password != params.password && params.password != null) {
                     log.debug "Cambio passs"
                     usuario.password = params.password
                 }
+                
+                def archivo = request.getFile('imagen')
+                if (!archivo.empty) {
+                    byte[] f = archivo.bytes
+                    def imagen = new Imagen(
+                        nombre : archivo.originalFilename
+                        , tipoContenido : archivo.contentType
+                        , tamano : archivo.size
+                        , archivo : f
+                    )
+                    if (usuario.imagenes) {
+                        usuario.imagenes?.clear()
+                    } else {
+                        usuario.imagenes = []
+                    }
+                    usuario.imagenes << imagen
+                }
+                
                 params.remove('password')
                 usuario.properties = params
-                
-                //Su foto
-//                def archivo = request.getFile('imagen')
-//                
-//                def foto
-//                for(x in usuario?.imagenes) {
-//                    foto = x
-//                    break;
-//                }
-//                
-//                log.debug "Imagen del usuario $foto"
-//                if(foto == null){
-//                    if (!archivo.empty) {
-//                        byte[] f = archivo.bytes
-//                        def imagen = new Imagen(
-//                            nombre : archivo.originalFilename
-//                            , tipoContenido : archivo.contentType
-//                            , tamano : archivo.size
-//                            , archivo : f
-//                        )
-//                        log.debug "Mostrando imagen ${imagen.nombre}"
-////                        if (usuario.imagenes) {
-////                            usuario.imagenes?.clear()
-////                        } else {
-////                            usuario.imagenes = []
-////                        }
-//                        usuario.imagenes = []
-//                        usuario.imagenes << imagen
-//                    }
-//                }
-                
 
-                if (!usuario.hasErrors() && usuario.save(flush: true)) {
+                if (!usuario.hasErrors() && usuario.save()) {
                     
                    if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
                         UsuarioRol.removeAll(usuario)

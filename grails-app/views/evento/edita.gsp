@@ -10,22 +10,21 @@
           
           <div class="container">
             <section>
-            <div class="span12">
               <ul class="breadcrumb">
                 <li><a href="${createLink(uri: '/')}"><g:message code="inicio.home" /></a> <span class="divider">/</span></li>
                 <li><a href="${createLink(controller:'usuario', action:'ver')}"><g:message code="usuario.miPerfil" /></a> <span class="divider">/</span></li>
                 <li class="active"><g:message code="evento.edita" /> </li>
               </ul>
-            </div>
             </section>
     
             <div class="well">
-             
-                              <div class="page-header">
-                                    <h1><small><g:message code="evento.edita" /></small></h1>
-                              </div>  
-            
-		
+               
+                              <div class="marketing">
+                                    <h1><g:message code="evento.editaTitulo" /></h1>
+                                    <p class="marketing-byline"><g:message code="evento.edita" /></p>
+                              </div>
+              
+                              <hr class="soften">
 
                               <g:hasErrors bean="${evento}">
 
@@ -44,17 +43,22 @@
 
                             </g:hasErrors>
 
-                            <g:form class="form-horizontal" method="post">
+                            <g:form method="post">
                                     <fieldset>
-                                      <div class="control-group">
-                                        <g:render template="form"/>
-                                      </div>  
-                                      <div class="control-group">
+                                      <div class="control-group" style="margin-left: 30px;">
+                                        <g:render template="form_edita"/>
+                                      </div>
+                                   
+                                      <div class="hero-unit">
+                                        <div class="control-group">
                                         <div class="controls">
                                             <g:hiddenField name="id" value="${evento?.id}" />
-                                            <g:hiddenField name="version" value="${evento?.version}" />  
+                                            <g:hiddenField name="version" value="${evento?.version}" /> 
+                                            <center>
                                             <g:actionSubmit class="btn btn-success" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                                             <g:actionSubmit class="btn btn-danger" action="elimina" value="${message(code: 'evento.elimina')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                            </center>
+                                        </div>
                                         </div>
                                       </div>
                                     </fieldset>

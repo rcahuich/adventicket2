@@ -11,7 +11,12 @@
             <br>
             <br>
             <br>
-          <p><strong><g:message code="acceso.restringido" /></strong>.</p>
+            <div class="hero-unit">
+              <img src="${resource(dir: 'img', file: 'acceso-denegado.jpg')}">
+              <div class="alert alert-error">
+                  <p><strong><g:message code="acceso.restringido" /></strong>.</p>
+              </div>
+            </div>
             <br>
             <br>
             <br>

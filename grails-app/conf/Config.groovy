@@ -71,9 +71,9 @@ log4j = {
     // Example of changing the log pattern for the default console
     // appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%d [ADVENTICKET] %5p [%c{2}] | %m%n')
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -111,6 +111,13 @@ grails {
         "mail.smtp.socketFactory.fallback":"false"]
     }
 }
+
+grails.gorm.default.mapping = {
+   cache true
+   id generator:'identity'
+}
+
+grails.gorm.failOnError = true
 
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'general.Usuario'

@@ -9,3 +9,4 @@ web-app/WEB-INF/classes
 *.orig
 CodeNarcReport.html
 /.settings/
+/images/.settings/

@@ -3,7 +3,6 @@
 <sec:ifAllGranted roles="ROLE_ADMIN">
 <legend>1. <g:message code="usuario.usernameTitulo" /></legend>
 
-
             <label class="control-label" for="input01"><g:message code="usuario.username" /></label>
             <div class="controls">
               <div class="input-prepend">
@@ -67,7 +66,7 @@
 <legend>2. <g:message code="usuario.imagenTitulo" /></legend>
             <label class="control-label" for="input01"><g:message code="usuario.imagen"/></label>
             <div class="controls">
-              <input class="input-file" id="fileInput" type="file" name="imagen" />
+              <input class="input-file" type="file" name="imagen" />
               <p > </p>
               <span class="help-block">
                    <strong><g:message code="usuario.fotoImportante" /></strong> <g:message code="usuario.fotoInstrucciones" />

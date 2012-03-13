@@ -29,7 +29,6 @@
           
           <div class="container">
             <section>
-            <g:hiddenField name="id" value="${evento?.id}" />
           
               <div>
                 
@@ -64,8 +63,6 @@
                                   </div>
                               </g:if>
                             <br />
-                            <br />
-                             
                             </center>
                       
                             <ul id="tab" class="nav nav-tabs">
@@ -84,32 +81,39 @@
                               <div class="tab-pane fade in active" id="infoGen">
                                 <p>
                                     <g:if test="${evento?.descripcion}">
-                                       <h5><g:message code="evento.descripcionVista" /></h5>
+                                       <h4><g:message code="evento.descripcionVista" /></h4>
                                        <g:fieldValue bean="${evento}" field="descripcion"/>
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.quienesPuedenAsistir}">
-                                       <h5><g:message code="evento.quienesPuedenAsistirVista" /></h5>
+                                       <h4><g:message code="evento.quienesPuedenAsistirVista" /></h4>
                                        <g:fieldValue bean="${evento}" field="quienesPuedenAsistir"/>
                                     </g:if>
                                 </p>
                                 <p>
-                                    <g:if test="${evento?.capacidad}">
-                                       <h5><g:message code="evento.capacidadVista" /></h5>
+                                    <g:if test="${evento?.cupo}">
+                                       <h4><g:message code="evento.capacidadVista" /></h4>
                                        <g:fieldValue bean="${evento}" field="capacidad"/>
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.nombreConferencias}">
-                                       <h5><g:message code="evento.nombreConferenciasVista" /></h5>
+                                       <h4><g:message code="evento.nombreConferenciasVista" /></h4>
                                        <g:fieldValue bean="${evento}" field="nombreConferencias"/>
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.nombrePonentes}">
-                                       <h5><g:message code="evento.nombrePonentesVista" /></h5>
+                                       <h4><g:message code="evento.nombrePonentesVista" /></h4>
                                        <g:fieldValue bean="${evento}" field="nombrePonentes"/>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.comidas}">
+                                       <h4><g:message code="evento.alimentos" /></h4>
+                                       Con valor de <g:fieldValue bean="${evento}" field="numeroComidas"/> comida(s) por el costo de
+                                       <g:formatNumber number="${evento.costoComida}" type="currency" />
                                     </g:if>
                                 </p>
                               </div>
@@ -117,19 +121,19 @@
                               <div class="tab-pane fade" id="fechas">
                                 <p>
                                     <g:if test="${evento?.fechaInicio}">
-                                       <h5><i class="icon-calendar"></i> <g:message code="evento.fechaInicio" /></h5>
+                                       <h4><i class="icon-calendar"></i> <g:message code="evento.fechaInicio" /></h4>
                                        <g:formatDate date="${evento?.fechaInicio}"/>
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.fechaFin}">
-                                       <h5><i class="icon-calendar"></i> <g:message code="evento.fechaFin" /></h5>
+                                       <h4><i class="icon-calendar"></i> <g:message code="evento.fechaFin" /></h4>
                                        <g:formatDate date="${evento?.fechaFin}"/>
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.cierreInscripciones}">
-                                       <h5><i class="icon-calendar"></i> <g:message code="evento.cierreInscripciones" /></h5>
+                                       <h4><i class="icon-calendar"></i> <g:message code="evento.finInscripciones" /></h4>
                                        <g:formatDate date="${evento?.cierreInscripciones}"/>
                                     </g:if>
                                 </p>
@@ -147,7 +151,7 @@
                               </div>-->
                               
                               <div class="tab-pane fade" id="lugar">
-                                <h5><g:message code="evento.lugar" /></h5>
+                                <h4><g:message code="evento.lugar" /></h4>
                                 <p>
                                     <g:if test="${evento?.lugarDescripcion}">
                                        <g:fieldValue bean="${evento}" field="lugarDescripcion"/>
@@ -167,28 +171,46 @@
                                        <g:fieldValue bean="${evento}" field="pais"/>
                                     </g:if>
                                 </p>
+                                <p>
+                                    <g:if test="${evento?.contacto}">
+                                       <h4><g:message code="evento.contacto" /></h4>
+                                       <g:fieldValue bean="${evento}" field="contacto"/>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.telefono}">
+                                       <h4><g:message code="evento.telefono" /></h4>
+                                       <g:fieldValue bean="${evento}" field="telefono"/>
+                                    </g:if>
+                                </p>
+                                <p>
+                                    <g:if test="${evento?.correo}">
+                                       <h4><g:message code="evento.correo" /></h4>
+                                       <g:fieldValue bean="${evento}" field="correo"/>
+                                    </g:if>
+                                </p>
                               </div>
                               
                               <g:if test="${evento?.costo}">
                               <div class="tab-pane fade" id="costos">
                                 <p>
                                     <g:if test="${evento?.costo}">
-                                       <h3><g:message code="evento.costo" /></h3>
-                                       <h4>$<g:fieldValue bean="${evento}" field="costo"/></h4>
+                                       <h4><g:message code="evento.costoEvento" /></h4>
+                                       <g:formatNumber number="${evento.costo}" type="currency" />
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.queIncluyeElPago}">
-                                       <h3><g:message code="evento.queIncluyeElPago" /></h3>
-                                       <h4><g:fieldValue bean="${evento}" field="queIncluyeElPago"/></h4>
+                                       <h4><g:message code="evento.incluyePago" /></h4>
+                                       <g:fieldValue bean="${evento}" field="queIncluyeElPago"/>
                                     </g:if>
                                 </p>
                                 <p>
                                     <g:if test="${evento?.descuento}">
-                                       <h3><g:message code="evento.costoPagoAnticipado" /></h3>
-                                       <h4>$<g:fieldValue bean="${evento}" field="costoPagoAnticipado"/></h4>
-                                       <h3><g:message code="evento.finPagoAnticipado" /></h3>
-                                       <h4><h4><g:formatDate date="${evento?.finPagoAnticipado}"/></h4></h4>
+                                       <h4><g:message code="evento.costoPagoAnticipado" /></h4>
+                                       <g:formatNumber number="${evento.costoPagoAnticipado}" type="currency" />
+                                       <h4><g:message code="evento.finPagoAnticipado" /></h4>
+                                       <g:formatDate date="${evento?.finPagoAnticipado}"/>
                                     </g:if>
                                 </p>
                               </div>
@@ -212,12 +234,15 @@
                             </sec:ifNotLoggedIn>
                                 <br />
                             <sec:ifLoggedIn>
-                              <center>
-                              <g:link class="btn btn-primary" action="asistir" style="width: 120px;" id="${evento?.id}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');">Asistir</g:link>
+                              <g:form>
+                                <g:hiddenField name="id" value="${evento?.id}" />
+                                <center>
+                                <g:actionSubmit style="width: 130px;" class="btn btn-primary" action="asistir" value="${message(code: 'evento.siAsistir')}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');" /> 
                                 <br />
                                 <br />
-                              <g:link class="btn" style="width: 120px;">Tal vez</g:link>
-                              </center>
+                                <g:actionSubmit class="btn" style="width: 130px;" action="talvez" value="${message(code: 'evento.talvez')}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');" />
+                                </center>
+                              </g:form>
                             </sec:ifLoggedIn>
                             <br />
                          </div>

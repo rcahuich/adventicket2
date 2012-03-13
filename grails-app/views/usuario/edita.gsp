@@ -46,7 +46,7 @@
 
                             </g:hasErrors>
 
-                            <g:form method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <g:form action="actualiza" method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <fieldset>
                                       <div class="control-group">
                                       <g:render template="form_edita"/>
@@ -56,7 +56,7 @@
                                         <div class="controls">
                                             <g:hiddenField name="id" value="${usuario?.id}" />
                                             <g:hiddenField name="version" value="${usuario?.version}" />  
-                                            <g:actionSubmit class="btn btn-success" action="actualiza" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                                            <g:submitButton name="edita" class="btn btn-success" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                                             <sec:ifAllGranted roles="ROLE_ADMIN">
                                             <g:actionSubmit class="btn btn-danger" action="elimina" value="${message(code: 'usuario.cancelarCuenta')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                                             </sec:ifAllGranted>

@@ -17,10 +17,38 @@
               <g:textArea type="text" class="span9" name="quienesPuedenAsistir" rows="2" required="" value="${evento?.quienesPuedenAsistir}"/>
             </div>
             <br>
-            <label class="control-label" for="input01"><g:message code="evento.capacidad" /> *</label>
+
+            <label class="control-label" for="input01">
+              <g:message code="evento.capacidad" />
+            </label>
+            <label class="control-label" for="input01">
+              <div class="btn-group" data-toggle="buttons-radio">
+                                <a id="siCupo" href="#siCupo" class="btn btn-primary">Si</a>
+                                <a id="noCupo" href="#noCupo" class="btn btn-primary">No</a>
+              </div>
+              <div style="display:none">
+                                <input type="radio" name="cupo" value="true" id="radioSiCupo"/> Si 
+                                <input type="radio" name="cupo" value="false" id="radioNoCupo"/> No
+              </div>  
+            </label>
             <div class="controls">
-              <g:field type="number" class="input-mini" name="capacidad" required="" value="${evento.capacidad}"/>
+            <div id="divSiCupo" style="display:none">
+                    <div class="controls">
+                      <g:message code="evento.incluyeCupo" /> : <g:field type="number" class="input-mini" name="capacidad" required="" value="${evento.capacidad}"/>
+                      <p>
+                        <g:message code="evento.incluyeCupoMensaje" />
+                      </p>
+                    </div>
+                    <br>
+                    
             </div>
+            <div id="divNoCupo" style="display:none">
+              <div class="input">
+                <g:message code="evento.incluyeCupoNo" />
+              </div>
+            </div>
+            </div>
+            
             <br>
             <label class="control-label" for="input01"><g:message code="evento.nombreConferencias" /> </label>
             <div class="controls" >
@@ -35,7 +63,7 @@
             <label class="control-label" for="input01">
               <g:message code="evento.costoTitulo" />
             </label>
-            <label class="control-label" for="input01" ">
+            <label class="control-label" for="input01">
               <div class="btn-group" data-toggle="buttons-radio">
                                 <a id="si" href="#si" class="btn btn-primary">Si</a>
                                 <a id="no" href="#no" class="btn btn-primary">No</a>
@@ -250,7 +278,7 @@
       });
     });
 </r:script>
-<!--Descuento-->
+<!--Cupo-->
 <r:script>
     $(document).ready(function(){
       $("a#siDescuento").click(function(e){
@@ -264,6 +292,23 @@
         $("#divSiDescuento").slideUp();
         $("#divNoDescuento").slideDown();
         document.getElementById("radioNoDescuento").checked=true
+        
+      });
+    });
+</r:script>
+<r:script>
+    $(document).ready(function(){
+      $("a#siCupo").click(function(e){
+        e.preventDefault();
+        $("#divNoCupo").slideUp();
+        $("#divSiCupo").slideDown();
+        document.getElementById("radioSiCupo").checked=true
+      });
+      $("a#noCupo").click(function(e){
+        e.preventDefault();
+        $("#divSiCupo").slideUp();
+        $("#divNoCupo").slideDown();
+        document.getElementById("radioNoCupo").checked=true
         
       });
     });

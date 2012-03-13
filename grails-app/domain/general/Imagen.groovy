@@ -1,6 +1,6 @@
 package general
 
-class Imagen {
+class Imagen implements Serializable{
 
     String nombre
     String tipoContenido

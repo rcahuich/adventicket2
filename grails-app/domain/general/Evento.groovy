@@ -6,6 +6,7 @@ class Evento {
     String nombre
     String descripcion
     String quienesPuedenAsistir
+    boolean cupo = false
     Integer capacidad = 0
     String nombreConferencias
     String nombrePonentes
