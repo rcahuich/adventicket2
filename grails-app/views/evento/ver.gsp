@@ -234,7 +234,7 @@
                             </sec:ifNotLoggedIn>
                                 <br />
                             <sec:ifLoggedIn>
-                              <g:form>
+                              <g:form >
                                 <g:hiddenField name="id" value="${evento?.id}" />
                                 <center>
                                 <g:actionSubmit style="width: 130px;" class="btn btn-primary" action="asistir" value="${message(code: 'evento.siAsistir')}" onclick="return confirm('${message(code: 'evento.estaSeguro')}');" /> 

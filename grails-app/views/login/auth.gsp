@@ -9,22 +9,23 @@
     <section>
     <div class="marketing well">
       
-      <form action="/adventicket/j_spring_security_check" method='POST' autocomplete='off' >
+      <form action="/adventicket/j_spring_security_check" id="loginForm" method='POST' autocomplete='off' >
         <center>
           <h1>AdvenTicket</h1>
           <p><g:message code="login.iniciaSesion" /></p>
-      <hr class="soften">
+          <hr class="soften">
         
-        <g:if test='${flash.message}'>
-          <div class="alert alert-block alert-error fade in">
-            <a class="close" data-dismiss="alert" href="#">&times;</a>
-            <center>
-            <p>${flash.message}</p>
-            </center>
-          </div>
-        </g:if>
             <br />
+            
           <div >
+              <g:if test='${flash.message}'>
+              <div class="alert alert-block alert-error fade in">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                <center>
+                <p>${flash.message}</p>
+                </center>
+              </div>
+              </g:if>
               <label class="control-label" for="input01"><g:message code="login.username" /></label>
               <div class="controls">
                <input id="username" type="text" class="input-large" name="j_username" required="" placeholder="usuario" autoFocus>

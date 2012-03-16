@@ -220,50 +220,15 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def asistir = {
-        println "[${obtieneUsuario()}] Asistir"
-        Evento evento = Evento.get(params.id)
-        if (springSecurityService.isLoggedIn()){
-        
-        Evento.withTransaction {
-        def id = springSecurityService.getPrincipal().id
-        def usuario = Usuario.get(id)
-        //def usuario =  springSecurityService.currentUser
-        println "Usuario: $usuario"
+        //def user = springSecurityService.currentUser
+        def user = Usuario.get(springSecurityService.principal.id)
+        println "User: ${user}" // Not found, it prints null
+      
+        Evento event = Evento.get(params.id)
 
-           if(evento){
-                
-                println "Evento: $evento"
-                println "Usuario: $usuario"
-                
-                if(!evento.findByAsistentes(usuario)){
-                    println "El $usuario NO se ha registrado, por lo tanto SI puede asistir al evento"
-                    evento.asistentes = usuario
-                    evento.asistentes.asistir = true
-                }else{
-                    println "El $usuario YA se ha registrado, por lo tanto NO puede asistir al evento"
-                    flash.message = message(code: 'evento.asistirExiste', args: [evento.nombre])
-                    redirect(action: "ver", id: evento.id)
+         if(!event.findByAllAsistentes(user)){
+                    println "Asistent to Event"
                 }
-                
-                if (!evento.hasErrors() && evento.save(flush: true)) {
-                    
-                    println "El usuario: $usuario, asistira al evento: $evento"
-                    flash.message = message(code: 'evento.asistir', args: [evento.nombre])
-                    redirect(action: "ver", id: evento.id)
-               }
-
-                
-            } else {
-                
-                flash.message = message(code: 'evento.noAsistir', args: [evento.nombre])
-                redirect(action: "ver", id: evento.id)
-            }
-        
-            }
-        } else{
-                flash.message = message(code: 'evento.loguearse')
-                redirect(action: "ver", id: evento.id)
-            }
     }
     
     @Secured(['ROLE_ASISTENTE'])

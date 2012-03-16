@@ -225,7 +225,7 @@ class UsuarioController {
                 
                 params.remove('password')
                 usuario.properties = params
-
+                usuario.refresh
                 if (!usuario.hasErrors() && usuario.save()) {
                     
                    if(SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
@@ -255,6 +255,25 @@ class UsuarioController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])
                 redirect(action: "lista")
             }
+        }
+    }
+    
+    def asistir = {
+        println "Controller Usuario"
+        println "Usuario ID: ${springSecurityService.principal.id}"
+      
+        def id = springSecurityService.principal.id
+        def usuario = Usuario.get(id)
+        
+        println "Usuario ANTES: ${usuario}"
+      
+        Evento evento = Evento.get(params.id)
+      
+        println "Usuario DESPUES: ${usuario}"
+        println "Evento: ${evento}"
+        
+        if(!evento.findByAsistentes(usuario)){
+              println "El $usuario NO se ha registrado, por lo tanto SI puede asistir al evento"
         }
     }
     

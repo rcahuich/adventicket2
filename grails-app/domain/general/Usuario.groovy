@@ -43,7 +43,6 @@ class Usuario implements java.io.Serializable {
 	static mapping = {
                 table 'usuarios'
                 password column: '`password`'
-                imagenes cascade:'all-delete-orphan'
 	}
 
 	Set<Rol> getAuthorities() {

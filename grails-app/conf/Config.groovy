@@ -1,6 +1,7 @@
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
+grails.config.locations = ["file:${userHome}/.grails/${appName}-config.groovy"]
 // grails.config.locations = [ "classpath:${appName}-config.properties",
 //                             "classpath:${appName}-config.groovy",
 //                             "file:${userHome}/.grails/${appName}-config.properties",
@@ -11,7 +12,7 @@
 // }
 
 
-grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
+//grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
@@ -55,6 +56,9 @@ grails.web.disable.multipart=false
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
 
+// enable query caching by default
+grails.hibernate.cache.queries = true
+
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
@@ -87,11 +91,11 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
     
-    //warn   'org.mortbay.log'
+    warn   'org.mortbay.log'
 
     debug  'grails.app'//,'org.hibernate'//,'test.integration'
 
-    //trace  'org.hibernate.type'
+    trace  'org.hibernate.type'
 
     off    'grails.app.services.org.grails.plugin.resource',
            'grails.app.taglib.org.grails.plugin.resource',
@@ -128,7 +132,4 @@ grails.plugins.springsecurity.roleHierarchy = '''
    ROLE_EVENTO > ROLE_ASISTENTE
    ROLE_ASISTENTE > ROLE_USER
 '''
-grails.plugins.springsecurity.controllerAnnotations.staticRules = [
-   '/*': ['ROLE_USER']
-]
 
