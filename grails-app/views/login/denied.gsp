@@ -1,5 +1,5 @@
 <head>
-<meta name='layout' content='main' />
+<meta name='layout' content='bootstrap' />
 <title><g:message code="acceso.restringido" /></title>
 </head>
 

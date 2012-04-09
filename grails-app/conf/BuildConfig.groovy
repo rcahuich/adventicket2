@@ -39,6 +39,8 @@ grails.project.dependency.resolution = {
         compile ":hibernate:$grailsVersion"
         compile ":jquery:1.6.1.1"
         compile ":resources:1.0.2"
+        compile ":spring-security-core:1.2.7.2"
+        compile ":mail:1.0"
 
         build ":tomcat:$grailsVersion"
     }

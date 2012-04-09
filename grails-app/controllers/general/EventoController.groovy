@@ -32,22 +32,22 @@ class EventoController {
     
     @Secured(['ROLE_ASISTENTE'])
     def crea = {
-        println "Params: $params"
+        log.debug "Params: $params"
         Evento.withTransaction {
             
             def evento = new Evento(params)
             
             Usuario usuario = Usuario.get(springSecurityService.getPrincipal().id)
             evento.usuario = usuario
-            println "parmas de precio: $params.precio"
-            println "ahora con el evento precio: $evento.precio"
+            log.debug "parmas de precio: $params.precio"
+            log.debug "ahora con el evento precio: $evento.precio"
             
             if(evento.precio == true){
-                println "Con costo"
+                log.debug "Con costo"
                 evento.statusSolicitud = "ENVIADO"//"ACEPTADO", "RECHAZADO", "CANCELADO", "ENVIADO"
                 evento.statusEvento = "ACTIVO"
             }else{
-                println "Sin costo"
+                log.debug "Sin costo"
                 evento.costo = 0
                 evento.statusSolicitud = "ACEPTADO"
                 evento.statusEvento = "ACTIVO"
@@ -78,13 +78,13 @@ class EventoController {
             redirect(uri: "/")
         }
         
-        println "REGLAS"
-        println "precio: $evento.precio"
-        println "statusSolicitud $evento.statusSolicitud"
-        println "statusEvento $evento.statusEvento"
+        log.debug "REGLAS"
+        log.debug "precio: $evento.precio"
+        log.debug "statusSolicitud $evento.statusSolicitud"
+        log.debug "statusEvento $evento.statusEvento"
         
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
-                println "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                log.debug "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
                 if(evento.precio == true && (evento.statusSolicitud.equals("ENVIADO") || evento.statusSolicitud.equals("RECHAZADO") || evento.statusSolicitud.equals("CANCELADO"))){
                 render (view:'solicitud', model:[evento:evento])
             }else{
@@ -92,36 +92,36 @@ class EventoController {
             }
         }else{
                 if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
-                    println "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+                    log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
                     flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("RECHAZADO")){
-                    println "El evento ha sido RECHAZADO"
+                    log.debug "El evento ha sido RECHAZADO"
                     flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("CANCELADO")){
-                    println "El evento ha sido CANCELADO"
+                    log.debug "El evento ha sido CANCELADO"
                     flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusEvento.equals("STANBY")){
-                    println "El evento ha sido puesto en STANBY"
+                    log.debug "El evento ha sido puesto en STANBY"
                     flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-                    println "El evento es aceptado"
+                    log.debug "El evento es aceptado"
                     return [evento: evento]
                 }
                 else {
                     flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
-                    println "ELSE"
+                    log.debug "ELSE"
                     redirect( controller: "usuario", action: "ver")
                 }
             }
@@ -136,46 +136,46 @@ class EventoController {
             redirect(uri: "/")
         }
         
-        println "REGLAS"
-        println "precio: $evento.precio"
-        println "statusSolicitud $evento.statusSolicitud"
-        println "statusEvento $evento.statusEvento"
+        log.debug "REGLAS"
+        log.debug "precio: $evento.precio"
+        log.debug "statusSolicitud $evento.statusSolicitud"
+        log.debug "statusEvento $evento.statusEvento"
         
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')){
-                println "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
+                log.debug "EL ADMINISTRADOR ESTA VIENDO EL EVENTO"
                 return [evento: evento]
         }else{
                 if(evento.precio == true && evento.statusSolicitud.equals("ENVIADO")){
-                    println "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
+                    log.debug "El evento aun no ha sido aceptado se encuentra con estatus precioTRUE y solicitudENVIADO"
                     flash.message = message(code:'evento.noAccesoNOACEPTADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("RECHAZADO")){
-                    println "El evento ha sido RECHAZADO"
+                    log.debug "El evento ha sido RECHAZADO"
                     flash.message = message(code:'evento.noAccesoRECHAZADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusSolicitud.equals("CANCELADO")){
-                    println "El evento ha sido CANCELADO"
+                    log.debug "El evento ha sido CANCELADO"
                     flash.message = message(code:'evento.noAccesoCANCELADO', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if(evento.statusEvento.equals("STANBY")){
-                    println "El evento ha sido puesto en STANBY"
+                    log.debug "El evento ha sido puesto en STANBY"
                     flash.message = message(code:'evento.noAccesoSTANBY', args: [evento.nombre])
                     redirect( controller: "usuario", action: "ver")
                 }
                 else
                 if((evento.precio == false || evento.precio == true) && evento.statusSolicitud.equals("ACEPTADO") && evento.statusEvento.equals("ACTIVO")){
-                    println "El evento es aceptado"
+                    log.debug "El evento es aceptado"
                     return [evento: evento]
                 }
                 else {
                     flash.message = message(code: 'evento.noAcceso', args: [evento.nombre])
-                    println "ELSE"
+                    log.debug "ELSE"
                     redirect( controller: "usuario", action: "ver")
                 }
             }
@@ -219,15 +219,16 @@ class EventoController {
     }
     
     @Secured(['ROLE_ASISTENTE'])
-    def asistir = {
+    def asistir = {exit
+        
         //def user = springSecurityService.currentUser
         def user = Usuario.get(springSecurityService.principal.id)
-        println "User: ${user}" // Not found, it prints null
+        log.debug "User: ${user}" // Not found, it prints null
       
         Evento event = Evento.get(params.id)
 
-         if(!event.findByAllAsistentes(user)){
-                    println "Asistent to Event"
+        if(!event.findAllByAsistentes(user)){
+                    log.debug "Asistent to Event"
                 }
     }
     
@@ -275,7 +276,7 @@ class EventoController {
         evento.statusSolicitud = "ACEPTADO"
         evento.statusEvento = "ACTIVO"
         
-        println "[${obtieneUsuario()}] Evento: $evento | ACEPTADO"
+        log.debug "[${obtieneUsuario()}] Evento: $evento | ACEPTADO"
         
         if (evento.save(flush: true)) {
                 try {
@@ -306,7 +307,7 @@ class EventoController {
         evento.statusSolicitud = "RECHAZADO"
         evento.statusEvento = "STANBY"
         
-        println "[${obtieneUsuario()}] Evento: $evento | RECHAZADO"
+        log.debug "[${obtieneUsuario()}] Evento: $evento | RECHAZADO"
         
         if (evento.save(flush: true)) {
                 try {
@@ -337,7 +338,7 @@ class EventoController {
         evento.statusSolicitud = "CANCELADO"
         evento.statusEvento = "INACTIVO"
             
-        println "[${obtieneUsuario()}] Evento: $evento | CANCELADO"
+        log.debug "[${obtieneUsuario()}] Evento: $evento | CANCELADO"
         
         if (evento.save(flush: true)) {
                 try {
@@ -367,7 +368,7 @@ class EventoController {
 
 
     def buscarEventos = {
-        println "Entrando a busqueda normal"
+        log.debug "Entrando a busqueda normal"
         //params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
         if(params?.nombreEvento || (params.fechaInicio && params.fechaFin)){
             def resultado = buscar(params)
@@ -378,14 +379,14 @@ class EventoController {
     }
     
      def busquedaPorNombre = {
-         println "Buscando eventos: $params.nombre"
+         log.debug "Buscando eventos: $params.nombre"
          def lista = Evento.findAllByNombreIlike(wrapSearchParm(params.nombre))
          render(template:'resultadosPorNombreEvento', model:[resultados:lista])
      }
      
      def buscar(params) {
-        println "[${obtieneUsuario()}] Buscando Eventos"
-        println "Parametros $params"
+        log.debug "[${obtieneUsuario()}] Buscando Eventos"
+        log.debug "Parametros $params"
         def eventos = []
         //def cantidad = 0
         def nombre = String.valueOf(params.nombreEvento)
@@ -395,25 +396,25 @@ class EventoController {
         def fechaFinal = fechas.fechaFin
         if (params?.nombreEvento) {
             if (params?.tipoSubEvento) {
-                println "Buscando Eventos con Nombre y fechas"
+                log.debug "Buscando Eventos con Nombre y fechas"
                 eventos = Evento.buscarEvento.findAllByNombreIlikeAndTipoSubEventoIlike(nombre, tipoEvento).buscaPorFecha(fechaInicial, fechaFinal).list(params)
-                println "eventos --- $eventos"
+                log.debug "eventos --- $eventos"
                 //cantidad = Evento.buscaPorNombre(params?.nombreEvento).buscaPorFecha(fechaInicial, fechaFinal).count()
             } else {
-                println "Buscando Eventos solo con Nombre"
+                log.debug "Buscando Eventos solo con Nombre"
                 eventos = Evento.buscarEvento.findAllByNombreIlike(wrapSearchParm(params.nombreEvento))
-                println "eventos --- $eventos"
+                log.debug "eventos --- $eventos"
                 //cantidad = Evento.buscarEvento.findAllByNombreIlike(wrapSearchParm(params.nombreEvento)).count()
             }
         } else {
             if (params?.tipoSubEvento) {
-                println "Buscando Eventos solo por Fecha y Tipo"
+                log.debug "Buscando Eventos solo por Fecha y Tipo"
                 eventos = Evento.buscarEvento.findAllByTipoSubEventoIlike(tipoEvento).buscaPorFecha(fechaInicial, fechaFinal).list(params)
-                println "eventos -- $eventos"
+                log.debug "eventos -- $eventos"
             } else {
-                println "Buscando todos los Eventos..."
+                log.debug "Buscando todos los Eventos..."
                 eventos = Evento.executeQuery("select evento from Evento evento where evento.fechaInicio >= :fechaActual and evento.statusSolicitud = :statusSolicitud and evento.statusEvento = :statusEvento ", [fechaActual: new Date(), statusSolicitud:"ACEPTADO",statusEvento:"ACTIVO"])
-                println "eventos -- $eventos"
+                log.debug "eventos -- $eventos"
             }
         }
 

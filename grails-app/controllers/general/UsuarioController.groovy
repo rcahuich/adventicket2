@@ -152,12 +152,13 @@ class UsuarioController {
     
     @Secured(['ROLE_USER'])
     def ver = {
-        
+        log.debug "Viendo usuario ${params.id}"
         if(params.id == null){
             params.id = springSecurityService.getPrincipal().id
         }
-        
+        log.debug "Viendo usuario ${params.id}"
         def usuario = Usuario.get(params.id)
+        log.debug "Viendo usuario ${usuario}"
         
         if (!usuario) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuario.label', default: 'Usuario'), params.id])

@@ -225,7 +225,7 @@
             <div class="span9 columns">
               <p>Phasellus sollicitudin feugiat metus nec gravida. Sed in nulla arcu, at egestas nunc. Aliquam blandit rutrum arcu sed iaculis. Curabitur vel sem ipsum. Cras egestas adipiscing tortor vitae congue. Donec at nibh magna. Ut tortor elit, auctor id varius vel, lacinia vel odio.</p>
               
-              	<g:form onClick="validarEmail(document.getElementById('email').value);"
+              	<g:form
                 name="solicitudInformacion" 
                 action="solicitud"
                 class="form-horizontal" 

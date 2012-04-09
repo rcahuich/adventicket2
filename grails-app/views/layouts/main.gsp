@@ -16,26 +16,9 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-responsive.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'docs.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'prettify.css')}" type="text/css">
-                    
-                <!-- JS javascript  -->
-                <script src="/adventicket/js/jquery.js"></script>
-                <script src="/adventicket/js/google-code-prettify/prettify.js"></script>
-                <script src="/adventicket/js/bootstrap-transition.js"></script>
-                <script src="/adventicket/js/bootstrap-alert.js"></script>
-                <script src="/adventicket/js/bootstrap-modal.js"></script>
-                <script src="/adventicket/js/bootstrap-dropdown.js"></script>
-                <script src="/adventicket/js/bootstrap-tab.js"></script>
-                <script src="/adventicket/js/bootstrap-tooltip.js"></script>
-                <script src="/adventicket/js/bootstrap-popover.js"></script>
-                <script src="/adventicket/js/bootstrap-scrollspy.js"></script>
-                <script src="/adventicket/js/bootstrap-button.js"></script>
-                <script src="/adventicket/js/bootstrap-collapse.js"></script>
-                <script src="/adventicket/js/bootstrap-carousel.js"></script>
-                <script src="/adventicket/js/bootstrap-typeahead.js"></script>
-                <script src="/adventicket/js/application.js"></script>
                 
-                <r:layoutResources/>
 		<g:layoutHead/>
+                <r:layoutResources/>
         </head>
 	<body>
                 <g:render template="/common/header" />

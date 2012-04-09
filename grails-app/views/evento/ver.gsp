@@ -29,9 +29,6 @@
           
           <div class="container">
             <section>
-          
-              <div>
-                
                 
                 <div class="well">
                   
@@ -260,7 +257,6 @@
 
                   </div>
                 </div>
-              </div>
           </section>
           </div> <!-- /container -->
 <div id="fb-root"></div>
